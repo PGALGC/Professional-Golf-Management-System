@@ -95,7 +95,7 @@
         /* Compact Tab Navigation */
         .tab-nav {
             display: grid;
-            grid-template-columns: repeat(7, 1fr);
+            grid-template-columns: repeat(8, 1fr);
             gap: 2px;
             margin-bottom: 10px;
             border-radius: 5px;
@@ -733,6 +733,77 @@
         .btn-purple { background: #9b59b6; }
         .btn-teal { background: #1abc9c; }
         .btn-orange { background: #e67e22; }
+        
+        /* Information Table Styles */
+        #infoTable th {
+            padding: 8px 6px;
+            text-align: center;
+            font-weight: 600;
+            border: 1px solid #34495e;
+            min-width: 120px;
+            position: relative;
+        }
+        
+        #infoTable th:nth-child(2) {
+            min-width: 200px;
+        }
+        
+        #infoTable th input {
+            width: 100%;
+            background: transparent;
+            border: none;
+            color: white;
+            text-align: center;
+            font-weight: 600;
+            font-size: 11px;
+            padding: 4px;
+        }
+        
+        #infoTable th input:focus {
+            outline: 2px solid #3498db;
+            background: rgba(255,255,255,0.1);
+        }
+        
+        #infoTable td {
+            padding: 6px;
+            border: 1px solid #e0e0e0;
+            text-align: center;
+            position: relative;
+        }
+        
+        #infoTable td input {
+            width: 100%;
+            padding: 4px;
+            border: 1px solid #ddd;
+            border-radius: 2px;
+            font-size: 11px;
+            text-align: center;
+        }
+        
+        #infoTable td input:focus {
+            outline: none;
+            border-color: #3498db;
+            background: #f0f8ff;
+        }
+        
+        #infoTable tbody tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .delete-row-btn, .delete-col-btn {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 2px 6px;
+            border-radius: 2px;
+            cursor: pointer;
+            font-size: 10px;
+            margin-left: 4px;
+        }
+        
+        .delete-row-btn:hover, .delete-col-btn:hover {
+            background: #c0392b;
+        }
 
         /* Responsive */
         @media (max-width: 1400px) {
@@ -943,6 +1014,7 @@
             <button class="tab-button" data-tab="pairs">🤝 Pairs</button>
             <button class="tab-button" data-tab="comps">🎯 Comps</button>
             <button class="tab-button" data-tab="randomdraw">🎲 Random Draw</button>
+            <button class="tab-button" data-tab="information">ℹ️ Information</button>
         </nav>
 
         <main>
@@ -1290,6 +1362,54 @@
                     </div>
                 </section>
             </div>
+
+            <!-- Information Tab -->
+            <div id="information-tab" class="tab-content">
+                <section class="information-section">
+                    <div class="section-header">
+                        <h2>ℹ️ Information</h2>
+                        <div class="section-actions">
+                            <button id="showHowTo" class="btn-info">📖 How To</button>
+                        </div>
+                    </div>
+                    
+                    <div style="background: white; padding: 15px; border-radius: 6px; box-shadow: 0 1px 4px rgba(0,0,0,0.1);">
+                        <div style="margin-bottom: 15px; display: flex; gap: 8px; flex-wrap: wrap; align-items: center;">
+                            <button id="addInfoRow" class="btn-success btn-small">➕ Add Row</button>
+                            <button id="addInfoColumn" class="btn-info btn-small">➕ Add Column</button>
+                            <button id="saveInfoTable" class="btn-primary btn-small">💾 Save Table</button>
+                            <button id="clearInfoTable" class="btn-warning btn-small">🗑️ Clear All</button>
+                            
+                            <div style="display: flex; gap: 6px; align-items: center; margin-left: auto; border-left: 1px solid #e0e0e0; padding-left: 8px;">
+                                <label for="infoTableCurrency" style="font-size: 11px; font-weight: 600;">Currency:</label>
+                                <select id="infoTableCurrency" style="padding: 5px; border: 1px solid #ddd; border-radius: 3px; font-size: 11px;">
+                                    <option value="$">$ (USD)</option>
+                                    <option value="£">£ (GBP)</option>
+                                    <option value="€">€ (EUR)</option>
+                                    <option value="¥">¥ (JPY)</option>
+                                    <option value="₹">₹ (INR)</option>
+                                    <option value="A$">A$ (AUD)</option>
+                                    <option value="C$">C$ (CAD)</option>
+                                    <option value="">— None</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div style="overflow-x: auto; max-height: 70vh;">
+                            <table id="infoTable" style="width: 100%; border-collapse: collapse; font-size: 11px;">
+                                <thead>
+                                    <tr id="infoTableHeader" style="background: #2c3e50; color: white; position: sticky; top: 0; z-index: 10;">
+                                        <!-- Table headers will be dynamically generated -->
+                                    </tr>
+                                </thead>
+                                <tbody id="infoTableBody">
+                                    <!-- Table rows will be dynamically generated -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+            </div>
         </main>
     </div>
 
@@ -1625,6 +1745,28 @@
         </div>
     </div>
     
+    <!-- How To Modal -->
+    <div id="howToModal" class="modal" style="display: none;">
+        <div class="modal-content" style="max-width: 900px; max-height: 90vh;">
+            <h3>📖 How To Use This App</h3>
+            <div style="margin-bottom: 15px;">
+                <p style="font-size: 0.85rem; color: #7f8c8d;">Edit the content below to add your own instructions and tips for using the app.</p>
+            </div>
+            
+            <div class="form-group" style="margin-bottom: 15px;">
+                <label for="howToContent" style="font-size: 11px; font-weight: 600; margin-bottom: 5px; display: block;">Instructions Content</label>
+                <textarea id="howToContent" rows="20" style="width: 100%; padding: 10px; font-size: 12px; border: 1px solid #ddd; border-radius: 3px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif; line-height: 1.6; resize: vertical;" placeholder="Enter your how-to instructions here..."></textarea>
+                <small style="color: #7f8c8d; font-size: 0.7rem; margin-top: 5px; display: block;">Tip: You can format your content with line breaks and paragraphs.</small>
+            </div>
+            
+            <div class="form-actions" style="display: flex; gap: 6px; justify-content: flex-end;">
+                <button type="button" id="saveHowTo" class="btn-success">💾 Save Instructions</button>
+                <button type="button" id="clearHowTo" class="btn-warning btn-small">🗑️ Clear</button>
+                <button type="button" id="closeHowTo" class="btn-secondary">❌ Close</button>
+            </div>
+        </div>
+    </div>
+    
     <!-- File inputs -->
     <input type="file" id="restoreFileInput" accept=".json" style="display: none;">
 
@@ -1688,6 +1830,16 @@
             // Temporary Team A vs Team B data for modal
             tempTeamAvsB: null,
             
+            // How To content
+            howToContent: '',
+            
+            // Information Table data
+            infoTableData: {
+                headers: ['Players Name:', 'Winners Position', 'Overall Winner', 'Daily Swindle', 'Pairs', '4BBB', '4 Person Team', '4 Person Team Mixed Score', 'Best 3 from 4', 'Team A vs Team B', 'Par 3 Closed to Pin'],
+                rows: [],
+                currency: '$'
+            },
+            
             init() {
                 this.loadData();
                 this.setupEventListeners();
@@ -1707,6 +1859,11 @@
                 
                 if (this.scorecardSettings.selectedCourseId) {
                     this.renderScorecard();
+                }
+                
+                // Render info table if on information tab
+                if (this.currentTab === 'information') {
+                    this.renderInfoTable();
                 }
                 
                 this.showToast('App loaded successfully!', 'success');
@@ -1793,6 +1950,25 @@
                     const savedMasterCurrency = localStorage.getItem('golfMasterLeaderboardCurrency');
                     if (savedMasterCurrency) this.masterLeaderboardCurrency = savedMasterCurrency;
                     
+                    // Load How To content
+                    const savedHowTo = localStorage.getItem('golfHowToContent');
+                    if (savedHowTo) this.howToContent = savedHowTo;
+                    
+                    // Load Information Table data
+                    const savedInfoTable = localStorage.getItem('golfInfoTableData');
+                    if (savedInfoTable) {
+                        this.infoTableData = JSON.parse(savedInfoTable);
+                        // Migrate old "Competition Name:" to "Winners Position"
+                        const oldHeaderIndex = this.infoTableData.headers.indexOf('Competition Name:');
+                        if (oldHeaderIndex !== -1) {
+                            this.infoTableData.headers[oldHeaderIndex] = 'Winners Position';
+                        }
+                        // Ensure currency property exists
+                        if (!this.infoTableData.currency) {
+                            this.infoTableData.currency = '$';
+                        }
+                    }
+                    
                 } catch (e) {
                     console.error('Error loading data:', e);
                 }
@@ -1818,6 +1994,8 @@
                     localStorage.setItem('golfRandomDrawCourse', this.randomDrawCourse);
                     localStorage.setItem('golfMasterLeaderboardMoney', JSON.stringify(this.masterLeaderboardMoney));
                     localStorage.setItem('golfMasterLeaderboardCurrency', this.masterLeaderboardCurrency);
+                    localStorage.setItem('golfHowToContent', this.howToContent);
+                    localStorage.setItem('golfInfoTableData', JSON.stringify(this.infoTableData));
                 } catch (e) {
                     console.error('Error saving data:', e);
                 }
@@ -2150,6 +2328,34 @@
                     }
                 });
                 
+                // How To modal buttons
+                document.getElementById('showHowTo').addEventListener('click', () => this.showHowToModal());
+                document.getElementById('saveHowTo').addEventListener('click', () => this.saveHowToContent());
+                document.getElementById('clearHowTo').addEventListener('click', () => {
+                    if (confirm('Clear all How To instructions?')) {
+                        document.getElementById('howToContent').value = '';
+                        this.showToast('Content cleared', 'warning');
+                    }
+                });
+                document.getElementById('closeHowTo').addEventListener('click', () => this.hideHowToModal());
+                
+                // Information Table buttons
+                document.getElementById('addInfoRow').addEventListener('click', () => this.addInfoTableRow());
+                document.getElementById('addInfoColumn').addEventListener('click', () => this.addInfoTableColumn());
+                document.getElementById('saveInfoTable').addEventListener('click', () => this.saveInfoTable());
+                document.getElementById('clearInfoTable').addEventListener('click', () => {
+                    if (confirm('Clear all table data? This will remove all rows but keep the headers.')) {
+                        this.infoTableData.rows = [];
+                        this.renderInfoTable();
+                        this.saveData();
+                        this.showToast('Table cleared', 'warning');
+                    }
+                });
+                document.getElementById('infoTableCurrency').addEventListener('change', (e) => {
+                    this.infoTableData.currency = e.target.value;
+                    this.saveData();
+                });
+                
                 window.addEventListener('beforeunload', () => this.saveData());
             },
             
@@ -2221,6 +2427,10 @@
                         this.populateRandomDrawCourseDropdown();
                         this.renderRandomDraw();
                     }, 100);
+                } else if (tabId === 'information') {
+                    setTimeout(() => {
+                        this.renderInfoTable();
+                    }, 100);
                 }
                 
                 this.saveData();
@@ -2257,7 +2467,12 @@
                 let finalPHC;
                 if (playerPHCPercentage && playerPHCPercentage !== '') {
                     const phcPercentage = parseInt(playerPHCPercentage) / 100;
-                    finalPHC = Math.round(roundedPlayingHandicap * phcPercentage);
+                    // Round DOWN when percentage < 100%
+                    if (phcPercentage < 1) {
+                        finalPHC = Math.floor(roundedPlayingHandicap * phcPercentage);
+                    } else {
+                        finalPHC = Math.round(roundedPlayingHandicap * phcPercentage);
+                    }
                 } else {
                     // If no PHC % selected, use the full rounded Playing Handicap
                     finalPHC = roundedPlayingHandicap;
@@ -2292,6 +2507,234 @@
                 const saveBtn = document.getElementById('savePlayer');
                 saveBtn.textContent = '💾 Save Player';
                 saveBtn.onclick = () => this.savePlayer();
+            },
+            
+            showHowToModal() {
+                document.getElementById('howToContent').value = this.howToContent;
+                document.getElementById('howToModal').style.display = 'flex';
+            },
+            
+            hideHowToModal() {
+                document.getElementById('howToModal').style.display = 'none';
+            },
+            
+            saveHowToContent() {
+                this.howToContent = document.getElementById('howToContent').value;
+                this.saveData();
+                this.showToast('How To instructions saved successfully!', 'success');
+                this.hideHowToModal();
+            },
+            
+            renderInfoTable() {
+                const headerRow = document.getElementById('infoTableHeader');
+                const tbody = document.getElementById('infoTableBody');
+                
+                // Clear existing content
+                headerRow.innerHTML = '';
+                tbody.innerHTML = '';
+                
+                // Restore currency selector value
+                const currencySelect = document.getElementById('infoTableCurrency');
+                if (currencySelect) {
+                    currencySelect.value = this.infoTableData.currency || '$';
+                }
+                
+                // Render headers with delete buttons
+                this.infoTableData.headers.forEach((header, index) => {
+                    const th = document.createElement('th');
+                    const input = document.createElement('input');
+                    input.type = 'text';
+                    input.value = header;
+                    input.addEventListener('change', (e) => {
+                        this.infoTableData.headers[index] = e.target.value;
+                    });
+                    th.appendChild(input);
+                    
+                    // Add delete button for columns (except first two)
+                    if (index >= 2) {
+                        const deleteBtn = document.createElement('button');
+                        deleteBtn.className = 'delete-col-btn';
+                        deleteBtn.textContent = '×';
+                        deleteBtn.title = 'Delete column';
+                        deleteBtn.addEventListener('click', () => this.deleteInfoTableColumn(index));
+                        th.appendChild(deleteBtn);
+                    }
+                    
+                    headerRow.appendChild(th);
+                });
+                
+                // Render rows
+                this.infoTableData.rows.forEach((row, rowIndex) => {
+                    const tr = document.createElement('tr');
+                    
+                    row.forEach((cell, cellIndex) => {
+                        const td = document.createElement('td');
+                        
+                        // Special handling for Winners Position column (index 1)
+                        if (cellIndex === 1) {
+                            td.style.padding = '4px';
+                            const container = document.createElement('div');
+                            container.style.display = 'flex';
+                            container.style.gap = '4px';
+                            container.style.alignItems = 'center';
+                            
+                            // Parse existing value (format: "1st - $100" or just "1st")
+                            let position = '';
+                            let value = '';
+                            if (cell) {
+                                const parts = cell.split(' - ');
+                                position = parts[0] || '';
+                                if (parts[1]) {
+                                    value = parts[1].replace(/[^0-9.]/g, ''); // Remove currency symbols
+                                }
+                            }
+                            
+                            // Position dropdown
+                            const posSelect = document.createElement('select');
+                            posSelect.style.flex = '0 0 60px';
+                            posSelect.style.padding = '4px';
+                            posSelect.style.fontSize = '11px';
+                            posSelect.style.border = '1px solid #ddd';
+                            posSelect.style.borderRadius = '2px';
+                            
+                            const positions = [
+                                { value: '', label: '---', symbol: '' },
+                                { value: '1st', label: '1st', symbol: '🏆' },
+                                { value: '2nd', label: '2nd', symbol: '🥈' },
+                                { value: '3rd', label: '3rd', symbol: '🥉' },
+                                { value: '4th', label: '4th', symbol: '🏅' },
+                                { value: '5th', label: '5th', symbol: '🎖️' },
+                                { value: '6th', label: '6th', symbol: '⭐' },
+                                { value: '7th', label: '7th', symbol: '⭐' },
+                                { value: '8th', label: '8th', symbol: '⭐' },
+                                { value: '9th', label: '9th', symbol: '⭐' },
+                                { value: '10th', label: '10th', symbol: '⭐' }
+                            ];
+                            positions.forEach(pos => {
+                                const option = document.createElement('option');
+                                option.value = pos.value;
+                                option.textContent = pos.symbol ? `${pos.symbol} ${pos.label}` : pos.label;
+                                if (pos.value === position) option.selected = true;
+                                posSelect.appendChild(option);
+                            });
+                            
+                            // Currency symbol display
+                            const currencySymbol = document.createElement('span');
+                            currencySymbol.textContent = this.infoTableData.currency || '$';
+                            currencySymbol.style.fontSize = '11px';
+                            currencySymbol.style.fontWeight = 'bold';
+                            currencySymbol.style.color = '#2c3e50';
+                            currencySymbol.style.padding = '0 2px';
+                            
+                            // Value input
+                            const valueInput = document.createElement('input');
+                            valueInput.type = 'text';
+                            valueInput.placeholder = '0.00';
+                            valueInput.value = value;
+                            valueInput.style.width = '60px';
+                            valueInput.style.padding = '4px';
+                            valueInput.style.fontSize = '11px';
+                            valueInput.style.border = '1px solid #ddd';
+                            valueInput.style.borderRadius = '2px';
+                            valueInput.style.textAlign = 'right';
+                            valueInput.style.paddingRight = '6px';
+                            
+                            // Update function
+                            const updateCell = () => {
+                                const pos = posSelect.value;
+                                const val = valueInput.value.trim();
+                                const currency = this.infoTableData.currency || '';
+                                
+                                if (pos && val) {
+                                    this.infoTableData.rows[rowIndex][cellIndex] = `${pos} - ${currency}${val}`;
+                                } else if (pos) {
+                                    this.infoTableData.rows[rowIndex][cellIndex] = pos;
+                                } else {
+                                    this.infoTableData.rows[rowIndex][cellIndex] = '';
+                                }
+                            };
+                            
+                            posSelect.addEventListener('change', updateCell);
+                            valueInput.addEventListener('change', updateCell);
+                            
+                            container.appendChild(posSelect);
+                            container.appendChild(currencySymbol);
+                            container.appendChild(valueInput);
+                            td.appendChild(container);
+                        } else {
+                            // Regular text input for other columns
+                            const input = document.createElement('input');
+                            input.type = 'text';
+                            input.value = cell || '';
+                            input.addEventListener('change', (e) => {
+                                this.infoTableData.rows[rowIndex][cellIndex] = e.target.value;
+                            });
+                            td.appendChild(input);
+                        }
+                        
+                        tr.appendChild(td);
+                    });
+                    
+                    // Add delete row button
+                    const actionTd = document.createElement('td');
+                    actionTd.style.border = 'none';
+                    actionTd.style.background = '#f8f9fa';
+                    const deleteBtn = document.createElement('button');
+                    deleteBtn.className = 'delete-row-btn';
+                    deleteBtn.textContent = 'Delete';
+                    deleteBtn.addEventListener('click', () => this.deleteInfoTableRow(rowIndex));
+                    actionTd.appendChild(deleteBtn);
+                    tr.appendChild(actionTd);
+                    
+                    tbody.appendChild(tr);
+                });
+            },
+            
+            addInfoTableRow() {
+                const newRow = new Array(this.infoTableData.headers.length).fill('');
+                this.infoTableData.rows.push(newRow);
+                this.renderInfoTable();
+                this.showToast('Row added', 'success');
+            },
+            
+            addInfoTableColumn() {
+                const columnName = prompt('Enter column name:');
+                if (columnName) {
+                    this.infoTableData.headers.push(columnName);
+                    // Add empty cell to all existing rows
+                    this.infoTableData.rows.forEach(row => {
+                        row.push('');
+                    });
+                    this.renderInfoTable();
+                    this.showToast('Column added', 'success');
+                }
+            },
+            
+            deleteInfoTableRow(rowIndex) {
+                if (confirm('Delete this row?')) {
+                    this.infoTableData.rows.splice(rowIndex, 1);
+                    this.renderInfoTable();
+                    this.saveData();
+                    this.showToast('Row deleted', 'warning');
+                }
+            },
+            
+            deleteInfoTableColumn(colIndex) {
+                if (confirm(`Delete column "${this.infoTableData.headers[colIndex]}"?`)) {
+                    this.infoTableData.headers.splice(colIndex, 1);
+                    // Remove the column from all rows
+                    this.infoTableData.rows.forEach(row => {
+                        row.splice(colIndex, 1);
+                    });
+                    this.renderInfoTable();
+                    this.saveData();
+                    this.showToast('Column deleted', 'warning');
+                }
+            },
+            
+            saveInfoTable() {
+                this.saveData();
+                this.showToast('Table saved successfully!', 'success');
             },
             
             populateCourseDropdown() {
