@@ -1374,6 +1374,20 @@
                     </div>
                     
                     <div style="background: white; padding: 15px; border-radius: 6px; box-shadow: 0 1px 4px rgba(0,0,0,0.1);">
+                        <!-- Grand Pot Money Section -->
+                        <div style="background: #f0f8ff; padding: 12px; border-radius: 5px; border: 2px solid #3498db; margin-bottom: 15px; display: flex; gap: 15px; align-items: center; flex-wrap: wrap;">
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <label for="grandPotMoney" style="font-size: 12px; font-weight: 700; color: #2c3e50;">🏺 Grand Pot Money:</label>
+                                <span id="grandPotCurrency" style="font-size: 14px; font-weight: bold; color: #2c3e50;">$</span>
+                                <input type="number" id="grandPotMoney" step="0.01" min="0" placeholder="0.00" style="width: 120px; padding: 6px 10px; font-size: 13px; border: 2px solid #3498db; border-radius: 3px; font-weight: bold; text-align: right;">
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 8px; padding-left: 15px; border-left: 2px solid #3498db;">
+                                <span style="font-size: 11px; font-weight: 600; color: #7f8c8d;">Remaining:</span>
+                                <span id="remainingPotMoney" style="font-size: 14px; font-weight: bold; color: #2ecc71;">$0.00</span>
+                            </div>
+                            <button id="updateGrandPot" class="btn-primary btn-small" style="margin-left: auto;">💾 Update</button>
+                        </div>
+                        
                         <div style="margin-bottom: 15px; display: flex; gap: 8px; flex-wrap: wrap; align-items: center;">
                             <button id="addInfoRow" class="btn-success btn-small">➕ Add Row</button>
                             <button id="addInfoColumn" class="btn-info btn-small">➕ Add Column</button>
@@ -1835,9 +1849,10 @@
             
             // Information Table data
             infoTableData: {
-                headers: ['Players Name:', 'Winners Position', 'Overall Winner', 'Daily Swindle', 'Pairs', '4BBB', '4 Person Team', '4 Person Team Mixed Score', 'Best 3 from 4', 'Team A vs Team B', 'Par 3 Closed to Pin'],
+                headers: ['Players Name:', 'Winners Position', 'Overall Winner', 'Daily Swindle', 'Pairs', '4BBB', '4 Person Team', '4 Person Team Mixed Score', 'Best 3 from 4', 'Team A vs Team B', 'Par 3 Closed to Pin', 'Other'],
                 rows: [],
-                currency: '$'
+                currency: '$',
+                grandPotMoney: 0
             },
             
             init() {
@@ -1966,6 +1981,18 @@
                         // Ensure currency property exists
                         if (!this.infoTableData.currency) {
                             this.infoTableData.currency = '$';
+                        }
+                        // Ensure grandPotMoney property exists
+                        if (this.infoTableData.grandPotMoney === undefined) {
+                            this.infoTableData.grandPotMoney = 0;
+                        }
+                        // Add "Other" column if it doesn't exist
+                        if (!this.infoTableData.headers.includes('Other')) {
+                            this.infoTableData.headers.push('Other');
+                            // Add empty cell to all existing rows
+                            this.infoTableData.rows.forEach(row => {
+                                row.push('');
+                            });
                         }
                     }
                     
@@ -2353,7 +2380,24 @@
                 });
                 document.getElementById('infoTableCurrency').addEventListener('change', (e) => {
                     this.infoTableData.currency = e.target.value;
+                    document.getElementById('grandPotCurrency').textContent = e.target.value || '$';
+                    this.updateRemainingPotMoney();
                     this.saveData();
+                });
+                
+                // Grand Pot Money
+                document.getElementById('updateGrandPot').addEventListener('click', () => {
+                    const value = parseFloat(document.getElementById('grandPotMoney').value) || 0;
+                    this.infoTableData.grandPotMoney = value;
+                    this.updateRemainingPotMoney();
+                    this.saveData();
+                    this.showToast('Grand Pot Money updated', 'success');
+                });
+                
+                document.getElementById('grandPotMoney').addEventListener('change', () => {
+                    const value = parseFloat(document.getElementById('grandPotMoney').value) || 0;
+                    this.infoTableData.grandPotMoney = value;
+                    this.updateRemainingPotMoney();
                 });
                 
                 window.addEventListener('beforeunload', () => this.saveData());
@@ -2539,6 +2583,19 @@
                     currencySelect.value = this.infoTableData.currency || '$';
                 }
                 
+                // Restore grand pot money
+                const grandPotInput = document.getElementById('grandPotMoney');
+                if (grandPotInput) {
+                    grandPotInput.value = this.infoTableData.grandPotMoney || 0;
+                }
+                const grandPotCurrency = document.getElementById('grandPotCurrency');
+                if (grandPotCurrency) {
+                    grandPotCurrency.textContent = this.infoTableData.currency || '$';
+                }
+                
+                // Update remaining pot money
+                this.updateRemainingPotMoney();
+                
                 // Render headers with delete buttons
                 this.infoTableData.headers.forEach((header, index) => {
                     const th = document.createElement('th');
@@ -2570,8 +2627,52 @@
                     row.forEach((cell, cellIndex) => {
                         const td = document.createElement('td');
                         
-                        // Special handling for Winners Position column (index 1)
-                        if (cellIndex === 1) {
+                        // Players Name column (index 0) - text input only
+                        if (cellIndex === 0) {
+                            const input = document.createElement('input');
+                            input.type = 'text';
+                            input.value = cell || '';
+                            input.addEventListener('change', (e) => {
+                                this.infoTableData.rows[rowIndex][cellIndex] = e.target.value;
+                            });
+                            td.appendChild(input);
+                        }
+                        // Winners Position column (index 1) - Display auto-calculated total
+                        else if (cellIndex === 1) {
+                            td.style.padding = '6px';
+                            td.style.textAlign = 'center';
+                            td.style.background = '#fff3cd';
+                            td.style.fontWeight = 'bold';
+                            td.style.fontSize = '12px';
+                            
+                            // Calculate total from all other columns (index 2+)
+                            let total = 0;
+                            for (let i = 2; i < row.length; i++) {
+                                const otherCell = row[i];
+                                if (otherCell && otherCell.includes(' - ')) {
+                                    const parts = otherCell.split(' - ');
+                                    if (parts[1]) {
+                                        const value = parseFloat(parts[1].replace(/[^0-9.]/g, ''));
+                                        if (!isNaN(value)) {
+                                            total += value;
+                                        }
+                                    }
+                                }
+                            }
+                            
+                            const currency = this.infoTableData.currency || '$';
+                            const totalSpan = document.createElement('span');
+                            totalSpan.id = `winner-total-${rowIndex}`;
+                            totalSpan.textContent = `${currency}${total.toFixed(2)}`;
+                            totalSpan.style.color = '#2c3e50';
+                            
+                            // Store the total in the cell data
+                            this.infoTableData.rows[rowIndex][cellIndex] = `Total - ${currency}${total.toFixed(2)}`;
+                            
+                            td.appendChild(totalSpan);
+                        }
+                        // All other columns (index 2+) - position dropdown + value input
+                        else if (cellIndex >= 2) {
                             td.style.padding = '4px';
                             const container = document.createElement('div');
                             container.style.display = 'flex';
@@ -2645,8 +2746,16 @@
                                 const val = valueInput.value.trim();
                                 const currency = this.infoTableData.currency || '';
                                 
-                                if (pos && val) {
-                                    this.infoTableData.rows[rowIndex][cellIndex] = `${pos} - ${currency}${val}`;
+                                if (val) {
+                                    // Value exists - store with or without position
+                                    if (pos) {
+                                        this.infoTableData.rows[rowIndex][cellIndex] = `${pos} - ${currency}${val}`;
+                                        console.log(`Updated row ${rowIndex}, col ${cellIndex}:`, `${pos} - ${currency}${val}`);
+                                    } else {
+                                        // No position selected, just save value with default position
+                                        this.infoTableData.rows[rowIndex][cellIndex] = `--- - ${currency}${val}`;
+                                        console.log(`Updated row ${rowIndex}, col ${cellIndex} (no position):`, `--- - ${currency}${val}`);
+                                    }
                                 } else if (pos) {
                                     this.infoTableData.rows[rowIndex][cellIndex] = pos;
                                 } else {
@@ -2654,22 +2763,31 @@
                                 }
                             };
                             
-                            posSelect.addEventListener('change', updateCell);
-                            valueInput.addEventListener('change', updateCell);
+                            posSelect.addEventListener('change', () => {
+                                updateCell();
+                                this.updateWinnersPositionTotals();
+                                this.updateRemainingPotMoney();
+                                this.saveData();
+                            });
+                            
+                            valueInput.addEventListener('blur', () => {
+                                updateCell();
+                                this.updateWinnersPositionTotals();
+                                this.updateRemainingPotMoney();
+                                this.saveData();
+                            });
+                            
+                            valueInput.addEventListener('keypress', (e) => {
+                                if (e.key === 'Enter') {
+                                    e.preventDefault();
+                                    valueInput.blur(); // Trigger blur event on Enter
+                                }
+                            });
                             
                             container.appendChild(posSelect);
                             container.appendChild(currencySymbol);
                             container.appendChild(valueInput);
                             td.appendChild(container);
-                        } else {
-                            // Regular text input for other columns
-                            const input = document.createElement('input');
-                            input.type = 'text';
-                            input.value = cell || '';
-                            input.addEventListener('change', (e) => {
-                                this.infoTableData.rows[rowIndex][cellIndex] = e.target.value;
-                            });
-                            td.appendChild(input);
                         }
                         
                         tr.appendChild(td);
@@ -2714,6 +2832,7 @@
                 if (confirm('Delete this row?')) {
                     this.infoTableData.rows.splice(rowIndex, 1);
                     this.renderInfoTable();
+                    this.updateRemainingPotMoney();
                     this.saveData();
                     this.showToast('Row deleted', 'warning');
                 }
@@ -2735,6 +2854,78 @@
             saveInfoTable() {
                 this.saveData();
                 this.showToast('Table saved successfully!', 'success');
+            },
+            
+            updateRemainingPotMoney() {
+                const grandPot = parseFloat(this.infoTableData.grandPotMoney) || 0;
+                let totalAwarded = 0;
+                
+                // Calculate total money awarded from Winners Position column (index 1)
+                this.infoTableData.rows.forEach(row => {
+                    const cell = row[1]; // Winners Position column
+                    if (cell && cell.includes(' - ')) {
+                        const parts = cell.split(' - ');
+                        if (parts[1]) {
+                            // Extract numeric value, removing currency symbols
+                            const value = parseFloat(parts[1].replace(/[^0-9.]/g, ''));
+                            if (!isNaN(value)) {
+                                totalAwarded += value;
+                            }
+                        }
+                    }
+                });
+                
+                const remaining = grandPot - totalAwarded;
+                const currency = this.infoTableData.currency || '$';
+                
+                // Update the remaining display
+                const remainingSpan = document.getElementById('remainingPotMoney');
+                if (remainingSpan) {
+                    remainingSpan.textContent = `${currency}${remaining.toFixed(2)}`;
+                    // Color code: green if positive, red if negative
+                    if (remaining >= 0) {
+                        remainingSpan.style.color = '#2ecc71';
+                    } else {
+                        remainingSpan.style.color = '#e74c3c';
+                    }
+                }
+            },
+            
+            updateWinnersPositionTotals() {
+                const currency = this.infoTableData.currency || '$';
+                console.log('Updating Winners Position totals...');
+                
+                this.infoTableData.rows.forEach((row, rowIndex) => {
+                    // Calculate total from all other columns (index 2+)
+                    let total = 0;
+                    for (let i = 2; i < row.length; i++) {
+                        const cell = row[i];
+                        if (cell && cell.includes(' - ')) {
+                            const parts = cell.split(' - ');
+                            if (parts[1]) {
+                                const value = parseFloat(parts[1].replace(/[^0-9.]/g, ''));
+                                if (!isNaN(value)) {
+                                    total += value;
+                                    console.log(`Row ${rowIndex}, Col ${i}: Adding ${value}, Total now: ${total}`);
+                                }
+                            }
+                        }
+                    }
+                    
+                    console.log(`Row ${rowIndex} final total: ${total}`);
+                    
+                    // Update the Winners Position cell data
+                    this.infoTableData.rows[rowIndex][1] = `Total - ${currency}${total.toFixed(2)}`;
+                    
+                    // Update the display in the DOM using the ID
+                    const totalSpan = document.getElementById(`winner-total-${rowIndex}`);
+                    if (totalSpan) {
+                        totalSpan.textContent = `${currency}${total.toFixed(2)}`;
+                        console.log(`Updated DOM for row ${rowIndex}: ${currency}${total.toFixed(2)}`);
+                    } else {
+                        console.log(`Could not find span with ID winner-total-${rowIndex}`);
+                    }
+                });
             },
             
             populateCourseDropdown() {
