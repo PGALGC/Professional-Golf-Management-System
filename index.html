@@ -2838,6 +2838,40 @@
                 }
             },
             
+            showDeleteColumnDialog() {
+                // Get all deletable columns (index 2+)
+                const deletableColumns = [];
+                this.infoTableData.headers.forEach((header, index) => {
+                    if (index >= 2) {
+                        deletableColumns.push({ index, name: header });
+                    }
+                });
+                
+                if (deletableColumns.length === 0) {
+                    this.showToast('No columns to delete', 'warning');
+                    return;
+                }
+                
+                // Build the message with numbered list
+                let message = 'Select column to delete:\n\n';
+                deletableColumns.forEach((col, i) => {
+                    message += `${i + 1}. ${col.name}\n`;
+                });
+                message += `\nEnter number (1-${deletableColumns.length}):`;
+                
+                const input = prompt(message);
+                if (input === null) return; // User cancelled
+                
+                const selectedNum = parseInt(input);
+                if (isNaN(selectedNum) || selectedNum < 1 || selectedNum > deletableColumns.length) {
+                    this.showToast('Invalid selection', 'error');
+                    return;
+                }
+                
+                const selectedColumn = deletableColumns[selectedNum - 1];
+                this.deleteInfoTableColumn(selectedColumn.index);
+            },
+            
             deleteInfoTableColumn(colIndex) {
                 if (confirm(`Delete column "${this.infoTableData.headers[colIndex]}"?`)) {
                     this.infoTableData.headers.splice(colIndex, 1);
@@ -7580,15 +7614,30 @@
                 const activeTabButton = document.querySelector('.tab-button.active');
                 const tabName = activeTabButton ? activeTabButton.textContent.trim().replace(/\s+/g, '-') : 'tab';
                 
+                // Find scrollable container and get its full dimensions
+                const scrollContainer = activeTabContent.querySelector('[style*="overflow"]') || activeTabContent;
+                const scrollWidth = scrollContainer.scrollWidth;
+                const scrollHeight = scrollContainer.scrollHeight;
+                
                 // Store original styles to restore later
-                const originalOverflow = activeTabContent.style.overflow;
-                const originalMaxHeight = activeTabContent.style.maxHeight;
-                const originalMinHeight = activeTabContent.style.minHeight;
+                const originalStyles = {
+                    tabOverflow: activeTabContent.style.overflow,
+                    tabMaxHeight: activeTabContent.style.maxHeight,
+                    tabMinHeight: activeTabContent.style.minHeight,
+                    tabWidth: activeTabContent.style.width,
+                    containerOverflow: scrollContainer.style.overflow,
+                    containerMaxHeight: scrollContainer.style.maxHeight,
+                    containerWidth: scrollContainer.style.width
+                };
                 
                 // Temporarily remove constraints for full capture
                 activeTabContent.style.overflow = 'visible';
                 activeTabContent.style.maxHeight = 'none';
                 activeTabContent.style.minHeight = 'auto';
+                activeTabContent.style.width = 'auto';
+                scrollContainer.style.overflow = 'visible';
+                scrollContainer.style.maxHeight = 'none';
+                scrollContainer.style.width = 'auto';
                 
                 // Show loading message
                 this.showToast('Capturing full tab data...', 'info');
@@ -7602,6 +7651,9 @@
                     backgroundColor: '#ffffff',
                     logging: false,
                     scrollY: -window.scrollY,
+                    scrollX: 0,
+                    windowWidth: Math.max(scrollWidth, activeTabContent.scrollWidth),
+                    windowHeight: Math.max(scrollHeight, activeTabContent.scrollHeight),
                     onclone: function(clonedDoc) {
                         // Ensure all content is visible in the cloned document
                         const clonedTab = clonedDoc.querySelector('.tab-content.active');
@@ -7610,20 +7662,33 @@
                             clonedTab.style.maxHeight = 'none';
                             clonedTab.style.minHeight = 'auto';
                             clonedTab.style.height = 'auto';
+                            clonedTab.style.width = 'auto';
                         }
+                        
+                        // Expand all scrollable containers
+                        const scrollables = clonedDoc.querySelectorAll('[style*="overflow"]');
+                        scrollables.forEach(el => {
+                            el.style.overflow = 'visible';
+                            el.style.maxHeight = 'none';
+                            el.style.width = 'auto';
+                        });
                         
                         // Ensure all tables are fully expanded
                         const tables = clonedDoc.querySelectorAll('table');
                         tables.forEach(table => {
-                            table.style.width = '100%';
+                            table.style.width = 'auto';
                             table.style.overflow = 'visible';
                         });
                     }
                 }).then(canvas => {
                     // Restore original styles
-                    activeTabContent.style.overflow = originalOverflow;
-                    activeTabContent.style.maxHeight = originalMaxHeight;
-                    activeTabContent.style.minHeight = originalMinHeight;
+                    activeTabContent.style.overflow = originalStyles.tabOverflow;
+                    activeTabContent.style.maxHeight = originalStyles.tabMaxHeight;
+                    activeTabContent.style.minHeight = originalStyles.tabMinHeight;
+                    activeTabContent.style.width = originalStyles.tabWidth;
+                    scrollContainer.style.overflow = originalStyles.containerOverflow;
+                    scrollContainer.style.maxHeight = originalStyles.containerMaxHeight;
+                    scrollContainer.style.width = originalStyles.containerWidth;
                     
                     const link = document.createElement('a');
                     link.download = `golf-${tabName}-${Date.now()}.png`;
@@ -7632,9 +7697,13 @@
                     this.showToast(`Full ${tabName} data captured!`, 'success');
                 }).catch(error => {
                     // Restore original styles even if there's an error
-                    activeTabContent.style.overflow = originalOverflow;
-                    activeTabContent.style.maxHeight = originalMaxHeight;
-                    activeTabContent.style.minHeight = originalMinHeight;
+                    activeTabContent.style.overflow = originalStyles.tabOverflow;
+                    activeTabContent.style.maxHeight = originalStyles.tabMaxHeight;
+                    activeTabContent.style.minHeight = originalStyles.tabMinHeight;
+                    activeTabContent.style.width = originalStyles.tabWidth;
+                    scrollContainer.style.overflow = originalStyles.containerOverflow;
+                    scrollContainer.style.maxHeight = originalStyles.containerMaxHeight;
+                    scrollContainer.style.width = originalStyles.containerWidth;
                     
                     console.error('Error capturing tab:', error);
                     this.showToast('Error capturing full tab data', 'error');
@@ -7873,7 +7942,11 @@
         };
 
         // Initialize app
-        document.addEventListener('DOMContentLoaded', () => app.init());
+        document.addEventListener('DOMContentLoaded', () => {
+            app.init();
+            // Make app globally accessible for onclick handlers
+            window.app = app;
+        });
     </script>
 </body>
 </html>
