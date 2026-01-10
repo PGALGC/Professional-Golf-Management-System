@@ -1370,60 +1370,50 @@
             <div id="information-tab" class="tab-content">
                 <section class="information-section">
                     <div class="section-header">
-                        <h2>ℹ️ Information</h2>
+                        <h2>ℹ️ Winnings Tracker</h2>
                         <div class="section-actions">
-                            <button id="showHowTo" class="btn-info">📖 How To</button>
+                            <button id="showHowTo" class="btn-info btn-small">📖 How To</button>
                         </div>
                     </div>
                     
-                    <div style="background: white; padding: 15px; border-radius: 6px; box-shadow: 0 1px 4px rgba(0,0,0,0.1);">
-                        <!-- Grand Pot Money Section -->
-                        <div style="background: #f0f8ff; padding: 12px; border-radius: 5px; border: 2px solid #3498db; margin-bottom: 15px; display: flex; gap: 15px; align-items: center; flex-wrap: wrap;">
-                            <div style="display: flex; align-items: center; gap: 8px;">
-                                <label for="grandPotMoney" style="font-size: 12px; font-weight: 700; color: #2c3e50;">🏺 Grand Pot Money:</label>
-                                <span id="grandPotCurrency" style="font-size: 14px; font-weight: bold; color: #2c3e50;">$</span>
-                                <input type="number" id="grandPotMoney" step="0.01" min="0" placeholder="0.00" style="width: 120px; padding: 6px 10px; font-size: 13px; border: 2px solid #3498db; border-radius: 3px; font-weight: bold; text-align: right;">
+                    <!-- Grand Pot Section -->
+                    <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 15px; border-radius: 8px; margin-bottom: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+                            <div style="color: white;">
+                                <div style="font-size: 11px; opacity: 0.9; margin-bottom: 4px;">🏆 GRAND POT</div>
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <span id="grandPotCurrency" style="font-size: 20px; font-weight: bold;">£</span>
+                                    <input type="number" id="grandPotMoney" step="0.01" min="0" placeholder="0" style="width: 100px; padding: 8px; font-size: 18px; border: none; border-radius: 4px; font-weight: bold; text-align: center;">
+                                </div>
                             </div>
-                            <div style="display: flex; align-items: center; gap: 8px; padding-left: 15px; border-left: 2px solid #3498db;">
-                                <span style="font-size: 11px; font-weight: 600; color: #7f8c8d;">Remaining:</span>
-                                <span id="remainingPotMoney" style="font-size: 14px; font-weight: bold; color: #2ecc71;">$0.00</span>
-                            </div>
-                            <button id="updateGrandPot" class="btn-primary btn-small" style="margin-left: auto;">💾 Update</button>
-                        </div>
-                        
-                        <div style="margin-bottom: 15px; display: flex; gap: 8px; flex-wrap: wrap; align-items: center;">
-                            <button id="addInfoRow" class="btn-success btn-small">➕ Add Row</button>
-                            <button id="addInfoColumn" class="btn-info btn-small">➕ Add Column</button>
-                            <button id="saveInfoTable" class="btn-primary btn-small">💾 Save Table</button>
-                            <button id="clearInfoTable" class="btn-warning btn-small">🗑️ Clear All</button>
-                            
-                            <div style="display: flex; gap: 6px; align-items: center; margin-left: auto; border-left: 1px solid #e0e0e0; padding-left: 8px;">
-                                <label for="infoTableCurrency" style="font-size: 11px; font-weight: 600;">Currency:</label>
-                                <select id="infoTableCurrency" style="padding: 5px; border: 1px solid #ddd; border-radius: 3px; font-size: 11px;">
-                                    <option value="$">$ (USD)</option>
-                                    <option value="£">£ (GBP)</option>
-                                    <option value="€">€ (EUR)</option>
-                                    <option value="¥">¥ (JPY)</option>
-                                    <option value="₹">₹ (INR)</option>
-                                    <option value="A$">A$ (AUD)</option>
-                                    <option value="C$">C$ (CAD)</option>
-                                    <option value="">— None</option>
-                                </select>
+                            <div style="text-align: right; color: white;">
+                                <div style="font-size: 11px; opacity: 0.9; margin-bottom: 4px;">💰 REMAINING</div>
+                                <div id="remainingPotMoney" style="font-size: 22px; font-weight: bold;">£0.00</div>
                             </div>
                         </div>
-                        
-                        <div style="overflow-x: auto; max-height: 70vh;">
-                            <table id="infoTable" style="width: 100%; border-collapse: collapse; font-size: 11px;">
-                                <thead>
-                                    <tr id="infoTableHeader" style="background: #2c3e50; color: white; position: sticky; top: 0; z-index: 10;">
-                                        <!-- Table headers will be dynamically generated -->
-                                    </tr>
-                                </thead>
-                                <tbody id="infoTableBody">
-                                    <!-- Table rows will be dynamically generated -->
-                                </tbody>
-                            </table>
+                        <button id="updateGrandPot" class="btn-success" style="margin-top: 10px; width: 100%;">💾 Update Grand Pot</button>
+                    </div>
+
+                    <!-- Controls -->
+                    <div style="background: #f8f9fa; padding: 10px; border-radius: 6px; margin-bottom: 15px; display: flex; gap: 8px; flex-wrap: wrap; align-items: center;">
+                        <button id="addPlayerWinning" class="btn-success btn-small">➕ Add Player</button>
+                        <button id="addTeamWinning" class="btn-primary btn-small">👥 Add Team Winning</button>
+                        <button id="clearAllWinnings" class="btn-warning btn-small">🗑️ Clear All</button>
+                        <div style="margin-left: auto; display: flex; gap: 6px; align-items: center;">
+                            <label style="font-size: 11px; font-weight: 600;">Currency:</label>
+                            <select id="infoTableCurrency" style="padding: 5px 8px; border: 1px solid #ddd; border-radius: 3px; font-size: 11px;">
+                                <option value="£">£ (GBP)</option>
+                                <option value="$">$ (USD)</option>
+                                <option value="€">€ (EUR)</option>
+                                <option value="¥">¥ (JPY)</option>
+                                <option value="₹">₹ (INR)</option>
+                            </select>
                         </div>
+                    </div>
+
+                    <!-- Players Winnings Cards -->
+                    <div id="winningsContainer" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 12px;">
+                        <!-- Cards will be generated here -->
                     </div>
                 </section>
             </div>
@@ -1855,11 +1845,10 @@
             // How To content
             howToContent: '',
             
-            // Information Table data
-            infoTableData: {
-                headers: ['Players Name:', 'Winners Position', 'Overall Winner', 'Daily Swindle', 'Pairs', '4BBB', '4 Person Team', '4 Person Team Mixed Score', 'Best 3 from 4', 'Team A vs Team B', 'Par 3 Closed to Pin', 'Other'],
-                rows: [],
-                currency: '$',
+            // Information - Winnings data (team-based structure)
+            winningsData: {
+                teams: [], // [{comp: '', position: '', players: ['name1', 'name2'], totalAmount: 0}]
+                currency: '£',
                 grandPotMoney: 0
             },
             
@@ -1884,9 +1873,9 @@
                     this.renderScorecard();
                 }
                 
-                // Render info table if on information tab
+                // Render winnings if on information tab
                 if (this.currentTab === 'information') {
-                    this.renderInfoTable();
+                    this.renderWinnings();
                 }
                 
                 this.showToast('App loaded successfully!', 'success');
@@ -1977,31 +1966,22 @@
                     const savedHowTo = localStorage.getItem('golfHowToContent');
                     if (savedHowTo) this.howToContent = savedHowTo;
                     
-                    // Load Information Table data
-                    const savedInfoTable = localStorage.getItem('golfInfoTableData');
-                    if (savedInfoTable) {
-                        this.infoTableData = JSON.parse(savedInfoTable);
-                        // Migrate old "Competition Name:" to "Winners Position"
-                        const oldHeaderIndex = this.infoTableData.headers.indexOf('Competition Name:');
-                        if (oldHeaderIndex !== -1) {
-                            this.infoTableData.headers[oldHeaderIndex] = 'Winners Position';
+                    // Load Winnings data (new team-based system)
+                    const savedWinnings = localStorage.getItem('golfWinningsData');
+                    if (savedWinnings) {
+                        const loadedData = JSON.parse(savedWinnings);
+                        // Ensure teams array exists (migrate from old players structure if needed)
+                        if (loadedData.players && !loadedData.teams) {
+                            // Migrate old players structure to teams
+                            loadedData.teams = [];
+                            delete loadedData.players;
                         }
-                        // Ensure currency property exists
-                        if (!this.infoTableData.currency) {
-                            this.infoTableData.currency = '$';
-                        }
-                        // Ensure grandPotMoney property exists
-                        if (this.infoTableData.grandPotMoney === undefined) {
-                            this.infoTableData.grandPotMoney = 0;
-                        }
-                        // Add "Other" column if it doesn't exist
-                        if (!this.infoTableData.headers.includes('Other')) {
-                            this.infoTableData.headers.push('Other');
-                            // Add empty cell to all existing rows
-                            this.infoTableData.rows.forEach(row => {
-                                row.push('');
-                            });
-                        }
+                        this.winningsData = loadedData;
+                    }
+                    
+                    // Ensure teams array exists
+                    if (!this.winningsData.teams) {
+                        this.winningsData.teams = [];
                     }
                     
                 } catch (e) {
@@ -2030,7 +2010,7 @@
                     localStorage.setItem('golfMasterLeaderboardMoney', JSON.stringify(this.masterLeaderboardMoney));
                     localStorage.setItem('golfMasterLeaderboardCurrency', this.masterLeaderboardCurrency);
                     localStorage.setItem('golfHowToContent', this.howToContent);
-                    localStorage.setItem('golfInfoTableData', JSON.stringify(this.infoTableData));
+                    localStorage.setItem('golfWinningsData', JSON.stringify(this.winningsData));
                 } catch (e) {
                     console.error('Error saving data:', e);
                 }
@@ -2374,38 +2354,38 @@
                 });
                 document.getElementById('closeHowTo').addEventListener('click', () => this.hideHowToModal());
                 
-                // Information Table buttons
-                document.getElementById('addInfoRow').addEventListener('click', () => this.addInfoTableRow());
-                document.getElementById('addInfoColumn').addEventListener('click', () => this.addInfoTableColumn());
-                document.getElementById('saveInfoTable').addEventListener('click', () => this.saveInfoTable());
-                document.getElementById('clearInfoTable').addEventListener('click', () => {
-                    if (confirm('Clear all table data? This will remove all rows but keep the headers.')) {
-                        this.infoTableData.rows = [];
-                        this.renderInfoTable();
+                // Winnings Tracker buttons
+                document.getElementById('addPlayerWinning').addEventListener('click', () => this.addPlayerWinning());
+                document.getElementById('addTeamWinning').addEventListener('click', () => this.addTeamWinning());
+                document.getElementById('clearAllWinnings').addEventListener('click', () => {
+                    if (confirm('Clear all winnings data?')) {
+                        this.winningsData.teams = [];
+                        this.renderWinnings();
+                        this.updateRemainingMoney();
                         this.saveData();
-                        this.showToast('Table cleared', 'warning');
+                        this.showToast('All winnings cleared', 'warning');
                     }
                 });
                 document.getElementById('infoTableCurrency').addEventListener('change', (e) => {
-                    this.infoTableData.currency = e.target.value;
-                    document.getElementById('grandPotCurrency').textContent = e.target.value || '$';
-                    this.updateRemainingPotMoney();
+                    this.winningsData.currency = e.target.value;
+                    document.getElementById('grandPotCurrency').textContent = e.target.value;
+                    this.renderWinnings();
                     this.saveData();
                 });
                 
                 // Grand Pot Money
                 document.getElementById('updateGrandPot').addEventListener('click', () => {
                     const value = parseFloat(document.getElementById('grandPotMoney').value) || 0;
-                    this.infoTableData.grandPotMoney = value;
-                    this.updateRemainingPotMoney();
+                    this.winningsData.grandPotMoney = value;
+                    this.updateRemainingMoney();
                     this.saveData();
-                    this.showToast('Grand Pot Money updated', 'success');
+                    this.showToast('Grand Pot updated', 'success');
                 });
                 
                 document.getElementById('grandPotMoney').addEventListener('change', () => {
                     const value = parseFloat(document.getElementById('grandPotMoney').value) || 0;
-                    this.infoTableData.grandPotMoney = value;
-                    this.updateRemainingPotMoney();
+                    this.winningsData.grandPotMoney = value;
+                    this.updateRemainingMoney();
                 });
                 
                 window.addEventListener('beforeunload', () => this.saveData());
@@ -2454,8 +2434,11 @@
                 document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
                 document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
                 
-                document.querySelector(`[data-tab="${tabId}"]`).classList.add('active');
-                document.getElementById(`${tabId}-tab`).classList.add('active');
+                const tabButton = document.querySelector(`[data-tab="${tabId}"]`);
+                const tabContent = document.getElementById(`${tabId}-tab`);
+                
+                if (tabButton) tabButton.classList.add('active');
+                if (tabContent) tabContent.classList.add('active');
                 
                 if (tabId === 'scorecard') {
                     setTimeout(() => this.renderScorecard(), 100);
@@ -2481,7 +2464,7 @@
                     }, 100);
                 } else if (tabId === 'information') {
                     setTimeout(() => {
-                        this.renderInfoTable();
+                        this.renderWinnings();
                     }, 100);
                 }
                 
@@ -2577,6 +2560,207 @@
                 this.hideHowToModal();
             },
             
+            // NEW CARD-BASED WINNINGS FUNCTIONS
+            renderWinnings() {
+                const container = document.getElementById('winningsContainer');
+                if (!container) return;
+                
+                // Update currency displays
+                const currencySelect = document.getElementById('infoTableCurrency');
+                if (currencySelect) {
+                    currencySelect.value = this.winningsData.currency;
+                }
+                
+                const grandPotCurrency = document.getElementById('grandPotCurrency');
+                if (grandPotCurrency) {
+                    grandPotCurrency.textContent = this.winningsData.currency;
+                }
+                
+                const grandPotInput = document.getElementById('grandPotMoney');
+                if (grandPotInput) {
+                    grandPotInput.value = this.winningsData.grandPotMoney || 0;
+                }
+                
+                this.updateRemainingMoney();
+                
+                // Render cards - group by team winnings
+                if (!this.winningsData.teams || this.winningsData.teams.length === 0) {
+                    container.innerHTML = `
+                        <div style="grid-column: 1/-1; text-align: center; padding: 40px; background: #f8f9fa; border-radius: 8px; border: 2px dashed #ddd;">
+                            <div style="font-size: 48px; margin-bottom: 10px;">🏆</div>
+                            <h3 style="color: #7f8c8d; margin-bottom: 8px;">No Winnings Yet</h3>
+                            <p style="color: #95a5a6; font-size: 14px;">Click "➕ Add Player" for individual winners or "👥 Add Team Winning" for team events</p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                const currency = this.winningsData.currency;
+                
+                container.innerHTML = this.winningsData.teams.map((team, teamIdx) => {
+                    const totalPrize = team.totalAmount;
+                    const shareAmount = team.totalAmount / team.players.length;
+                    const isIndividual = team.players.length === 1;
+                    
+                    if (isIndividual) {
+                        // Individual player card
+                        return `
+                            <div style="background: white; border-radius: 8px; padding: 15px; box-shadow: 0 2px 4px rgba(0,0,0,0.08); border: 1px solid #e0e0e0; transition: all 0.2s;" onmouseover="this.style.boxShadow='0 4px 8px rgba(0,0,0,0.12)'" onmouseout="this.style.boxShadow='0 2px 4px rgba(0,0,0,0.08)'">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; padding-bottom: 10px; border-bottom: 2px solid #f0f0f0;">
+                                    <div>
+                                        <div style="font-weight: bold; font-size: 16px; color: #2c3e50;">👤 ${team.players[0]}</div>
+                                        <div style="font-size: 12px; color: #7f8c8d; margin-top: 2px;">
+                                            ${team.comp} <span style="padding: 2px 6px; background: #3498db; color: white; border-radius: 3px; font-size: 10px; margin-left: 4px;">${team.position}</span>
+                                        </div>
+                                    </div>
+                                    <div style="font-size: 20px; font-weight: bold; color: #27ae60;">${currency}${totalPrize.toFixed(2)}</div>
+                                </div>
+                                <button onclick="window.app.deleteTeam(${teamIdx})" style="width: 100%; padding: 6px; background: #e74c3c; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 11px;">🗑️ Delete</button>
+                            </div>
+                        `;
+                    } else {
+                        // Team card
+                        return `
+                            <div style="background: white; border-radius: 8px; padding: 15px; box-shadow: 0 2px 4px rgba(0,0,0,0.08); border: 1px solid #e0e0e0; transition: all 0.2s;" onmouseover="this.style.boxShadow='0 4px 8px rgba(0,0,0,0.12)'" onmouseout="this.style.boxShadow='0 2px 4px rgba(0,0,0,0.08)'">
+                                <!-- Team Header -->
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; padding-bottom: 10px; border-bottom: 2px solid #f0f0f0;">
+                                    <div>
+                                        <div style="font-weight: bold; font-size: 16px; color: #2c3e50;">👥 ${team.comp}</div>
+                                        <div style="font-size: 11px; color: #7f8c8d; margin-top: 2px;">
+                                            <span style="padding: 2px 6px; background: #3498db; color: white; border-radius: 3px; font-size: 10px; margin-right: 4px;">${team.position}</span>
+                                            ${team.players.length} Players
+                                        </div>
+                                    </div>
+                                    <div style="text-align: right;">
+                                        <div style="font-size: 20px; font-weight: bold; color: #27ae60;">${currency}${totalPrize.toFixed(2)}</div>
+                                        <div style="font-size: 10px; color: #7f8c8d;">Total Prize</div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Team Members -->
+                                <div style="display: flex; flex-direction: column; gap: 6px; margin-bottom: 10px;">
+                                    ${team.players.map((playerName, idx) => `
+                                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 6px 10px; background: #f8f9fa; border-radius: 4px; font-size: 12px;">
+                                            <div style="font-weight: 600; color: #34495e;">👤 ${playerName}</div>
+                                            <div style="font-weight: bold; color: #2c3e50;">${currency}${shareAmount.toFixed(2)}</div>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                                
+                                <!-- Delete Team Button -->
+                                <button onclick="window.app.deleteTeam(${teamIdx})" style="width: 100%; padding: 6px; background: #e74c3c; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 11px;">🗑️ Delete Team</button>
+                            </div>
+                        `;
+                    }
+                }).join('');
+            },
+            
+            addPlayerWinning() {
+                // Add individual player winning
+                const playerName = prompt('Enter player name:');
+                if (!playerName || !playerName.trim()) return;
+                
+                const comp = prompt('Competition name:');
+                if (!comp || !comp.trim()) return;
+                
+                const position = prompt('Position (1st, 2nd, 3rd, etc.):');
+                if (!position || !position.trim()) return;
+                
+                const amountStr = prompt('Prize money:');
+                const amount = parseFloat(amountStr) || 0;
+                if (amount <= 0) {
+                    this.showToast('Prize amount must be greater than 0', 'warning');
+                    return;
+                }
+                
+                // Create a single-player "team" entry
+                this.winningsData.teams.push({
+                    comp: comp.trim(),
+                    position: position.trim(),
+                    players: [playerName.trim()],
+                    totalAmount: amount
+                });
+                
+                this.renderWinnings();
+                this.updateRemainingMoney();
+                this.saveData();
+                this.showToast(`Individual winning added for ${playerName.trim()}`, 'success');
+            },
+            
+            addTeamWinning() {
+                // Step 1: Competition name
+                const comp = prompt('Competition name (e.g., Pairs, 4BBB, 4 Person Team):');
+                if (!comp || !comp.trim()) return;
+                
+                // Step 2: Team size
+                const teamSizeStr = prompt('How many players in the team? (2, 3, or 4):');
+                const teamSize = parseInt(teamSizeStr) || 2;
+                if (teamSize < 2 || teamSize > 4) {
+                    this.showToast('Team size must be 2-4 players', 'warning');
+                    return;
+                }
+                
+                // Step 3: Collect all team member names
+                const players = [];
+                for (let i = 1; i <= teamSize; i++) {
+                    const name = prompt(`Enter player ${i} name:`);
+                    if (!name || !name.trim()) {
+                        this.showToast('All team member names required', 'warning');
+                        return;
+                    }
+                    players.push(name.trim());
+                }
+                
+                // Step 4: Position
+                const position = prompt('Team position (1st, 2nd, 3rd, etc.):');
+                if (!position || !position.trim()) return;
+                
+                // Step 5: Total prize money
+                const amountStr = prompt('Total prize money for the team:');
+                const totalAmount = parseFloat(amountStr) || 0;
+                if (totalAmount <= 0) {
+                    this.showToast('Prize amount must be greater than 0', 'warning');
+                    return;
+                }
+                
+                // Create team winning entry
+                this.winningsData.teams.push({
+                    comp: comp.trim(),
+                    position: position.trim(),
+                    players: players,
+                    totalAmount: totalAmount
+                });
+                
+                this.renderWinnings();
+                this.updateRemainingMoney();
+                this.saveData();
+                this.showToast(`Team winning added: ${players.join(', ')}`, 'success');
+            },
+            
+            deleteTeam(teamIndex) {
+                if (!confirm('Delete this team winning?')) return;
+                
+                this.winningsData.teams.splice(teamIndex, 1);
+                
+                this.renderWinnings();
+                this.updateRemainingMoney();
+                this.saveData();
+                this.showToast('Team winning deleted', 'warning');
+            },
+            
+            updateRemainingMoney() {
+                const grandPot = parseFloat(this.winningsData.grandPotMoney) || 0;
+                const totalAwarded = this.winningsData.teams.reduce((sum, team) => sum + (team.totalAmount || 0), 0);
+                const remaining = grandPot - totalAwarded;
+                
+                const remainingSpan = document.getElementById('remainingPotMoney');
+                if (remainingSpan) {
+                    remainingSpan.textContent = `${this.winningsData.currency}${remaining.toFixed(2)}`;
+                    remainingSpan.style.color = remaining >= 0 ? '#2ecc71' : '#e74c3c';
+                }
+            },
+            
+            // OLD INFO TABLE FUNCTIONS (kept for backward compatibility during migration)
             renderInfoTable() {
                 const headerRow = document.getElementById('infoTableHeader');
                 const tbody = document.getElementById('infoTableBody');
