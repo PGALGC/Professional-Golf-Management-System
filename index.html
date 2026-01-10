@@ -1754,22 +1754,329 @@
     
     <!-- How To Modal -->
     <div id="howToModal" class="modal" style="display: none;">
-        <div class="modal-content" style="max-width: 900px; max-height: 90vh;">
-            <h3>📖 How To Use This App</h3>
-            <div style="margin-bottom: 15px;">
-                <p style="font-size: 0.85rem; color: #7f8c8d;">Edit the content below to add your own instructions and tips for using the app.</p>
+        <div class="modal-content" style="max-width: 1000px; max-height: 90vh; overflow-y: auto;">
+            <h3 style="margin-bottom: 20px; color: #2c3e50;">📖 Professional Golf Management System - User Guide</h3>
+            
+            <div style="background: #e8f5e9; padding: 15px; border-radius: 5px; margin-bottom: 20px; border-left: 4px solid #2ecc71;">
+                <strong>🎯 Quick Start:</strong> This comprehensive guide covers all features and functionalities of the Golf Management System.
             </div>
             
-            <div class="form-group" style="margin-bottom: 15px;">
-                <label for="howToContent" style="font-size: 11px; font-weight: 600; margin-bottom: 5px; display: block;">Instructions Content</label>
-                <textarea id="howToContent" rows="20" style="width: 100%; padding: 10px; font-size: 12px; border: 1px solid #ddd; border-radius: 3px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif; line-height: 1.6; resize: vertical;" placeholder="Enter your how-to instructions here..."></textarea>
-                <small style="color: #7f8c8d; font-size: 0.7rem; margin-top: 5px; display: block;">Tip: You can format your content with line breaks and paragraphs.</small>
+            <div id="howToContent" style="padding: 10px; font-size: 13px; line-height: 1.8; color: #2c3e50;">
+                <!-- Players Tab -->
+                <h4 style="color: #3498db; border-bottom: 2px solid #3498db; padding-bottom: 5px; margin-top: 20px;">👥 PLAYERS TAB</h4>
+                
+                <h5 style="color: #2c3e50; margin-top: 15px;">➕ Adding Players:</h5>
+                <ol style="margin-left: 20px;">
+                    <li>Click the <strong>"➕ Add Player"</strong> button at the top</li>
+                    <li>Fill in player details:
+                        <ul style="margin-left: 20px;">
+                            <li><strong>Player Name:</strong> Enter full name</li>
+                            <li><strong>Index Handicap:</strong> Official handicap index (0.0 - 54.0)</li>
+                            <li><strong>PHC %:</strong> Playing Handicap percentage (optional override)</li>
+                            <li><strong>PHC:</strong> Playing Handicap (auto-calculated)</li>
+                            <li><strong>Course:</strong> Select the course for this player</li>
+                            <li><strong>Group:</strong> Assign to a group (max 4 players per group)</li>
+                        </ul>
+                    </li>
+                    <li>Click <strong>"💾 Save Player"</strong></li>
+                </ol>
+                
+                <h5 style="color: #2c3e50; margin-top: 15px;">✏️ Editing Players:</h5>
+                <ul style="margin-left: 20px;">
+                    <li>Click the <strong>"✏️ Edit"</strong> button next to any player</li>
+                    <li>Modify details and click <strong>"💾 Update Player"</strong></li>
+                </ul>
+                
+                <h5 style="color: #2c3e50; margin-top: 15px;">🗑️ Deleting Players:</h5>
+                <ul style="margin-left: 20px;">
+                    <li>Click the <strong>"🗑️ Delete"</strong> button next to any player</li>
+                    <li>Confirm deletion (this removes all associated scores)</li>
+                </ul>
+                
+                <h5 style="color: #2c3e50; margin-top: 15px;">📄 Export/Import:</h5>
+                <ul style="margin-left: 20px;">
+                    <li><strong>"📥 Backup Data":</strong> Downloads all data as JSON file</li>
+                    <li><strong>"📤 Restore Data":</strong> Imports previously saved data</li>
+                    <li><strong>"🗑️ Clear Players":</strong> Removes all players and data (use with caution!)</li>
+                </ul>
+                
+                <!-- Courses Tab -->
+                <h4 style="color: #3498db; border-bottom: 2px solid #3498db; padding-bottom: 5px; margin-top: 25px;">⛳ COURSES TAB</h4>
+                
+                <h5 style="color: #2c3e50; margin-top: 15px;">➕ Adding Courses:</h5>
+                <ol style="margin-left: 20px;">
+                    <li>Click <strong>"➕ Add Course"</strong></li>
+                    <li>Enter course details:
+                        <ul style="margin-left: 20px;">
+                            <li><strong>Course Name:</strong> Official course name</li>
+                            <li><strong>PHC %:</strong> Default playing handicap percentage (85-100%)</li>
+                            <li><strong>Course Rating:</strong> Official rating (e.g., 72.0)</li>
+                            <li><strong>Slope Rating:</strong> Official slope (55-155, typically 113)</li>
+                        </ul>
+                    </li>
+                    <li>Configure holes:
+                        <ul style="margin-left: 20px;">
+                            <li>Click <strong>"⚙️ Use Default (Par 72)"</strong> for standard setup</li>
+                            <li>Or manually enter Par and Stroke Index for each hole</li>
+                        </ul>
+                    </li>
+                    <li>Click <strong>"💾 Save Course"</strong></li>
+                </ol>
+                
+                <!-- Scorecard Tab -->
+                <h4 style="color: #3498db; border-bottom: 2px solid #3498db; padding-bottom: 5px; margin-top: 25px;">📋 SCORECARD TAB</h4>
+                
+                <h5 style="color: #2c3e50; margin-top: 15px;">🎯 Entering Scores:</h5>
+                <ol style="margin-left: 20px;">
+                    <li>Select <strong>Course</strong> from dropdown</li>
+                    <li>Filter by <strong>Group</strong> (optional)</li>
+                    <li>Enter gross scores in yellow cells for each hole</li>
+                    <li>System auto-calculates:
+                        <ul style="margin-left: 20px;">
+                            <li><strong>Net Score:</strong> Gross - strokes received</li>
+                            <li><strong>Points:</strong> Stableford points per hole</li>
+                            <li><strong>Totals:</strong> Front 9, Back 9, Total</li>
+                        </ul>
+                    </li>
+                </ol>
+                
+                <h5 style="color: #2c3e50; margin-top: 15px;">🔄 Scorecard Buttons:</h5>
+                <ul style="margin-left: 20px;">
+                    <li><strong>"🔄 Refresh":</strong> Reload scorecard data</li>
+                    <li><strong>"🧮 Calculate":</strong> Recalculate all scores and points</li>
+                    <li><strong>"🗑️ Clear All Scores":</strong> Remove all scores (confirmation required)</li>
+                </ul>
+                
+                <!-- Leaderboard Tab -->
+                <h4 style="color: #3498db; border-bottom: 2px solid #3498db; padding-bottom: 5px; margin-top: 25px;">🏆 LEADERBOARD TAB</h4>
+                
+                <h5 style="color: #2c3e50; margin-top: 15px;">📊 Viewing Results:</h5>
+                <ul style="margin-left: 20px;">
+                    <li>Displays all players' performance across courses</li>
+                    <li>Shows: Total Points, Gross Total, Net Total, Prize Money</li>
+                    <li>Color-coded names indicate different courses</li>
+                </ul>
+                
+                <h5 style="color: #2c3e50; margin-top: 15px;">💰 Adding Prize Money:</h5>
+                <ol style="margin-left: 20px;">
+                    <li>Click <strong>"💰 Add Money"</strong></li>
+                    <li>Select currency (£, $, €, etc.)</li>
+                    <li>Enter player name and amount</li>
+                    <li>Click <strong>"💾 Save"</strong></li>
+                </ol>
+                
+                <h5 style="color: #2c3e50; margin-top: 15px;">🔽 Sorting:</h5>
+                <ul style="margin-left: 20px;">
+                    <li>Click any column header to sort</li>
+                    <li>Set default sort order in settings dropdown</li>
+                </ul>
+                
+                <h5 style="color: #2c3e50; margin-top: 15px;">🌟 Master Leaderboard:</h5>
+                <ul style="margin-left: 20px;">
+                    <li>Tracks cumulative performance across all rounds</li>
+                    <li><strong>"➕ Add to Master":</strong> Include players in master tracking</li>
+                    <li>Weekly totals accumulated automatically</li>
+                </ul>
+                
+                <!-- Pairs Tab -->
+                <h4 style="color: #3498db; border-bottom: 2px solid #3498db; padding-bottom: 5px; margin-top: 25px;">🤝 PAIRS TAB</h4>
+                
+                <h5 style="color: #2c3e50; margin-top: 15px;">🎲 Generating Pairs:</h5>
+                <ol style="margin-left: 20px;">
+                    <li>Select <strong>Course</strong></li>
+                    <li>Click <strong>"🎲 Generate Pairs"</strong></li>
+                    <li>System randomly pairs players from selected course</li>
+                    <li>Each pair assigned to a group</li>
+                </ol>
+                
+                <h5 style="color: #2c3e50; margin-top: 15px;">📊 Calculating Pairs Results:</h5>
+                <ol style="margin-left: 20px;">
+                    <li>Ensure scores are entered in Scorecard tab</li>
+                    <li>Click <strong>"🧮 Calculate Pairs"</strong></li>
+                    <li>System calculates best ball scores and points</li>
+                    <li>Results show combined pair performance</li>
+                </ol>
+                
+                <h5 style="color: #2c3e50; margin-top: 15px;">💰 Pairs Prize Money:</h5>
+                <ul style="margin-left: 20px;">
+                    <li>Click <strong>"💰 Add Prize"</strong> next to any pair</li>
+                    <li>Enter amount - automatically splits between partners</li>
+                </ul>
+                
+                <!-- Competitions Tab -->
+                <h4 style="color: #3498db; border-bottom: 2px solid #3498db; padding-bottom: 5px; margin-top: 25px;">🏅 COMPETITIONS TAB</h4>
+                
+                <h5 style="color: #2c3e50; margin-top: 15px;">🎯 4 Ball Better Ball (4BBB):</h5>
+                <ul style="margin-left: 20px;">
+                    <li><strong>"⭐ Auto Draw":</strong> Randomly create 4-player teams</li>
+                    <li><strong>"✍️ Manual":</strong> Manually select team members</li>
+                    <li><strong>"🧮 Calculate":</strong> Process best ball scoring</li>
+                    <li><strong>Scoring:</strong> Best net score per hole from 4 players</li>
+                </ul>
+                
+                <h5 style="color: #2c3e50; margin-top: 15px;">👥 4 Person Teams:</h5>
+                <ul style="margin-left: 20px;">
+                    <li>Each player contributes to team score</li>
+                    <li>Combined Stableford points</li>
+                </ul>
+                
+                <h5 style="color: #2c3e50; margin-top: 15px;">🎯 Best 3 From 4:</h5>
+                <ul style="margin-left: 20px;">
+                    <li>4 players per team</li>
+                    <li>Best 3 net scores count per hole</li>
+                    <li>Discard worst score each hole</li>
+                </ul>
+                
+                <h5 style="color: #2c3e50; margin-top: 15px;">🎯 4 Person Team Mixed Score:</h5>
+                <ul style="margin-left: 20px;">
+                    <li>P1: Holes 1-4</li>
+                    <li>P2: Holes 5-9</li>
+                    <li>P3: Holes 10-13</li>
+                    <li>P4: Holes 14-18</li>
+                    <li>Each player's net score counts only on assigned holes</li>
+                </ul>
+                
+                <h5 style="color: #2c3e50; margin-top: 15px;">⚔️ Team A vs Team B:</h5>
+                <ol style="margin-left: 20px;">
+                    <li>Click <strong>"🎲 Auto Draw"</strong> or <strong>"✍️ Manual Add"</strong></li>
+                    <li>Select course and assign players to teams</li>
+                    <li>Click <strong>"🧮 Calculate Scores"</strong></li>
+                    <li>System totals Stableford and Gross scores per team</li>
+                </ol>
+                
+                <h5 style="color: #2c3e50; margin-top: 15px;">💰 Competition Prize Money:</h5>
+                <ul style="margin-left: 20px;">
+                    <li>Click <strong>"✏️ Edit"</strong> on any competition result</li>
+                    <li>Enter prize amounts for each position</li>
+                    <li>Automatically splits between team members</li>
+                </ul>
+                
+                <!-- Random Draw Tab -->
+                <h4 style="color: #3498db; border-bottom: 2px solid #3498db; padding-bottom: 5px; margin-top: 25px;">🎲 RANDOM DRAW TAB</h4>
+                
+                <h5 style="color: #2c3e50; margin-top: 15px;">🎲 Generating Draw:</h5>
+                <ol style="margin-left: 20px;">
+                    <li>Select <strong>Course</strong></li>
+                    <li>Click <strong>"🎲 Generate Draw"</strong></li>
+                    <li>System randomly distributes players into groups</li>
+                    <li><strong>Priority:</strong> Groups of 3, then groups of 4</li>
+                    <li><strong>Maximum:</strong> 4 players per group</li>
+                </ol>
+                
+                <h5 style="color: #2c3e50; margin-top: 15px;">🔄 Draw Features:</h5>
+                <ul style="margin-left: 20px;">
+                    <li>Truly randomized player distribution</li>
+                    <li>Balanced group sizes</li>
+                    <li><strong>"🗑️ Clear Draw":</strong> Remove current draw</li>
+                </ul>
+                
+                <!-- Information Tab -->
+                <h4 style="color: #3498db; border-bottom: 2px solid #3498db; padding-bottom: 5px; margin-top: 25px;">ℹ️ INFORMATION TAB (WINNINGS TRACKER)</h4>
+                
+                <h5 style="color: #2c3e50; margin-top: 15px;">🏆 Setting Up Grand Pot:</h5>
+                <ol style="margin-left: 20px;">
+                    <li>Enter total pot amount in <strong>"GRAND POT"</strong> field</li>
+                    <li>Click <strong>"💾 Update Grand Pot"</strong></li>
+                    <li>System tracks remaining amount as prizes are awarded</li>
+                </ol>
+                
+                <h5 style="color: #2c3e50; margin-top: 15px;">➕ Adding Individual Winner:</h5>
+                <ol style="margin-left: 20px;">
+                    <li>Click <strong>"➕ Add Player"</strong></li>
+                    <li>Enter:
+                        <ul style="margin-left: 20px;">
+                            <li>Player name</li>
+                            <li>Competition name (e.g., "Stableford")</li>
+                            <li>Position (1st, 2nd, 3rd)</li>
+                            <li>Prize money</li>
+                        </ul>
+                    </li>
+                    <li>Creates individual winner card</li>
+                </ol>
+                
+                <h5 style="color: #2c3e50; margin-top: 15px;">👥 Adding Team Winning:</h5>
+                <ol style="margin-left: 20px;">
+                    <li>Click <strong>"👥 Add Team Winning"</strong></li>
+                    <li>Enter:
+                        <ul style="margin-left: 20px;">
+                            <li>Competition name (e.g., "Pairs", "4BBB")</li>
+                            <li>Team size (2-4 players)</li>
+                            <li>ALL player names (one prompt per player)</li>
+                            <li>Team position</li>
+                            <li>Total prize money</li>
+                        </ul>
+                    </li>
+                    <li>System automatically splits prize equally among team members</li>
+                    <li>Creates single team card showing all members</li>
+                </ol>
+                
+                <h5 style="color: #2c3e50; margin-top: 15px;">📊 Winnings Display:</h5>
+                <ul style="margin-left: 20px;">
+                    <li><strong>Individual cards:</strong> Show player name, competition, position, amount</li>
+                    <li><strong>Team cards:</strong> Show all team members with individual shares</li>
+                    <li><strong>Grand Pot tracking:</strong> Shows remaining pot (green if positive, red if exceeded)</li>
+                </ul>
+                
+                <h5 style="color: #2c3e50; margin-top: 15px;">🔧 Winnings Management:</h5>
+                <ul style="margin-left: 20px;">
+                    <li><strong>Currency selector:</strong> Change display currency (£, $, €, ¥, ₹)</li>
+                    <li><strong>"🗑️ Delete":</strong> Remove individual or team winning entry</li>
+                    <li><strong>"🗑️ Clear All":</strong> Remove all winnings data</li>
+                </ul>
+                
+                <!-- Header Buttons -->
+                <h4 style="color: #3498db; border-bottom: 2px solid #3498db; padding-bottom: 5px; margin-top: 25px;">🔧 HEADER BUTTONS (ALL TABS)</h4>
+                
+                <h5 style="color: #2c3e50; margin-top: 15px;">📥 Backup Data:</h5>
+                <ul style="margin-left: 20px;">
+                    <li>Downloads complete system data as JSON file</li>
+                    <li>Includes: players, courses, scores, pairs, competitions, winnings</li>
+                    <li>File named: <code>golf-data-[timestamp].json</code></li>
+                </ul>
+                
+                <h5 style="color: #2c3e50; margin-top: 15px;">📤 Restore Data:</h5>
+                <ul style="margin-left: 20px;">
+                    <li>Imports previously saved backup file</li>
+                    <li>Overwrites current data (backup first!)</li>
+                    <li>Restores complete system state</li>
+                </ul>
+                
+                <!-- Tips & Best Practices -->
+                <h4 style="color: #e67e22; border-bottom: 2px solid #e67e22; padding-bottom: 5px; margin-top: 25px;">💡 TIPS & BEST PRACTICES</h4>
+                
+                <ul style="margin-left: 20px;">
+                    <li><strong>💾 Regular Backups:</strong> Use "Backup Data" button regularly to save your work</li>
+                    <li><strong>⛳ Course Setup:</strong> Set up courses before adding players</li>
+                    <li><strong>👥 Group Organization:</strong> Assign players to groups for easier score entry</li>
+                    <li><strong>📊 Score Entry:</strong> Enter all scores before running competition calculations</li>
+                    <li><strong>💰 Prize Tracking:</strong> Use Information tab to track all winnings in one place</li>
+                    <li><strong>🔄 Recalculate:</strong> Use calculate buttons after editing scores or adding players</li>
+                    <li><strong>📱 Mobile Friendly:</strong> System works on tablets and phones</li>
+                    <li><strong>🌐 Browser Storage:</strong> Data saved locally in browser (backup to preserve)</li>
+                </ul>
+                
+                <!-- Troubleshooting -->
+                <h4 style="color: #e74c3c; border-bottom: 2px solid #e74c3c; padding-bottom: 5px; margin-top: 25px;">⚠️ TROUBLESHOOTING</h4>
+                
+                <ul style="margin-left: 20px;">
+                    <li><strong>Scores not appearing?</strong> Click "Refresh" or "Calculate" button</li>
+                    <li><strong>Pairs not generating?</strong> Ensure players assigned to selected course</li>
+                    <li><strong>Competition results missing?</strong> Verify scores entered for all team members</li>
+                    <li><strong>Lost data?</strong> Use "Restore Data" with your backup file</li>
+                    <li><strong>Wrong calculations?</strong> Check PHC % settings and course slope/rating</li>
+                </ul>
+                
+                <div style="background: #fff3cd; padding: 15px; border-radius: 5px; margin-top: 25px; border-left: 4px solid #f39c12;">
+                    <strong>ℹ️ Note:</strong> All data is stored locally in your browser. Regular backups are recommended to prevent data loss.
+                </div>
+                
+                <div style="background: #e8f5e9; padding: 15px; border-radius: 5px; margin-top: 15px; border-left: 4px solid #2ecc71;">
+                    <strong>🎉 Version:</strong> Professional Golf Management System v2.0.0 | <strong>📧 Support:</strong> Contact system administrator for assistance
+                </div>
             </div>
             
-            <div class="form-actions" style="display: flex; gap: 6px; justify-content: flex-end;">
-                <button type="button" id="saveHowTo" class="btn-success">💾 Save Instructions</button>
-                <button type="button" id="clearHowTo" class="btn-warning btn-small">🗑️ Clear</button>
-                <button type="button" id="closeHowTo" class="btn-secondary">❌ Close</button>
+            <div class="form-actions" style="display: flex; gap: 6px; justify-content: center; margin-top: 20px; padding-top: 15px; border-top: 2px solid #e0e0e0;">
+                <button type="button" id="closeHowTo" class="btn-primary" style="padding: 10px 30px;">✔️ Close Guide</button>
             </div>
         </div>
     </div>
@@ -2343,15 +2650,8 @@
                     }
                 });
                 
-                // How To modal buttons
+                // How To modal button
                 document.getElementById('showHowTo').addEventListener('click', () => this.showHowToModal());
-                document.getElementById('saveHowTo').addEventListener('click', () => this.saveHowToContent());
-                document.getElementById('clearHowTo').addEventListener('click', () => {
-                    if (confirm('Clear all How To instructions?')) {
-                        document.getElementById('howToContent').value = '';
-                        this.showToast('Content cleared', 'warning');
-                    }
-                });
                 document.getElementById('closeHowTo').addEventListener('click', () => this.hideHowToModal());
                 
                 // Winnings Tracker buttons
@@ -2545,19 +2845,11 @@
             },
             
             showHowToModal() {
-                document.getElementById('howToContent').value = this.howToContent;
                 document.getElementById('howToModal').style.display = 'flex';
             },
             
             hideHowToModal() {
                 document.getElementById('howToModal').style.display = 'none';
-            },
-            
-            saveHowToContent() {
-                this.howToContent = document.getElementById('howToContent').value;
-                this.saveData();
-                this.showToast('How To instructions saved successfully!', 'success');
-                this.hideHowToModal();
             },
             
             // NEW CARD-BASED WINNINGS FUNCTIONS
