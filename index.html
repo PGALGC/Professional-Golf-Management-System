@@ -4424,7 +4424,7 @@
                     </th>`;
                 }
                 
-                // Ultra-compact summary headers
+                // Summary headers with countback progression
                 html += `
                     <th class="summary-cell front9-gross-cell">F9 G</th>
                     <th class="summary-cell front9-points-cell">F9 P</th>
@@ -4432,7 +4432,11 @@
                     <th class="summary-cell back9-points-cell">B9 P</th>
                     <th class="summary-cell total-gross-cell">TOT G</th>
                     <th class="summary-cell total-points-cell">TOT P</th>
-                    <th class="summary-cell countback-cell">CB</th>
+                    <th class="summary-cell countback-cell" title="Last 6 holes (13-18)">L6</th>
+                    <th class="summary-cell countback-cell" title="Last 3 holes (16-18)">L3</th>
+                    <th class="summary-cell countback-cell" title="Hole 18">H18</th>
+                    <th class="summary-cell countback-cell" title="Hole 17">H17</th>
+                    <th class="summary-cell countback-cell" title="Hole 16">H16</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -4515,8 +4519,7 @@
                         html += `</td>`;
                     }
                     
-                    // Ultra-compact summary cells with detailed countback
-                    const cbDisplay = countbackData.last6 > 0 ? countbackData.last6 : '';
+                    // Summary cells with separate countback columns
                     html += `
                         <td class="summary-cell front9-gross-cell">${front9Gross > 0 ? front9Gross : ''}</td>
                         <td class="summary-cell front9-points-cell">${front9Points > 0 ? front9Points : ''}</td>
@@ -4524,7 +4527,11 @@
                         <td class="summary-cell back9-points-cell">${back9Points > 0 ? back9Points : ''}</td>
                         <td class="summary-cell total-gross-cell">${totalGross > 0 ? totalGross : ''}</td>
                         <td class="summary-cell total-points-cell">${totalPoints > 0 ? totalPoints : ''}</td>
-                        <td class="summary-cell countback-cell" title="L6: ${countbackData.last6} | L3: ${countbackData.last3} | H18: ${countbackData.last1} | H17: ${countbackData.last2nd} | H16: ${countbackData.last3rd}">${cbDisplay}</td>
+                        <td class="summary-cell countback-cell">${countbackData.last6 > 0 ? countbackData.last6 : ''}</td>
+                        <td class="summary-cell countback-cell">${countbackData.last3 > 0 ? countbackData.last3 : ''}</td>
+                        <td class="summary-cell countback-cell">${countbackData.last1 > 0 ? countbackData.last1 : ''}</td>
+                        <td class="summary-cell countback-cell">${countbackData.last2nd > 0 ? countbackData.last2nd : ''}</td>
+                        <td class="summary-cell countback-cell">${countbackData.last3rd > 0 ? countbackData.last3rd : ''}</td>
                     </tr>
                     `;
                 });
@@ -4691,17 +4698,19 @@
                         const row = td.closest('tr');
                         if (row) {
                             const totalCells = row.querySelectorAll('.summary-cell');
-                            if (totalCells.length >= 7) {
+                            if (totalCells.length >= 11) {
                                 totalCells[0].textContent = front9Gross > 0 ? front9Gross : '';
                                 totalCells[1].textContent = front9Points > 0 ? front9Points : '';
                                 totalCells[2].textContent = back9Gross > 0 ? back9Gross : '';
                                 totalCells[3].textContent = back9Points > 0 ? back9Points : '';
                                 totalCells[4].textContent = totalGross > 0 ? totalGross : '';
                                 totalCells[5].textContent = totalPoints > 0 ? totalPoints : '';
-                                // Update countback cell with tooltip showing full breakdown
-                                const cbDisplay = countbackData.last6 > 0 ? countbackData.last6 : '';
-                                totalCells[6].textContent = cbDisplay;
-                                totalCells[6].title = `L6: ${countbackData.last6} | L3: ${countbackData.last3} | H18: ${countbackData.last1} | H17: ${countbackData.last2nd} | H16: ${countbackData.last3rd}`;
+                                // Update all countback columns
+                                totalCells[6].textContent = countbackData.last6 > 0 ? countbackData.last6 : '';
+                                totalCells[7].textContent = countbackData.last3 > 0 ? countbackData.last3 : '';
+                                totalCells[8].textContent = countbackData.last1 > 0 ? countbackData.last1 : '';
+                                totalCells[9].textContent = countbackData.last2nd > 0 ? countbackData.last2nd : '';
+                                totalCells[10].textContent = countbackData.last3rd > 0 ? countbackData.last3rd : '';
                             }
                         }
                     }
