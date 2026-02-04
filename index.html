@@ -8356,20 +8356,35 @@
                             clonedTab.style.width = 'auto';
                         }
                         
-                        // Expand all scrollable containers
-                        const scrollables = clonedDoc.querySelectorAll('[style*="overflow"]');
+                        // Expand all scrollable containers including scorecard
+                        const scrollables = clonedDoc.querySelectorAll('[style*="overflow"], .scorecard-container');
                         scrollables.forEach(el => {
                             el.style.overflow = 'visible';
                             el.style.maxHeight = 'none';
                             el.style.width = 'auto';
+                            el.style.maxWidth = 'none';
                         });
                         
-                        // Ensure all tables are fully expanded
-                        const tables = clonedDoc.querySelectorAll('table');
+                        // Ensure all tables are fully expanded with all columns visible
+                        const tables = clonedDoc.querySelectorAll('table, .scorecard-table');
                         tables.forEach(table => {
                             table.style.width = 'auto';
+                            table.style.minWidth = 'max-content';
                             table.style.overflow = 'visible';
+                            table.style.display = 'table';
                         });
+                        
+                        // Specifically handle scorecard table to show all columns
+                        const scorecardTable = clonedDoc.querySelector('.scorecard-table');
+                        if (scorecardTable) {
+                            scorecardTable.style.minWidth = 'max-content';
+                            scorecardTable.style.width = 'auto';
+                            // Ensure all cells are visible
+                            const cells = scorecardTable.querySelectorAll('th, td');
+                            cells.forEach(cell => {
+                                cell.style.whiteSpace = 'nowrap';
+                            });
+                        }
                     }
                 }).then(canvas => {
                     // Restore original styles
