@@ -1117,6 +1117,15 @@
                             <option value="all">All Players</option>
                             <!-- Groups will be dynamically added -->
                         </select>
+                        <select id="scorecardSortSelect" style="padding: 6px; border: 1px solid #ddd; border-radius: 3px; font-size: 11px;">
+                            <option value="name">Sort: Name (A→Z)</option>
+                            <option value="totalPoints" selected>Sort: Points (High→Low)</option>
+                            <option value="totalPointsAsc">Sort: Points (Low→High)</option>
+                            <option value="totalGross">Sort: Gross (Low→High)</option>
+                            <option value="totalGrossDesc">Sort: Gross (High→Low)</option>
+                            <option value="back9Points">Sort: Back 9 (High→Low)</option>
+                            <option value="front9Points">Sort: Front 9 (High→Low)</option>
+                        </select>
                         <button id="refreshScorecard" class="btn-primary">🔄 Refresh</button>
                     </div>
                     
@@ -2408,6 +2417,9 @@
                 });
                 document.getElementById('scorecardGroupSelect').addEventListener('change', () => {
                     this.saveScorecardSettings();
+                    this.renderScorecard();
+                });
+                document.getElementById('scorecardSortSelect').addEventListener('change', () => {
                     this.renderScorecard();
                 });
                 document.getElementById('clearAllScores').addEventListener('click', () => {
@@ -4375,6 +4387,64 @@
                     `;
                     return;
                 }
+                
+                // Sort players based on selected sort option
+                const sortSelect = document.getElementById('scorecardSortSelect');
+                const sortOption = sortSelect ? sortSelect.value : 'totalPoints';
+                
+                // Calculate totals for each player for sorting
+                const playersWithTotals = filteredPlayers.map(player => {
+                    const playerScores = this.scores[player.id] || {};
+                    let front9Gross = 0, front9Points = 0, back9Gross = 0, back9Points = 0, totalGross = 0, totalPoints = 0;
+                    
+                    for (let i = 1; i <= 18; i++) {
+                        const hole = course.holes.find(h => h.number === i);
+                        const score = playerScores[i];
+                        if (score !== undefined && score !== null && score !== '' && hole) {
+                            const scoreNum = parseInt(score);
+                            const stablefordResult = this.calculateStablefordWithResult(score, hole.par, player.phc, hole.index);
+                            if (i <= 9) {
+                                front9Gross += scoreNum;
+                                front9Points += stablefordResult.points;
+                            } else {
+                                back9Gross += scoreNum;
+                                back9Points += stablefordResult.points;
+                            }
+                            totalGross += scoreNum;
+                            totalPoints += stablefordResult.points;
+                        }
+                    }
+                    
+                    return { player, front9Gross, front9Points, back9Gross, back9Points, totalGross, totalPoints };
+                });
+                
+                // Sort based on selection
+                playersWithTotals.sort((a, b) => {
+                    switch(sortOption) {
+                        case 'name':
+                            return a.player.name.localeCompare(b.player.name);
+                        case 'totalPoints':
+                            return b.totalPoints - a.totalPoints || this.compareCountback(
+                                this.calculateCountbackScore(this.scores[b.player.id] || {}, course, b.player),
+                                this.calculateCountbackScore(this.scores[a.player.id] || {}, course, a.player)
+                            );
+                        case 'totalPointsAsc':
+                            return a.totalPoints - b.totalPoints;
+                        case 'totalGross':
+                            return a.totalGross - b.totalGross;
+                        case 'totalGrossDesc':
+                            return b.totalGross - a.totalGross;
+                        case 'back9Points':
+                            return b.back9Points - a.back9Points;
+                        case 'front9Points':
+                            return b.front9Points - a.front9Points;
+                        default:
+                            return 0;
+                    }
+                });
+                
+                // Update filteredPlayers with sorted order
+                filteredPlayers = playersWithTotals.map(item => item.player);
                 
                 // Ultra-compact scorecard HTML
                 let html = `
