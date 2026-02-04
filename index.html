@@ -4424,9 +4424,13 @@
                         case 'name':
                             return a.player.name.localeCompare(b.player.name);
                         case 'totalPoints':
-                            return b.totalPoints - a.totalPoints || this.compareCountback(
-                                this.calculateCountbackScore(this.scores[b.player.id] || {}, course, b.player),
-                                this.calculateCountbackScore(this.scores[a.player.id] || {}, course, a.player)
+                            if (b.totalPoints !== a.totalPoints) {
+                                return b.totalPoints - a.totalPoints;
+                            }
+                            // If tied on total points, use countback (a vs b, not b vs a)
+                            return this.compareCountback(
+                                this.calculateCountbackScore(this.scores[a.player.id] || {}, course, a.player),
+                                this.calculateCountbackScore(this.scores[b.player.id] || {}, course, b.player)
                             );
                         case 'totalPointsAsc':
                             return a.totalPoints - b.totalPoints;
