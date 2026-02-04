@@ -8306,9 +8306,8 @@
                 const tabName = activeTabButton ? activeTabButton.textContent.trim().replace(/\s+/g, '-') : 'tab';
                 
                 // Find scrollable container and get its full dimensions
-                const scrollContainer = activeTabContent.querySelector('[style*="overflow"]') || activeTabContent;
-                const scrollWidth = scrollContainer.scrollWidth;
-                const scrollHeight = scrollContainer.scrollHeight;
+                const scrollContainer = activeTabContent.querySelector('.scorecard-container') || activeTabContent.querySelector('[style*="overflow"]') || activeTabContent;
+                const scorecardTable = activeTabContent.querySelector('.scorecard-table');
                 
                 // Store original styles to restore later
                 const originalStyles = {
@@ -8336,6 +8335,18 @@
                 // Force a reflow to ensure DOM updates
                 activeTabContent.offsetHeight;
                 
+                // Calculate actual full width needed including the table
+                let captureWidth = activeTabContent.scrollWidth;
+                let captureHeight = activeTabContent.scrollHeight;
+                
+                if (scorecardTable) {
+                    // Get the actual table width which includes all columns
+                    const tableWidth = scorecardTable.scrollWidth;
+                    const tableOffsetLeft = scorecardTable.getBoundingClientRect().left - activeTabContent.getBoundingClientRect().left;
+                    const requiredWidth = tableOffsetLeft + tableWidth + 50; // Add padding
+                    captureWidth = Math.max(captureWidth, requiredWidth, tableWidth);
+                }
+                
                 html2canvas(activeTabContent, {
                     scale: 2,
                     useCORS: true,
@@ -8343,8 +8354,10 @@
                     logging: false,
                     scrollY: -window.scrollY,
                     scrollX: 0,
-                    windowWidth: Math.max(scrollWidth, activeTabContent.scrollWidth),
-                    windowHeight: Math.max(scrollHeight, activeTabContent.scrollHeight),
+                    windowWidth: captureWidth,
+                    windowHeight: captureHeight,
+                    width: captureWidth,
+                    height: captureHeight,
                     onclone: function(clonedDoc) {
                         // Ensure all content is visible in the cloned document
                         const clonedTab = clonedDoc.querySelector('.tab-content.active');
