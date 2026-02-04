@@ -8335,7 +8335,7 @@
                 // Force a reflow to ensure DOM updates
                 activeTabContent.offsetHeight;
                 
-                // Calculate actual full width needed including the table
+                // Calculate actual full width and height needed including the table
                 let captureWidth = activeTabContent.scrollWidth;
                 let captureHeight = activeTabContent.scrollHeight;
                 
@@ -8345,6 +8345,12 @@
                     const tableOffsetLeft = scorecardTable.getBoundingClientRect().left - activeTabContent.getBoundingClientRect().left;
                     const requiredWidth = tableOffsetLeft + tableWidth + 50; // Add padding
                     captureWidth = Math.max(captureWidth, requiredWidth, tableWidth);
+                    
+                    // Get the actual table height which includes all rows
+                    const tableHeight = scorecardTable.scrollHeight;
+                    const tableOffsetTop = scorecardTable.getBoundingClientRect().top - activeTabContent.getBoundingClientRect().top;
+                    const requiredHeight = tableOffsetTop + tableHeight + 100; // Add padding
+                    captureHeight = Math.max(captureHeight, requiredHeight, tableHeight);
                 }
                 
                 html2canvas(activeTabContent, {
@@ -8387,16 +8393,26 @@
                             table.style.display = 'table';
                         });
                         
-                        // Specifically handle scorecard table to show all columns
+                        // Specifically handle scorecard table to show all columns and rows
                         const scorecardTable = clonedDoc.querySelector('.scorecard-table');
                         if (scorecardTable) {
                             scorecardTable.style.minWidth = 'max-content';
                             scorecardTable.style.width = 'auto';
+                            scorecardTable.style.minHeight = 'max-content';
+                            scorecardTable.style.height = 'auto';
                             // Ensure all cells are visible
                             const cells = scorecardTable.querySelectorAll('th, td');
                             cells.forEach(cell => {
                                 cell.style.whiteSpace = 'nowrap';
                             });
+                        }
+                        
+                        // Ensure scorecard container shows all content
+                        const scorecardContainer = clonedDoc.querySelector('.scorecard-container');
+                        if (scorecardContainer) {
+                            scorecardContainer.style.maxHeight = 'none';
+                            scorecardContainer.style.height = 'auto';
+                            scorecardContainer.style.overflow = 'visible';
                         }
                     }
                 }).then(canvas => {
