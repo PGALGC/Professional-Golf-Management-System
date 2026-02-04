@@ -1878,49 +1878,28 @@
                     <li>Weekly totals accumulated automatically</li>
                 </ul>
                 
-                <h5 style="color: #e74c3c; margin-top: 15px;">⚖️ COUNTBACK TIE-BREAKING RULES:</h5>
+                <h5 style="color: #e74c3c; margin-top: 15px;">⚖️ COMPLETE COUNTBACK TIE-BREAKING RULES:</h5>
                 <div style="background: #fff3cd; padding: 12px; border-left: 4px solid #f39c12; border-radius: 3px; margin: 10px 0;">
-                    <p style="margin-bottom: 8px; font-weight: bold;">When players are tied on total Stableford points, positions are determined using the following countback sequence:</p>
+                    <p style="margin-bottom: 8px; font-weight: bold;">When players are tied on total Stableford points, positions are determined using the following 11-step official countback sequence:</p>
                 </div>
                 <ol style="margin-left: 20px;">
-                    <li><strong>Last 6 Holes (Holes 13-18):</strong>
-                        <ul style="margin-left: 20px;">
-                            <li>Compare Stableford points from holes 13, 14, 15, 16, 17, and 18</li>
-                            <li>Player with higher points wins</li>
-                        </ul>
-                    </li>
-                    <li><strong>Last 3 Holes (Holes 16-18) - If still tied:</strong>
-                        <ul style="margin-left: 20px;">
-                            <li>Compare Stableford points from holes 16, 17, and 18</li>
-                            <li>Player with higher points wins</li>
-                        </ul>
-                    </li>
-                    <li><strong>Last Hole (Hole 18) - If still tied:</strong>
-                        <ul style="margin-left: 20px;">
-                            <li>Compare Stableford points from hole 18 only</li>
-                            <li>Player with higher points wins</li>
-                        </ul>
-                    </li>
-                    <li><strong>2nd to Last Hole (Hole 17) - If still tied:</strong>
-                        <ul style="margin-left: 20px;">
-                            <li>Compare Stableford points from hole 17 only</li>
-                            <li>Player with higher points wins</li>
-                        </ul>
-                    </li>
-                    <li><strong>3rd to Last Hole (Hole 16) - If still tied:</strong>
-                        <ul style="margin-left: 20px;">
-                            <li>Compare Stableford points from hole 16 only</li>
-                            <li>Player with higher points wins</li>
-                        </ul>
-                    </li>
-                    <li><strong>If still tied after all countback checks:</strong>
-                        <ul style="margin-left: 20px;">
-                            <li>Players share the same position</li>
-                        </ul>
-                    </li>
+                    <li><strong>Total Stableford Points</strong> - Compare overall points</li>
+                    <li><strong>Back 9 (Holes 10-18)</strong> - If tied, compare back 9 points</li>
+                    <li><strong>Holes 13-18 (Last 6 of back 9)</strong> - If still tied</li>
+                    <li><strong>Holes 16-18 (Last 3 holes)</strong> - If still tied</li>
+                    <li><strong>Holes 17-18 (Last 2 holes)</strong> - If still tied</li>
+                    <li><strong>Hole 18 (Last 1 hole)</strong> - If still tied</li>
+                    <li><strong>Front 9 (Holes 1-9)</strong> - If still tied, compare front 9 points</li>
+                    <li><strong>Holes 4-9 (Last 6 of front 9)</strong> - If still tied</li>
+                    <li><strong>Holes 7-9 (Last 3 of front 9)</strong> - If still tied</li>
+                    <li><strong>Holes 8-9 (Last 2 of front 9)</strong> - If still tied</li>
+                    <li><strong>Hole 9 (Last hole of front 9)</strong> - Final tiebreaker</li>
                 </ol>
                 <div style="background: #e8f5e9; padding: 10px; border-left: 4px solid #2ecc71; border-radius: 3px; margin: 10px 0;">
-                    <p style="margin: 0;"><strong>💡 Tip:</strong> Hover over the <strong>CB</strong> (Countback) column in the leaderboard or scorecard to see the full countback breakdown for each player.</p>
+                    <p style="margin: 0;"><strong>💡 Tip:</strong> The scorecard displays all 11 countback values in separate columns, showing the complete progression from left to right in order of priority.</p>
+                </div>
+                <div style="background: #e3f2fd; padding: 10px; border-left: 4px solid #2196F3; border-radius: 3px; margin: 10px 0;">
+                    <p style="margin: 0;"><strong>ℹ️ Note:</strong> Players only share the same position if they remain tied after all 11 countback checks have been applied.</p>
                 </div>
                 
                 <!-- Pairs Tab -->
@@ -4424,7 +4403,7 @@
                     </th>`;
                 }
                 
-                // Summary headers with countback progression
+                // Summary headers with complete countback progression
                 html += `
                     <th class="summary-cell front9-gross-cell">F9 G</th>
                     <th class="summary-cell front9-points-cell">F9 P</th>
@@ -4432,11 +4411,16 @@
                     <th class="summary-cell back9-points-cell">B9 P</th>
                     <th class="summary-cell total-gross-cell">TOT G</th>
                     <th class="summary-cell total-points-cell">TOT P</th>
-                    <th class="summary-cell countback-cell" title="Last 6 holes (13-18)">L6</th>
-                    <th class="summary-cell countback-cell" title="Last 3 holes (16-18)">L3</th>
+                    <th class="summary-cell countback-cell" title="Back 9 (10-18)">B9</th>
+                    <th class="summary-cell countback-cell" title="Holes 13-18">13-18</th>
+                    <th class="summary-cell countback-cell" title="Holes 16-18">16-18</th>
+                    <th class="summary-cell countback-cell" title="Holes 17-18">17-18</th>
                     <th class="summary-cell countback-cell" title="Hole 18">H18</th>
-                    <th class="summary-cell countback-cell" title="Hole 17">H17</th>
-                    <th class="summary-cell countback-cell" title="Hole 16">H16</th>
+                    <th class="summary-cell front9-points-cell" title="Front 9 (1-9)">F9</th>
+                    <th class="summary-cell countback-cell" title="Holes 4-9">4-9</th>
+                    <th class="summary-cell countback-cell" title="Holes 7-9">7-9</th>
+                    <th class="summary-cell countback-cell" title="Holes 8-9">8-9</th>
+                    <th class="summary-cell countback-cell" title="Hole 9">H9</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -4519,7 +4503,7 @@
                         html += `</td>`;
                     }
                     
-                    // Summary cells with separate countback columns
+                    // Summary cells with complete countback sequence
                     html += `
                         <td class="summary-cell front9-gross-cell">${front9Gross > 0 ? front9Gross : ''}</td>
                         <td class="summary-cell front9-points-cell">${front9Points > 0 ? front9Points : ''}</td>
@@ -4527,11 +4511,16 @@
                         <td class="summary-cell back9-points-cell">${back9Points > 0 ? back9Points : ''}</td>
                         <td class="summary-cell total-gross-cell">${totalGross > 0 ? totalGross : ''}</td>
                         <td class="summary-cell total-points-cell">${totalPoints > 0 ? totalPoints : ''}</td>
-                        <td class="summary-cell countback-cell">${countbackData.last6 > 0 ? countbackData.last6 : ''}</td>
-                        <td class="summary-cell countback-cell">${countbackData.last3 > 0 ? countbackData.last3 : ''}</td>
-                        <td class="summary-cell countback-cell">${countbackData.last1 > 0 ? countbackData.last1 : ''}</td>
-                        <td class="summary-cell countback-cell">${countbackData.last2nd > 0 ? countbackData.last2nd : ''}</td>
-                        <td class="summary-cell countback-cell">${countbackData.last3rd > 0 ? countbackData.last3rd : ''}</td>
+                        <td class="summary-cell countback-cell">${countbackData.back9 > 0 ? countbackData.back9 : ''}</td>
+                        <td class="summary-cell countback-cell">${countbackData.back9_last6 > 0 ? countbackData.back9_last6 : ''}</td>
+                        <td class="summary-cell countback-cell">${countbackData.back9_last3 > 0 ? countbackData.back9_last3 : ''}</td>
+                        <td class="summary-cell countback-cell">${countbackData.back9_last2 > 0 ? countbackData.back9_last2 : ''}</td>
+                        <td class="summary-cell countback-cell">${countbackData.back9_last1 > 0 ? countbackData.back9_last1 : ''}</td>
+                        <td class="summary-cell front9-points-cell">${countbackData.front9 > 0 ? countbackData.front9 : ''}</td>
+                        <td class="summary-cell countback-cell">${countbackData.front9_last6 > 0 ? countbackData.front9_last6 : ''}</td>
+                        <td class="summary-cell countback-cell">${countbackData.front9_last3 > 0 ? countbackData.front9_last3 : ''}</td>
+                        <td class="summary-cell countback-cell">${countbackData.front9_last2 > 0 ? countbackData.front9_last2 : ''}</td>
+                        <td class="summary-cell countback-cell">${countbackData.front9_last1 > 0 ? countbackData.front9_last1 : ''}</td>
                     </tr>
                     `;
                 });
@@ -4698,19 +4687,24 @@
                         const row = td.closest('tr');
                         if (row) {
                             const totalCells = row.querySelectorAll('.summary-cell');
-                            if (totalCells.length >= 11) {
+                            if (totalCells.length >= 16) {
                                 totalCells[0].textContent = front9Gross > 0 ? front9Gross : '';
                                 totalCells[1].textContent = front9Points > 0 ? front9Points : '';
                                 totalCells[2].textContent = back9Gross > 0 ? back9Gross : '';
                                 totalCells[3].textContent = back9Points > 0 ? back9Points : '';
                                 totalCells[4].textContent = totalGross > 0 ? totalGross : '';
                                 totalCells[5].textContent = totalPoints > 0 ? totalPoints : '';
-                                // Update all countback columns
-                                totalCells[6].textContent = countbackData.last6 > 0 ? countbackData.last6 : '';
-                                totalCells[7].textContent = countbackData.last3 > 0 ? countbackData.last3 : '';
-                                totalCells[8].textContent = countbackData.last1 > 0 ? countbackData.last1 : '';
-                                totalCells[9].textContent = countbackData.last2nd > 0 ? countbackData.last2nd : '';
-                                totalCells[10].textContent = countbackData.last3rd > 0 ? countbackData.last3rd : '';
+                                // Update all 11 countback columns
+                                totalCells[6].textContent = countbackData.back9 > 0 ? countbackData.back9 : '';
+                                totalCells[7].textContent = countbackData.back9_last6 > 0 ? countbackData.back9_last6 : '';
+                                totalCells[8].textContent = countbackData.back9_last3 > 0 ? countbackData.back9_last3 : '';
+                                totalCells[9].textContent = countbackData.back9_last2 > 0 ? countbackData.back9_last2 : '';
+                                totalCells[10].textContent = countbackData.back9_last1 > 0 ? countbackData.back9_last1 : '';
+                                totalCells[11].textContent = countbackData.front9 > 0 ? countbackData.front9 : '';
+                                totalCells[12].textContent = countbackData.front9_last6 > 0 ? countbackData.front9_last6 : '';
+                                totalCells[13].textContent = countbackData.front9_last3 > 0 ? countbackData.front9_last3 : '';
+                                totalCells[14].textContent = countbackData.front9_last2 > 0 ? countbackData.front9_last2 : '';
+                                totalCells[15].textContent = countbackData.front9_last1 > 0 ? countbackData.front9_last1 : '';
                             }
                         }
                     }
@@ -4768,35 +4762,56 @@
                 return { points: 0, type: 'double' };
             },
             
-            // Calculate countback according to proper golf rules
-            // Countback sequence: Last 6 holes → Last 3 holes → Last hole → 2nd to last → 3rd to last
+            // Calculate countback according to official golf rules
+            // Full countback sequence as specified
             calculateCountbackScore(playerScores, course, player) {
                 const countbackData = {
-                    last6: 0,    // Holes 13-18
-                    last3: 0,    // Holes 16-18
-                    last1: 0,    // Hole 18
-                    last2nd: 0,  // Hole 17
-                    last3rd: 0   // Hole 16
+                    // Total points
+                    totalPoints: 0,
+                    
+                    // Back 9 sequence
+                    back9: 0,        // Holes 10-18
+                    back9_last6: 0,  // Holes 13-18
+                    back9_last3: 0,  // Holes 16-18
+                    back9_last2: 0,  // Holes 17-18
+                    back9_last1: 0,  // Hole 18
+                    
+                    // Front 9 sequence
+                    front9: 0,       // Holes 1-9
+                    front9_last6: 0, // Holes 4-9
+                    front9_last3: 0, // Holes 7-9
+                    front9_last2: 0, // Holes 8-9
+                    front9_last1: 0  // Hole 9
                 };
                 
-                // Calculate last 6 holes (13-18)
-                for (let i = 13; i <= 18; i++) {
+                // Calculate all 18 holes
+                for (let i = 1; i <= 18; i++) {
                     const hole = course.holes.find(h => h.number === i);
                     const score = playerScores[i];
                     if (score !== undefined && score !== null && score !== '' && hole) {
                         const stablefordResult = this.calculateStablefordWithResult(
                             score, hole.par, player.phc, hole.index
                         );
-                        countbackData.last6 += stablefordResult.points;
+                        const points = stablefordResult.points;
                         
-                        // Last 3 holes (16-18)
-                        if (i >= 16) {
-                            countbackData.last3 += stablefordResult.points;
-                            
-                            // Individual holes for final tiebreakers
-                            if (i === 18) countbackData.last1 = stablefordResult.points;
-                            if (i === 17) countbackData.last2nd = stablefordResult.points;
-                            if (i === 16) countbackData.last3rd = stablefordResult.points;
+                        countbackData.totalPoints += points;
+                        
+                        // Back 9 calculations (holes 10-18)
+                        if (i >= 10) {
+                            countbackData.back9 += points;
+                            if (i >= 13) countbackData.back9_last6 += points;
+                            if (i >= 16) countbackData.back9_last3 += points;
+                            if (i >= 17) countbackData.back9_last2 += points;
+                            if (i === 18) countbackData.back9_last1 = points;
+                        }
+                        
+                        // Front 9 calculations (holes 1-9)
+                        if (i <= 9) {
+                            countbackData.front9 += points;
+                            if (i >= 4) countbackData.front9_last6 += points;
+                            if (i >= 7) countbackData.front9_last3 += points;
+                            if (i >= 8) countbackData.front9_last2 += points;
+                            if (i === 9) countbackData.front9_last1 = points;
                         }
                     }
                 }
@@ -4804,30 +4819,65 @@
                 return countbackData;
             },
             
-            // Compare two players using countback rules
+            // Compare two players using complete official countback rules
             // Returns: -1 if player1 wins, 1 if player2 wins, 0 if still tied
             compareCountback(countback1, countback2) {
-                // 1st: Last 6 holes
-                if (countback1.last6 !== countback2.last6) {
-                    return countback2.last6 - countback1.last6;
+                // 1st: Total Stableford points (should already be compared, but included for completeness)
+                if (countback1.totalPoints !== countback2.totalPoints) {
+                    return countback2.totalPoints - countback1.totalPoints;
                 }
-                // 2nd: Last 3 holes
-                if (countback1.last3 !== countback2.last3) {
-                    return countback2.last3 - countback1.last3;
+                
+                // 2nd: Back 9 (Holes 10-18)
+                if (countback1.back9 !== countback2.back9) {
+                    return countback2.back9 - countback1.back9;
                 }
-                // 3rd: Last hole (18)
-                if (countback1.last1 !== countback2.last1) {
-                    return countback2.last1 - countback1.last1;
+                
+                // 3rd: Holes 13-18 (Last 6 holes of back 9)
+                if (countback1.back9_last6 !== countback2.back9_last6) {
+                    return countback2.back9_last6 - countback1.back9_last6;
                 }
-                // 4th: 2nd to last hole (17)
-                if (countback1.last2nd !== countback2.last2nd) {
-                    return countback2.last2nd - countback1.last2nd;
+                
+                // 4th: Holes 16-18 (Last 3 holes)
+                if (countback1.back9_last3 !== countback2.back9_last3) {
+                    return countback2.back9_last3 - countback1.back9_last3;
                 }
-                // 5th: 3rd to last hole (16)
-                if (countback1.last3rd !== countback2.last3rd) {
-                    return countback2.last3rd - countback1.last3rd;
+                
+                // 5th: Holes 17-18 (Last 2 holes)
+                if (countback1.back9_last2 !== countback2.back9_last2) {
+                    return countback2.back9_last2 - countback1.back9_last2;
                 }
-                // Still tied after all countback checks
+                
+                // 6th: Hole 18 (Last 1 hole)
+                if (countback1.back9_last1 !== countback2.back9_last1) {
+                    return countback2.back9_last1 - countback1.back9_last1;
+                }
+                
+                // 7th: Front 9 (Holes 1-9)
+                if (countback1.front9 !== countback2.front9) {
+                    return countback2.front9 - countback1.front9;
+                }
+                
+                // 8th: Holes 4-9 (Last 6 holes of front 9)
+                if (countback1.front9_last6 !== countback2.front9_last6) {
+                    return countback2.front9_last6 - countback1.front9_last6;
+                }
+                
+                // 9th: Holes 7-9 (Last 3 holes of front 9)
+                if (countback1.front9_last3 !== countback2.front9_last3) {
+                    return countback2.front9_last3 - countback1.front9_last3;
+                }
+                
+                // 10th: Holes 8-9 (Last 2 holes of front 9)
+                if (countback1.front9_last2 !== countback2.front9_last2) {
+                    return countback2.front9_last2 - countback1.front9_last2;
+                }
+                
+                // 11th: Hole 9 (Last hole of front 9)
+                if (countback1.front9_last1 !== countback2.front9_last1) {
+                    return countback2.front9_last1 - countback1.front9_last1;
+                }
+                
+                // Still tied after all 11 countback checks
                 return 0;
             },
             
