@@ -1,0 +1,126 @@
+{
+  "courses": [
+    {
+      "id": 1770195566574,
+      "name": "LGC",
+      "rating": 71.5,
+      "slope": 128,
+      "par": 71,
+      "teeColor": "White",
+      "holes": [
+        {
+          "number": 1,
+          "par": 4,
+          "index": 16,
+          "yardage": 0
+        },
+        {
+          "number": 2,
+          "par": 3,
+          "index": 10,
+          "yardage": 0
+        },
+        {
+          "number": 3,
+          "par": 4,
+          "index": 4,
+          "yardage": 0
+        },
+        {
+          "number": 4,
+          "par": 4,
+          "index": 6,
+          "yardage": 0
+        },
+        {
+          "number": 5,
+          "par": 4,
+          "index": 14,
+          "yardage": 0
+        },
+        {
+          "number": 6,
+          "par": 4,
+          "index": 2,
+          "yardage": 0
+        },
+        {
+          "number": 7,
+          "par": 5,
+          "index": 8,
+          "yardage": 0
+        },
+        {
+          "number": 8,
+          "par": 3,
+          "index": 12,
+          "yardage": 0
+        },
+        {
+          "number": 9,
+          "par": 4,
+          "index": 18,
+          "yardage": 0
+        },
+        {
+          "number": 10,
+          "par": 4,
+          "index": 5,
+          "yardage": 0
+        },
+        {
+          "number": 11,
+          "par": 4,
+          "index": 7,
+          "yardage": 0
+        },
+        {
+          "number": 12,
+          "par": 5,
+          "index": 17,
+          "yardage": 0
+        },
+        {
+          "number": 13,
+          "par": 4,
+          "index": 1,
+          "yardage": 0
+        },
+        {
+          "number": 14,
+          "par": 3,
+          "index": 13,
+          "yardage": 0
+        },
+        {
+          "number": 15,
+          "par": 4,
+          "index": 9,
+          "yardage": 0
+        },
+        {
+          "number": 16,
+          "par": 5,
+          "index": 15,
+          "yardage": 0
+        },
+        {
+          "number": 17,
+          "par": 3,
+          "index": 11,
+          "yardage": 0
+        },
+        {
+          "number": 18,
+          "par": 4,
+          "index": 3,
+          "yardage": 0
+        }
+      ],
+      "frontPar": 35,
+      "backPar": 36,
+      "date": "2026-02-04T08:59:26.574Z"
+    }
+  ],
+  "timestamp": "2026-02-04T08:59:53.168Z"
+}

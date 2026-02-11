@@ -4789,18 +4789,30 @@
                 if (grossScore === undefined || grossScore === null) return 0;
                 const gross = parseInt(grossScore);
                 if (isNaN(gross)) return 0;
-                if (!phc) return gross;
+                if (!phc && phc !== 0) return gross;
                 
                 const playingHandicap = Math.floor(phc) || 0;
                 let strokes = 0;
                 
-                if (playingHandicap >= 18) {
-                    strokes = 1 + Math.floor((playingHandicap - holeIndex) / 18);
-                } else if (playingHandicap >= holeIndex) {
-                    strokes = 1;
+                if (playingHandicap >= 0) {
+                    // Positive handicap: player RECEIVES strokes
+                    if (playingHandicap >= 18) {
+                        strokes = 1 + Math.floor((playingHandicap - holeIndex) / 18);
+                    } else if (playingHandicap >= holeIndex) {
+                        strokes = 1;
+                    }
+                    return Math.max(1, gross - strokes);
+                } else {
+                    // Negative handicap: player GIVES strokes to the course
+                    // Strokes are given on HIGHEST stroke index holes (18, 17, 16, etc.)
+                    const absHandicap = Math.abs(playingHandicap);
+                    const strokeIndexThreshold = 19 - absHandicap; // e.g., -3 means SI 16, 17, 18 get +1
+                    
+                    if (holeIndex >= strokeIndexThreshold) {
+                        strokes = -1; // Giving a stroke (adds to net score)
+                    }
+                    return gross - strokes; // Subtracting -1 = adding 1
                 }
-                
-                return Math.max(1, gross - strokes);
             },
             
             calculateStablefordWithResult(grossScore, par, phc, holeIndex) {
@@ -4820,10 +4832,22 @@
                 const playingHandicap = Math.floor(phc) || 0;
                 let strokesReceived = 0;
                 
-                if (playingHandicap >= 18) {
-                    strokesReceived = 1 + Math.floor((playingHandicap - holeIndex) / 18);
-                } else if (playingHandicap >= holeIndex) {
-                    strokesReceived = 1;
+                if (playingHandicap >= 0) {
+                    // Positive handicap: player RECEIVES strokes
+                    if (playingHandicap >= 18) {
+                        strokesReceived = 1 + Math.floor((playingHandicap - holeIndex) / 18);
+                    } else if (playingHandicap >= holeIndex) {
+                        strokesReceived = 1;
+                    }
+                } else {
+                    // Negative handicap: player GIVES strokes to the course
+                    // Strokes are given on HIGHEST stroke index holes (18, 17, 16, etc.)
+                    const absHandicap = Math.abs(playingHandicap);
+                    const strokeIndexThreshold = 19 - absHandicap; // e.g., -3 means SI 16, 17, 18 get stroke given
+                    
+                    if (holeIndex >= strokeIndexThreshold) {
+                        strokesReceived = -1; // Player gives a stroke (net score increases)
+                    }
                 }
                 
                 const netScore = scoreNum - strokesReceived;

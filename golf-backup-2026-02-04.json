@@ -1,0 +1,1353 @@
+{
+  "players": [
+    {
+      "id": 1770195731936,
+      "name": "Nick Eaton",
+      "handicap": -0.1,
+      "phc": 0,
+      "course": "LGC",
+      "group": "",
+      "date": "2026-02-04",
+      "phcPercentage": ""
+    },
+    {
+      "id": 1770195761522,
+      "name": "Paul Bentley",
+      "handicap": 8.6,
+      "phc": 10,
+      "course": "LGC",
+      "group": "",
+      "date": "2026-02-04",
+      "phcPercentage": ""
+    },
+    {
+      "id": 1770195780830,
+      "name": "Rich Moore",
+      "handicap": 5.8,
+      "phc": 7,
+      "course": "LGC",
+      "group": "",
+      "date": "2026-02-04",
+      "phcPercentage": ""
+    },
+    {
+      "id": 1770195802199,
+      "name": "Daren Davey",
+      "handicap": 7.2,
+      "phc": 9,
+      "course": "LGC",
+      "group": "",
+      "date": "2026-02-04",
+      "phcPercentage": ""
+    },
+    {
+      "id": 1770195823900,
+      "name": "Darren Sunter",
+      "handicap": 13,
+      "phc": 15,
+      "course": "LGC",
+      "group": "",
+      "date": "2026-02-04",
+      "phcPercentage": ""
+    },
+    {
+      "id": 1770195843354,
+      "name": "Julian Pennie",
+      "handicap": 5.5,
+      "phc": 7,
+      "course": "LGC",
+      "group": "",
+      "date": "2026-02-04",
+      "phcPercentage": ""
+    },
+    {
+      "id": 1770195861515,
+      "name": "Ringo Theara",
+      "handicap": 5.5,
+      "phc": 7,
+      "course": "LGC",
+      "group": "",
+      "date": "2026-02-04",
+      "phcPercentage": ""
+    },
+    {
+      "id": 1770195882711,
+      "name": "Josh Eaton",
+      "handicap": 9.9,
+      "phc": 12,
+      "course": "LGC",
+      "group": "",
+      "date": "2026-02-04",
+      "phcPercentage": ""
+    },
+    {
+      "id": 1770195915403,
+      "name": "Michael Paeckmeyer",
+      "handicap": 5.1,
+      "phc": 6,
+      "course": "LGC",
+      "group": "",
+      "date": "2026-02-04",
+      "phcPercentage": ""
+    },
+    {
+      "id": 1770195932808,
+      "name": "Tony Chapman",
+      "handicap": 7.9,
+      "phc": 9,
+      "course": "LGC",
+      "group": "",
+      "date": "2026-02-04",
+      "phcPercentage": ""
+    },
+    {
+      "id": 1770195951738,
+      "name": "Dan Breeze",
+      "handicap": 7.8,
+      "phc": 9,
+      "course": "LGC",
+      "group": "",
+      "date": "2026-02-04",
+      "phcPercentage": ""
+    },
+    {
+      "id": 1770195971984,
+      "name": "Mark Saunders",
+      "handicap": 3.6,
+      "phc": 5,
+      "course": "LGC",
+      "group": "",
+      "date": "2026-02-04",
+      "phcPercentage": ""
+    },
+    {
+      "id": 1770195986827,
+      "name": "Duane Hayden",
+      "handicap": 12,
+      "phc": 14,
+      "course": "LGC",
+      "group": "",
+      "date": "2026-02-04",
+      "phcPercentage": ""
+    },
+    {
+      "id": 1770196006821,
+      "name": "David Park",
+      "handicap": 6.3,
+      "phc": 8,
+      "course": "LGC",
+      "group": "",
+      "date": "2026-02-04",
+      "phcPercentage": ""
+    },
+    {
+      "id": 1770196029632,
+      "name": "Tom McCarthy",
+      "handicap": 10.4,
+      "phc": 12,
+      "course": "LGC",
+      "group": "",
+      "date": "2026-02-04",
+      "phcPercentage": ""
+    },
+    {
+      "id": 1770196051519,
+      "name": "Daljit Basra",
+      "handicap": 13.7,
+      "phc": 16,
+      "course": "LGC",
+      "group": "",
+      "date": "2026-02-04",
+      "phcPercentage": ""
+    },
+    {
+      "id": 1770196067468,
+      "name": "Sean Casey",
+      "handicap": 8.7,
+      "phc": 10,
+      "course": "LGC",
+      "group": "",
+      "date": "2026-02-04",
+      "phcPercentage": ""
+    },
+    {
+      "id": 1770196085764,
+      "name": "SDF",
+      "handicap": 10.5,
+      "phc": 12,
+      "course": "LGC",
+      "group": "",
+      "date": "2026-02-04",
+      "phcPercentage": ""
+    },
+    {
+      "id": 1770196105516,
+      "name": "Tony Semple",
+      "handicap": 10.9,
+      "phc": 13,
+      "course": "LGC",
+      "group": "",
+      "date": "2026-02-04",
+      "phcPercentage": ""
+    }
+  ],
+  "courses": [
+    {
+      "id": 1770195566574,
+      "name": "LGC",
+      "rating": 71.5,
+      "slope": 128,
+      "par": 71,
+      "teeColor": "White",
+      "holes": [
+        {
+          "number": 1,
+          "par": 4,
+          "index": 16,
+          "yardage": 0
+        },
+        {
+          "number": 2,
+          "par": 3,
+          "index": 10,
+          "yardage": 0
+        },
+        {
+          "number": 3,
+          "par": 4,
+          "index": 4,
+          "yardage": 0
+        },
+        {
+          "number": 4,
+          "par": 4,
+          "index": 6,
+          "yardage": 0
+        },
+        {
+          "number": 5,
+          "par": 4,
+          "index": 14,
+          "yardage": 0
+        },
+        {
+          "number": 6,
+          "par": 4,
+          "index": 2,
+          "yardage": 0
+        },
+        {
+          "number": 7,
+          "par": 5,
+          "index": 8,
+          "yardage": 0
+        },
+        {
+          "number": 8,
+          "par": 3,
+          "index": 12,
+          "yardage": 0
+        },
+        {
+          "number": 9,
+          "par": 4,
+          "index": 18,
+          "yardage": 0
+        },
+        {
+          "number": 10,
+          "par": 4,
+          "index": 5,
+          "yardage": 0
+        },
+        {
+          "number": 11,
+          "par": 4,
+          "index": 7,
+          "yardage": 0
+        },
+        {
+          "number": 12,
+          "par": 5,
+          "index": 17,
+          "yardage": 0
+        },
+        {
+          "number": 13,
+          "par": 4,
+          "index": 1,
+          "yardage": 0
+        },
+        {
+          "number": 14,
+          "par": 3,
+          "index": 13,
+          "yardage": 0
+        },
+        {
+          "number": 15,
+          "par": 4,
+          "index": 9,
+          "yardage": 0
+        },
+        {
+          "number": 16,
+          "par": 5,
+          "index": 15,
+          "yardage": 0
+        },
+        {
+          "number": 17,
+          "par": 3,
+          "index": 11,
+          "yardage": 0
+        },
+        {
+          "number": 18,
+          "par": 4,
+          "index": 3,
+          "yardage": 0
+        }
+      ],
+      "frontPar": 35,
+      "backPar": 36,
+      "date": "2026-02-04T08:59:26.574Z"
+    }
+  ],
+  "pairs": [
+    {
+      "id": 1770200663041,
+      "player1": {
+        "id": 1770195731936,
+        "name": "Nick Eaton",
+        "handicap": -0.1,
+        "phc": 0,
+        "course": "LGC",
+        "group": "",
+        "date": "2026-02-04",
+        "phcPercentage": ""
+      },
+      "player2": {
+        "id": 1770195761522,
+        "name": "Paul Bentley",
+        "handicap": 8.6,
+        "phc": 10,
+        "course": "LGC",
+        "group": "",
+        "date": "2026-02-04",
+        "phcPercentage": ""
+      },
+      "date": "2026-02-04T10:24:23.041Z",
+      "course": "LGC"
+    },
+    {
+      "id": 1770200663046,
+      "player1": {
+        "id": 1770195932808,
+        "name": "Tony Chapman",
+        "handicap": 7.9,
+        "phc": 9,
+        "course": "LGC",
+        "group": "",
+        "date": "2026-02-04",
+        "phcPercentage": ""
+      },
+      "player2": {
+        "id": 1770196085764,
+        "name": "SDF",
+        "handicap": 10.5,
+        "phc": 12,
+        "course": "LGC",
+        "group": "",
+        "date": "2026-02-04",
+        "phcPercentage": ""
+      },
+      "date": "2026-02-04T10:24:23.044Z",
+      "course": "LGC"
+    },
+    {
+      "id": 1770200663048,
+      "player1": {
+        "id": 1770195843354,
+        "name": "Julian Pennie",
+        "handicap": 5.5,
+        "phc": 7,
+        "course": "LGC",
+        "group": "",
+        "date": "2026-02-04",
+        "phcPercentage": ""
+      },
+      "player2": {
+        "id": 1770195882711,
+        "name": "Josh Eaton",
+        "handicap": 9.9,
+        "phc": 12,
+        "course": "LGC",
+        "group": "",
+        "date": "2026-02-04",
+        "phcPercentage": ""
+      },
+      "date": "2026-02-04T10:24:23.044Z",
+      "course": "LGC"
+    },
+    {
+      "id": 1770200663050,
+      "player1": {
+        "id": 1770195971984,
+        "name": "Mark Saunders",
+        "handicap": 3.6,
+        "phc": 5,
+        "course": "LGC",
+        "group": "",
+        "date": "2026-02-04",
+        "phcPercentage": ""
+      },
+      "player2": {
+        "id": 1770196006821,
+        "name": "David Park",
+        "handicap": 6.3,
+        "phc": 8,
+        "course": "LGC",
+        "group": "",
+        "date": "2026-02-04",
+        "phcPercentage": ""
+      },
+      "date": "2026-02-04T10:24:23.044Z",
+      "course": "LGC"
+    },
+    {
+      "id": 1770200663052,
+      "player1": {
+        "id": 1770195823900,
+        "name": "Darren Sunter",
+        "handicap": 13,
+        "phc": 15,
+        "course": "LGC",
+        "group": "",
+        "date": "2026-02-04",
+        "phcPercentage": ""
+      },
+      "player2": {
+        "id": 1770195986827,
+        "name": "Duane Hayden",
+        "handicap": 12,
+        "phc": 14,
+        "course": "LGC",
+        "group": "",
+        "date": "2026-02-04",
+        "phcPercentage": ""
+      },
+      "date": "2026-02-04T10:24:23.044Z",
+      "course": "LGC"
+    },
+    {
+      "id": 1770200663054,
+      "player1": {
+        "id": 1770195915403,
+        "name": "Michael Paeckmeyer",
+        "handicap": 5.1,
+        "phc": 6,
+        "course": "LGC",
+        "group": "",
+        "date": "2026-02-04",
+        "phcPercentage": ""
+      },
+      "player2": {
+        "id": 1770195951738,
+        "name": "Dan Breeze",
+        "handicap": 7.8,
+        "phc": 9,
+        "course": "LGC",
+        "group": "",
+        "date": "2026-02-04",
+        "phcPercentage": ""
+      },
+      "date": "2026-02-04T10:24:23.044Z",
+      "course": "LGC"
+    },
+    {
+      "id": 1770200663056,
+      "player1": {
+        "id": 1770195780830,
+        "name": "Rich Moore",
+        "handicap": 5.8,
+        "phc": 7,
+        "course": "LGC",
+        "group": "",
+        "date": "2026-02-04",
+        "phcPercentage": ""
+      },
+      "player2": {
+        "id": 1770195802199,
+        "name": "Daren Davey",
+        "handicap": 7.2,
+        "phc": 9,
+        "course": "LGC",
+        "group": "",
+        "date": "2026-02-04",
+        "phcPercentage": ""
+      },
+      "date": "2026-02-04T10:24:23.044Z",
+      "course": "LGC"
+    },
+    {
+      "id": 1770200663058,
+      "player1": {
+        "id": 1770196051519,
+        "name": "Daljit Basra",
+        "handicap": 13.7,
+        "phc": 16,
+        "course": "LGC",
+        "group": "",
+        "date": "2026-02-04",
+        "phcPercentage": ""
+      },
+      "player2": {
+        "id": 1770196067468,
+        "name": "Sean Casey",
+        "handicap": 8.7,
+        "phc": 10,
+        "course": "LGC",
+        "group": "",
+        "date": "2026-02-04",
+        "phcPercentage": ""
+      },
+      "date": "2026-02-04T10:24:23.044Z",
+      "course": "LGC"
+    },
+    {
+      "id": 1770200663060,
+      "player1": {
+        "id": 1770195861515,
+        "name": "Ringo Theara",
+        "handicap": 5.5,
+        "phc": 7,
+        "course": "LGC",
+        "group": "",
+        "date": "2026-02-04",
+        "phcPercentage": ""
+      },
+      "player2": {
+        "id": 1770196105516,
+        "name": "Tony Semple",
+        "handicap": 10.9,
+        "phc": 13,
+        "course": "LGC",
+        "group": "",
+        "date": "2026-02-04",
+        "phcPercentage": ""
+      },
+      "date": "2026-02-04T10:24:23.044Z",
+      "course": "LGC"
+    }
+  ],
+  "scores": {
+    "1770195731936": {
+      "1": 4,
+      "2": 3,
+      "3": 3,
+      "4": 5,
+      "5": 4,
+      "6": 3,
+      "7": 5,
+      "8": 4,
+      "9": 4,
+      "10": 4,
+      "11": 4,
+      "12": 6,
+      "13": 5,
+      "14": 2,
+      "15": 4,
+      "16": 5,
+      "17": 2,
+      "18": 3
+    },
+    "1770195761522": {
+      "1": 5,
+      "2": 3,
+      "3": 5,
+      "4": 4,
+      "5": 5,
+      "6": 5,
+      "7": 7,
+      "8": 3,
+      "9": 4,
+      "10": 4,
+      "11": 5,
+      "12": 6,
+      "13": 4,
+      "14": 4,
+      "15": 4,
+      "16": 5,
+      "17": 3,
+      "18": 6
+    },
+    "1770195780830": {
+      "1": 6,
+      "2": 4,
+      "3": 5,
+      "4": 6,
+      "5": 4,
+      "6": 5,
+      "7": 6,
+      "8": 3,
+      "9": 4,
+      "10": 4,
+      "11": 4,
+      "12": 6,
+      "13": 6,
+      "14": 4,
+      "15": 4,
+      "16": 6,
+      "17": 4,
+      "18": 4
+    },
+    "1770195802199": {
+      "1": 3,
+      "2": 3,
+      "3": 5,
+      "4": 5,
+      "5": 4,
+      "6": 5,
+      "7": 5,
+      "8": 3,
+      "9": 5,
+      "10": 5,
+      "11": 5,
+      "12": 5,
+      "13": 5,
+      "14": 3,
+      "15": 4,
+      "16": 7,
+      "17": 3,
+      "18": 5
+    },
+    "1770195823900": {
+      "1": 6,
+      "2": 4,
+      "3": 4,
+      "4": 5,
+      "5": 5,
+      "6": 6,
+      "7": 6,
+      "8": 2,
+      "9": 5,
+      "10": 7,
+      "11": 6,
+      "12": 7,
+      "13": 5,
+      "14": 3,
+      "15": 4,
+      "16": 6,
+      "17": 3,
+      "18": 7
+    },
+    "1770195843354": {
+      "1": 6,
+      "2": 3,
+      "3": 4,
+      "4": 5,
+      "5": 6,
+      "6": 5,
+      "7": 7,
+      "8": 5,
+      "9": 5,
+      "10": 7,
+      "11": 6,
+      "12": 6,
+      "13": 5,
+      "14": 4,
+      "15": 5,
+      "16": 5,
+      "17": 3,
+      "18": 6
+    },
+    "1770195861515": {
+      "1": 4,
+      "2": 4,
+      "3": 4,
+      "4": 4,
+      "5": 4,
+      "6": 5,
+      "7": 5,
+      "8": 4,
+      "9": 6,
+      "10": 5,
+      "11": 6,
+      "12": 7,
+      "13": 5,
+      "14": 4,
+      "15": 3,
+      "16": 4,
+      "17": 3,
+      "18": 4
+    },
+    "1770195882711": {
+      "1": 6,
+      "2": 4,
+      "3": 4,
+      "4": 4,
+      "5": 5,
+      "6": 4,
+      "7": 6,
+      "8": 3,
+      "9": 5,
+      "10": 7,
+      "11": 6,
+      "12": 5,
+      "13": 6,
+      "14": 4,
+      "15": 5,
+      "16": 7,
+      "17": 3,
+      "18": 5
+    },
+    "1770195915403": {
+      "1": 4,
+      "2": 3,
+      "3": 4,
+      "4": 4,
+      "5": 4,
+      "6": 4,
+      "7": 6,
+      "8": 3,
+      "9": 5,
+      "10": 4,
+      "11": 6,
+      "12": 5,
+      "13": 5,
+      "14": 4,
+      "15": 6,
+      "16": 6,
+      "17": 3,
+      "18": 6
+    },
+    "1770195932808": {
+      "1": 4,
+      "2": 5,
+      "3": 5,
+      "4": 7,
+      "5": 4,
+      "6": 4,
+      "7": 5,
+      "8": 4,
+      "9": 5,
+      "10": 5,
+      "11": 5,
+      "12": 5,
+      "13": 4,
+      "14": 3,
+      "15": 4,
+      "16": 6,
+      "17": 3,
+      "18": 6
+    },
+    "1770195951738": {
+      "1": 5,
+      "2": 5,
+      "3": 5,
+      "4": 6,
+      "5": 4,
+      "6": 6,
+      "7": 5,
+      "8": 3,
+      "9": 4,
+      "10": 4,
+      "11": 5,
+      "12": 6,
+      "13": 5,
+      "14": 4,
+      "15": 5,
+      "16": 5,
+      "17": 4,
+      "18": 5
+    },
+    "1770195971984": {
+      "1": 4,
+      "2": 4,
+      "3": 4,
+      "4": 5,
+      "5": 4,
+      "6": 5,
+      "7": 7,
+      "8": 3,
+      "9": 5,
+      "10": 5,
+      "11": 5,
+      "12": 5,
+      "13": 4,
+      "14": 3,
+      "15": 4,
+      "16": 5,
+      "17": 3,
+      "18": 5
+    },
+    "1770195986827": {
+      "1": 7,
+      "2": 5,
+      "3": 5,
+      "4": 4,
+      "5": 5,
+      "6": 6,
+      "7": 5,
+      "8": 3,
+      "9": 5,
+      "10": 3,
+      "11": 6,
+      "12": 6,
+      "13": 5,
+      "14": 4,
+      "15": 5,
+      "16": 6,
+      "17": 4,
+      "18": 6
+    },
+    "1770196006821": {
+      "1": 5,
+      "2": 4,
+      "3": 4,
+      "4": 6,
+      "5": 5,
+      "6": 4,
+      "7": 5,
+      "8": 3,
+      "9": 4,
+      "10": 5,
+      "11": 5,
+      "12": 5,
+      "13": 5,
+      "14": 4,
+      "15": 5,
+      "16": 5,
+      "17": 3,
+      "18": 6
+    },
+    "1770196029632": {
+      "1": 3,
+      "2": 4,
+      "3": 4,
+      "4": 6,
+      "5": 5,
+      "6": 4,
+      "7": 7,
+      "8": 5,
+      "9": 5,
+      "10": 7,
+      "11": 4,
+      "12": 5,
+      "13": 7,
+      "14": 4,
+      "15": 6,
+      "16": 5,
+      "17": 3,
+      "18": 4
+    },
+    "1770196051519": {
+      "1": 4,
+      "2": 4,
+      "3": 5,
+      "4": 6,
+      "5": 5,
+      "6": 6,
+      "7": 8,
+      "8": 4,
+      "9": 5,
+      "10": 4,
+      "11": 5,
+      "12": 6,
+      "13": 5,
+      "14": 4,
+      "15": 6,
+      "16": 4,
+      "17": 4,
+      "18": 5
+    },
+    "1770196067468": {
+      "1": 4,
+      "2": 4,
+      "3": 6,
+      "4": 4,
+      "5": 4,
+      "6": 5,
+      "7": 6,
+      "8": 3,
+      "9": 5,
+      "10": 5,
+      "11": 4,
+      "12": 6,
+      "13": 5,
+      "14": 3,
+      "15": 4,
+      "16": 5,
+      "17": 3,
+      "18": 5
+    },
+    "1770196085764": {
+      "1": 4,
+      "2": 4,
+      "3": 5,
+      "4": 5,
+      "5": 4,
+      "6": 5,
+      "7": 6,
+      "8": 3,
+      "9": 5,
+      "10": 4,
+      "11": 5,
+      "12": 6,
+      "13": 7,
+      "14": 4,
+      "15": 4,
+      "16": 5,
+      "17": 4,
+      "18": 5
+    },
+    "1770196105516": {
+      "1": 5,
+      "2": 5,
+      "3": 6,
+      "4": 5,
+      "5": 5,
+      "6": 6,
+      "7": 6,
+      "8": 4,
+      "9": 5,
+      "10": 5,
+      "11": 5,
+      "12": 5,
+      "13": 5,
+      "14": 4,
+      "15": 6,
+      "16": 7,
+      "17": 4,
+      "18": 6
+    }
+  },
+  "leaderboardMoney": {},
+  "pairsScores": {
+    "1770200663041": {
+      "totalPoints": 72,
+      "totalGross": 152,
+      "front9Points": 35,
+      "back9Points": 37,
+      "course": "LGC",
+      "calculatedAt": "2026-02-04T10:24:28.021Z"
+    },
+    "1770200663046": {
+      "totalPoints": 66,
+      "totalGross": 169,
+      "front9Points": 32,
+      "back9Points": 34,
+      "course": "LGC",
+      "calculatedAt": "2026-02-04T10:24:28.021Z"
+    },
+    "1770200663048": {
+      "totalPoints": 51,
+      "totalGross": 182,
+      "front9Points": 28,
+      "back9Points": 23,
+      "course": "LGC",
+      "calculatedAt": "2026-02-04T10:24:28.021Z"
+    },
+    "1770200663050": {
+      "totalPoints": 64,
+      "totalGross": 163,
+      "front9Points": 31,
+      "back9Points": 33,
+      "course": "LGC",
+      "calculatedAt": "2026-02-04T10:24:28.021Z"
+    },
+    "1770200663052": {
+      "totalPoints": 63,
+      "totalGross": 181,
+      "front9Points": 33,
+      "back9Points": 30,
+      "course": "LGC",
+      "calculatedAt": "2026-02-04T10:24:28.021Z"
+    },
+    "1770200663054": {
+      "totalPoints": 61,
+      "totalGross": 168,
+      "front9Points": 33,
+      "back9Points": 28,
+      "course": "LGC",
+      "calculatedAt": "2026-02-04T10:24:28.021Z"
+    },
+    "1770200663056": {
+      "totalPoints": 65,
+      "totalGross": 165,
+      "front9Points": 32,
+      "back9Points": 33,
+      "course": "LGC",
+      "calculatedAt": "2026-02-04T10:24:28.021Z"
+    },
+    "1770200663058": {
+      "totalPoints": 69,
+      "totalGross": 171,
+      "front9Points": 31,
+      "back9Points": 38,
+      "course": "LGC",
+      "calculatedAt": "2026-02-04T10:24:28.021Z"
+    },
+    "1770200663060": {
+      "totalPoints": 59,
+      "totalGross": 175,
+      "front9Points": 28,
+      "back9Points": 31,
+      "course": "LGC",
+      "calculatedAt": "2026-02-04T10:24:28.021Z"
+    }
+  },
+  "pairsMoney": {},
+  "pairsCourseGenerated": "LGC",
+  "comps": {
+    "fourBBB": [
+      {
+        "id": 1770200681879,
+        "name": "4BBB Team 1",
+        "players": [
+          {
+            "id": 1770196051519,
+            "name": "Daljit Basra",
+            "handicap": 13.7,
+            "phc": 16,
+            "course": "LGC",
+            "group": "",
+            "date": "2026-02-04",
+            "phcPercentage": ""
+          },
+          {
+            "id": 1770195761522,
+            "name": "Paul Bentley",
+            "handicap": 8.6,
+            "phc": 10,
+            "course": "LGC",
+            "group": "",
+            "date": "2026-02-04",
+            "phcPercentage": ""
+          }
+        ],
+        "course": "LGC",
+        "currency": "£",
+        "money": 0,
+        "group": "Group 1",
+        "date": "2026-02-04T10:24:41.879Z",
+        "scores": {},
+        "totalPoints": 42,
+        "totalGross": 81,
+        "front9Points": 20,
+        "back9Points": 22
+      },
+      {
+        "id": 1770200681881,
+        "name": "4BBB Team 2",
+        "players": [
+          {
+            "id": 1770195780830,
+            "name": "Rich Moore",
+            "handicap": 5.8,
+            "phc": 7,
+            "course": "LGC",
+            "group": "",
+            "date": "2026-02-04",
+            "phcPercentage": ""
+          },
+          {
+            "id": 1770195951738,
+            "name": "Dan Breeze",
+            "handicap": 7.8,
+            "phc": 9,
+            "course": "LGC",
+            "group": "",
+            "date": "2026-02-04",
+            "phcPercentage": ""
+          }
+        ],
+        "course": "LGC",
+        "currency": "£",
+        "money": 0,
+        "group": "Group 1",
+        "date": "2026-02-04T10:24:41.879Z",
+        "scores": {},
+        "totalPoints": 34,
+        "totalGross": 81,
+        "front9Points": 16,
+        "back9Points": 18
+      },
+      {
+        "id": 1770200681883,
+        "name": "4BBB Team 3",
+        "players": [
+          {
+            "id": 1770195915403,
+            "name": "Michael Paeckmeyer",
+            "handicap": 5.1,
+            "phc": 6,
+            "course": "LGC",
+            "group": "",
+            "date": "2026-02-04",
+            "phcPercentage": ""
+          },
+          {
+            "id": 1770195986827,
+            "name": "Duane Hayden",
+            "handicap": 12,
+            "phc": 14,
+            "course": "LGC",
+            "group": "",
+            "date": "2026-02-04",
+            "phcPercentage": ""
+          }
+        ],
+        "course": "LGC",
+        "currency": "£",
+        "money": 0,
+        "group": "Group 2",
+        "date": "2026-02-04T10:24:41.879Z",
+        "scores": {},
+        "totalPoints": 39,
+        "totalGross": 79,
+        "front9Points": 22,
+        "back9Points": 17
+      },
+      {
+        "id": 1770200681885,
+        "name": "4BBB Team 4",
+        "players": [
+          {
+            "id": 1770196105516,
+            "name": "Tony Semple",
+            "handicap": 10.9,
+            "phc": 13,
+            "course": "LGC",
+            "group": "",
+            "date": "2026-02-04",
+            "phcPercentage": ""
+          },
+          {
+            "id": 1770195843354,
+            "name": "Julian Pennie",
+            "handicap": 5.5,
+            "phc": 7,
+            "course": "LGC",
+            "group": "",
+            "date": "2026-02-04",
+            "phcPercentage": ""
+          }
+        ],
+        "course": "LGC",
+        "currency": "£",
+        "money": 0,
+        "group": "Group 2",
+        "date": "2026-02-04T10:24:41.879Z",
+        "scores": {},
+        "totalPoints": 32,
+        "totalGross": 87,
+        "front9Points": 16,
+        "back9Points": 16
+      },
+      {
+        "id": 1770200681887,
+        "name": "4BBB Team 5",
+        "players": [
+          {
+            "id": 1770196029632,
+            "name": "Tom McCarthy",
+            "handicap": 10.4,
+            "phc": 12,
+            "course": "LGC",
+            "group": "",
+            "date": "2026-02-04",
+            "phcPercentage": ""
+          },
+          {
+            "id": 1770196067468,
+            "name": "Sean Casey",
+            "handicap": 8.7,
+            "phc": 10,
+            "course": "LGC",
+            "group": "",
+            "date": "2026-02-04",
+            "phcPercentage": ""
+          }
+        ],
+        "course": "LGC",
+        "currency": "£",
+        "money": 0,
+        "group": "Group 3",
+        "date": "2026-02-04T10:24:41.879Z",
+        "scores": {},
+        "totalPoints": 43,
+        "totalGross": 75,
+        "front9Points": 21,
+        "back9Points": 22
+      },
+      {
+        "id": 1770200681889,
+        "name": "4BBB Team 6",
+        "players": [
+          {
+            "id": 1770196006821,
+            "name": "David Park",
+            "handicap": 6.3,
+            "phc": 8,
+            "course": "LGC",
+            "group": "",
+            "date": "2026-02-04",
+            "phcPercentage": ""
+          },
+          {
+            "id": 1770195971984,
+            "name": "Mark Saunders",
+            "handicap": 3.6,
+            "phc": 5,
+            "course": "LGC",
+            "group": "",
+            "date": "2026-02-04",
+            "phcPercentage": ""
+          }
+        ],
+        "course": "LGC",
+        "currency": "£",
+        "money": 0,
+        "group": "Group 3",
+        "date": "2026-02-04T10:24:41.879Z",
+        "scores": {},
+        "totalPoints": 38,
+        "totalGross": 77,
+        "front9Points": 19,
+        "back9Points": 19
+      },
+      {
+        "id": 1770200681891,
+        "name": "4BBB Team 7",
+        "players": [
+          {
+            "id": 1770196085764,
+            "name": "SDF",
+            "handicap": 10.5,
+            "phc": 12,
+            "course": "LGC",
+            "group": "",
+            "date": "2026-02-04",
+            "phcPercentage": ""
+          },
+          {
+            "id": 1770195823900,
+            "name": "Darren Sunter",
+            "handicap": 13,
+            "phc": 15,
+            "course": "LGC",
+            "group": "",
+            "date": "2026-02-04",
+            "phcPercentage": ""
+          }
+        ],
+        "course": "LGC",
+        "currency": "£",
+        "money": 0,
+        "group": "Group 4",
+        "date": "2026-02-04T10:24:41.879Z",
+        "scores": {},
+        "totalPoints": 41,
+        "totalGross": 79,
+        "front9Points": 20,
+        "back9Points": 21
+      },
+      {
+        "id": 1770200681893,
+        "name": "4BBB Team 8",
+        "players": [
+          {
+            "id": 1770195861515,
+            "name": "Ringo Theara",
+            "handicap": 5.5,
+            "phc": 7,
+            "course": "LGC",
+            "group": "",
+            "date": "2026-02-04",
+            "phcPercentage": ""
+          },
+          {
+            "id": 1770195932808,
+            "name": "Tony Chapman",
+            "handicap": 7.9,
+            "phc": 9,
+            "course": "LGC",
+            "group": "",
+            "date": "2026-02-04",
+            "phcPercentage": ""
+          }
+        ],
+        "course": "LGC",
+        "currency": "£",
+        "money": 0,
+        "group": "Group 4",
+        "date": "2026-02-04T10:24:41.879Z",
+        "scores": {},
+        "totalPoints": 41,
+        "totalGross": 74,
+        "front9Points": 19,
+        "back9Points": 22
+      },
+      {
+        "id": 1770200681895,
+        "name": "4BBB Team 9",
+        "players": [
+          {
+            "id": 1770195882711,
+            "name": "Josh Eaton",
+            "handicap": 9.9,
+            "phc": 12,
+            "course": "LGC",
+            "group": "",
+            "date": "2026-02-04",
+            "phcPercentage": ""
+          },
+          {
+            "id": 1770195802199,
+            "name": "Daren Davey",
+            "handicap": 7.2,
+            "phc": 9,
+            "course": "LGC",
+            "group": "",
+            "date": "2026-02-04",
+            "phcPercentage": ""
+          }
+        ],
+        "course": "LGC",
+        "currency": "£",
+        "money": 0,
+        "group": "Group 5",
+        "date": "2026-02-04T10:24:41.879Z",
+        "scores": {},
+        "totalPoints": 41,
+        "totalGross": 71,
+        "front9Points": 23,
+        "back9Points": 18
+      }
+    ],
+    "fourPersonTeams": [],
+    "best3From4": [],
+    "mixedScore": [],
+    "teamAvsB": {
+      "teamA": [],
+      "teamB": [],
+      "courseName": ""
+    }
+  },
+  "masterLeaderboardData": [],
+  "currentTab": "scorecard",
+  "scorecardSettings": {
+    "selectedCourseId": "1770195566574",
+    "selectedGroupFilter": "all"
+  },
+  "leaderboardSettings": {
+    "currency": "$",
+    "defaultSort": "totalPoints"
+  },
+  "pairsSettings": {
+    "currency": "$"
+  },
+  "timestamp": "2026-02-04T10:39:18.252Z"
+}
