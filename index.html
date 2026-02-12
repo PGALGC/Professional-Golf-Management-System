@@ -4713,9 +4713,9 @@
                     const hole = course.holes.find(h => h.number === i);
                     html += `<th class="hole-header">
                         <div style="font-weight: bold;">${i}</div>
-                        <div style="font-size: 0.7em; line-height: 1;">
-                            <div style="color: #2ecc71;">${hole.par}</div>
-                            <div style="color: #3498db;">${hole.index}</div>
+                        <div style="line-height: 1.2;">
+                            <div style="color: #2ecc71; font-weight: bold;">${hole.par}</div>
+                            <div style="color: #3498db; font-weight: bold;">${hole.index}</div>
                         </div>
                     </th>`;
                 }
