@@ -1345,6 +1345,16 @@
                                 <button id="saveRafflePrizeFund" class="btn-success">💾 Save Prize Fund</button>
                                 <button id="conductRaffleDraw" class="btn-primary">🎲 Conduct Draw</button>
                             </div>
+                            
+                            <!-- Winners Display -->
+                            <div id="raffleWinnersDisplay" style="margin-top: 15px; padding: 10px; background: #f8f9fa; border-radius: 4px; border: 1px solid #e0e0e0;">
+                                <h4 style="font-size: 0.9rem; margin-bottom: 8px; color: #2c3e50;">🏆 Recent Winners</h4>
+                                <div id="raffleWinnersList">
+                                    <div style="text-align: center; padding: 15px; color: #7f8c8d; font-size: 0.8rem;">
+                                        No winners yet
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     
@@ -2271,8 +2281,9 @@
                     this.renderWinnings();
                 }
                 
-                // Restore raffle prize fund value
+                // Restore raffle prize fund value and winners list
                 this.restoreRafflePrizeFund();
+                this.renderRaffleWinners();
                 
                 this.showToast('App loaded successfully!', 'success');
             },
@@ -2888,6 +2899,7 @@
                 } else if (tabId === 'comps') {
                     setTimeout(() => {
                         this.renderCompsResults();
+                        this.renderRaffleWinners();
                     }, 100);
                 } else if (tabId === 'randomdraw') {
                     setTimeout(() => {
@@ -9224,6 +9236,9 @@
                 this.raffleDrawData.winners.push(winnerEntry);
                 this.saveData();
                 
+                // Render the updated winners list
+                this.renderRaffleWinners();
+                
                 // Show result
                 const message = prizeFund > 0 
                     ? `🎉 Winner: ${winner.name} wins £${prizeFund.toFixed(2)}!` 
@@ -9231,6 +9246,44 @@
                     
                 alert(message);
                 this.showToast(message, 'success');
+            },
+            
+            renderRaffleWinners() {
+                const winnersList = document.getElementById('raffleWinnersList');
+                if (!winnersList) return;
+                
+                if (!this.raffleDrawData.winners || this.raffleDrawData.winners.length === 0) {
+                    winnersList.innerHTML = `
+                        <div style="text-align: center; padding: 15px; color: #7f8c8d; font-size: 0.8rem;">
+                            No winners yet
+                        </div>
+                    `;
+                    return;
+                }
+                
+                // Show most recent winners first (reverse order)
+                const sortedWinners = [...this.raffleDrawData.winners].reverse();
+                
+                let html = '';
+                sortedWinners.forEach((winner, index) => {
+                    const isLatest = index === 0;
+                    const bgColor = isLatest ? '#e8f5e9' : '#ffffff';
+                    const borderColor = isLatest ? '#2ecc71' : '#e0e0e0';
+                    
+                    html += `
+                        <div style="padding: 8px; margin-bottom: 6px; background: ${bgColor}; border-radius: 3px; border-left: 3px solid ${borderColor}; font-size: 0.8rem;">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <div>
+                                    <span style="font-weight: bold; color: #2c3e50;">${isLatest ? '🌟 ' : ''}${winner.playerName}</span>
+                                    <div style="font-size: 0.7rem; color: #7f8c8d; margin-top: 2px;">${winner.date}</div>
+                                </div>
+                                <span style="font-weight: bold; color: #2ecc71;">£${winner.amount.toFixed(2)}</span>
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                winnersList.innerHTML = html;
             }
         };
 
