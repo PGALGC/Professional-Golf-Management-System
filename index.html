@@ -1331,6 +1331,21 @@
                                 <button id="calculateTeamAvsB" class="btn-primary" style="grid-column: 1 / -1;">🧮 Calculate Scores</button>
                             </div>
                         </div>
+                        
+                        <div class="comp-card">
+                            <h3>🎰 Clubhouse Hole 19 Raffle Draw</h3>
+                            <div class="comp-description">
+                                A raffle draw competition for the clubhouse. Set the prize fund in sterling and manage the raffle draw.
+                            </div>
+                            <div style="margin: 10px 0; padding: 10px; background: #f8f9fa; border-radius: 4px; border: 1px solid #e0e0e0;">
+                                <label for="rafflePrizeFund" style="font-size: 11px; font-weight: 600; display: block; margin-bottom: 5px;">Prize Fund (£):</label>
+                                <input type="number" id="rafflePrizeFund" step="0.01" min="0" placeholder="0.00" style="width: 100%; padding: 8px; font-size: 14px; border: 1px solid #ddd; border-radius: 3px; text-align: center; font-weight: bold;">
+                            </div>
+                            <div class="comp-actions" style="display: grid; grid-template-columns: 1fr; gap: 6px;">
+                                <button id="saveRafflePrizeFund" class="btn-success">💾 Save Prize Fund</button>
+                                <button id="conductRaffleDraw" class="btn-primary">🎲 Conduct Draw</button>
+                            </div>
+                        </div>
                     </div>
                     
                     <div id="compsResultsContainer" style="margin-top: 20px;">
@@ -2224,6 +2239,12 @@
                 players: [] // [{name: '', days: [{startHcp: '', cutApplied: '', newHcp: ''}, ...]}]
             },
             
+            // Raffle Draw data
+            raffleDrawData: {
+                prizeFund: 0,
+                winners: [] // [{playerName: '', amount: 0, date: ''}]
+            },
+            
             init() {
                 this.loadData();
                 this.setupEventListeners();
@@ -2249,6 +2270,9 @@
                 if (this.currentTab === 'information') {
                     this.renderWinnings();
                 }
+                
+                // Restore raffle prize fund value
+                this.restoreRafflePrizeFund();
                 
                 this.showToast('App loaded successfully!', 'success');
             },
@@ -2362,6 +2386,12 @@
                         this.handicapTracker = JSON.parse(savedHandicapTracker);
                     }
                     
+                    // Load Raffle Draw data
+                    const savedRaffleData = localStorage.getItem('golfRaffleDrawData');
+                    if (savedRaffleData) {
+                        this.raffleDrawData = JSON.parse(savedRaffleData);
+                    }
+                    
                 } catch (e) {
                     console.error('Error loading data:', e);
                 }
@@ -2390,6 +2420,7 @@
                     localStorage.setItem('golfHowToContent', this.howToContent);
                     localStorage.setItem('golfWinningsData', JSON.stringify(this.winningsData));
                     localStorage.setItem('golfHandicapTracker', JSON.stringify(this.handicapTracker));
+                    localStorage.setItem('golfRaffleDrawData', JSON.stringify(this.raffleDrawData));
                 } catch (e) {
                     console.error('Error saving data:', e);
                 }
@@ -2671,6 +2702,10 @@
                 }
                 document.getElementById('editAllComps').addEventListener('click', () => this.showEditAllCompsModal());
                 
+                // Raffle Draw buttons
+                document.getElementById('saveRafflePrizeFund').addEventListener('click', () => this.saveRafflePrizeFund());
+                document.getElementById('conductRaffleDraw').addEventListener('click', () => this.conductRaffleDraw());
+                
                 // Team modal
                 document.getElementById('teamCurrency').addEventListener('change', (e) => {
                     document.getElementById('teamCurrencySymbol').textContent = e.target.value || '';
@@ -2808,6 +2843,13 @@
             
             restorePairsSettings() {
                 // Pairs settings restoration
+            },
+            
+            restoreRafflePrizeFund() {
+                const rafflePrizeFundInput = document.getElementById('rafflePrizeFund');
+                if (rafflePrizeFundInput && this.raffleDrawData.prizeFund) {
+                    rafflePrizeFundInput.value = this.raffleDrawData.prizeFund;
+                }
             },
             
             saveLeaderboardSettings() {
@@ -9144,6 +9186,51 @@
                     toast.style.opacity = '0';
                     setTimeout(() => toast.remove(), 300);
                 }, 3000);
+            },
+            
+            // Raffle Draw Functions
+            saveRafflePrizeFund() {
+                const input = document.getElementById('rafflePrizeFund');
+                const value = parseFloat(input.value) || 0;
+                
+                if (value < 0) {
+                    this.showToast('Prize fund cannot be negative', 'error');
+                    return;
+                }
+                
+                this.raffleDrawData.prizeFund = value;
+                this.saveData();
+                this.showToast(`Prize fund saved: £${value.toFixed(2)}`, 'success');
+            },
+            
+            conductRaffleDraw() {
+                if (this.players.length === 0) {
+                    this.showToast('No players available for the draw', 'error');
+                    return;
+                }
+                
+                // Select a random player
+                const randomIndex = Math.floor(Math.random() * this.players.length);
+                const winner = this.players[randomIndex];
+                const prizeFund = this.raffleDrawData.prizeFund || 0;
+                
+                // Add to winners history
+                const winnerEntry = {
+                    playerName: winner.name,
+                    amount: prizeFund,
+                    date: new Date().toLocaleDateString('en-GB')
+                };
+                
+                this.raffleDrawData.winners.push(winnerEntry);
+                this.saveData();
+                
+                // Show result
+                const message = prizeFund > 0 
+                    ? `🎉 Winner: ${winner.name} wins £${prizeFund.toFixed(2)}!` 
+                    : `🎉 Winner: ${winner.name}!`;
+                    
+                alert(message);
+                this.showToast(message, 'success');
             }
         };
 
