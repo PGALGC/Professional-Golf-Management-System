@@ -9225,10 +9225,14 @@
                     return;
                 }
                 
+                // Get prize fund from input field (use saved value as fallback)
+                const input = document.getElementById('rafflePrizeFund');
+                const inputValue = parseFloat(input.value);
+                const prizeFund = !isNaN(inputValue) ? inputValue : (this.raffleDrawData.prizeFund || 0);
+                
                 // Select a random player
                 const randomIndex = Math.floor(Math.random() * this.players.length);
                 const winner = this.players[randomIndex];
-                const prizeFund = this.raffleDrawData.prizeFund || 0;
                 
                 // Add to winners history
                 const winnerEntry = {
