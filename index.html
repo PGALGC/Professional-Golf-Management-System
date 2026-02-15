@@ -3056,7 +3056,10 @@
                                     </div>
                                     <div style="font-size: 20px; font-weight: bold; color: #27ae60;">${currency}${totalPrize.toFixed(2)}</div>
                                 </div>
-                                <button onclick="window.app.deleteTeam(${teamIdx})" style="width: 100%; padding: 6px; background: #e74c3c; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 11px;">🗑️ Delete</button>
+                                <div style="display: flex; gap: 6px;">
+                                    <button onclick="window.app.editTeam(${teamIdx})" style="flex: 1; padding: 6px; background: #3498db; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 11px;">✏️ Edit</button>
+                                    <button onclick="window.app.deleteTeam(${teamIdx})" style="flex: 1; padding: 6px; background: #e74c3c; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 11px;">🗑️ Delete</button>
+                                </div>
                             </div>
                         `;
                     } else {
@@ -3088,8 +3091,11 @@
                                     `).join('')}
                                 </div>
                                 
-                                <!-- Delete Team Button -->
-                                <button onclick="window.app.deleteTeam(${teamIdx})" style="width: 100%; padding: 6px; background: #e74c3c; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 11px;">🗑️ Delete Team</button>
+                                <!-- Edit/Delete Team Buttons -->
+                                <div style="display: flex; gap: 6px;">
+                                    <button onclick="window.app.editTeam(${teamIdx})" style="flex: 1; padding: 6px; background: #3498db; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 11px;">✏️ Edit</button>
+                                    <button onclick="window.app.deleteTeam(${teamIdx})" style="flex: 1; padding: 6px; background: #e74c3c; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 11px;">🗑️ Delete</button>
+                                </div>
                             </div>
                         `;
                     }
@@ -3187,6 +3193,77 @@
                 this.updateRemainingMoney();
                 this.saveData();
                 this.showToast('Team winning deleted', 'warning');
+            },
+            
+            editTeam(teamIndex) {
+                const team = this.winningsData.teams[teamIndex];
+                if (!team) return;
+                
+                const isIndividual = team.players.length === 1;
+                
+                if (isIndividual) {
+                    // Edit individual player
+                    const playerName = prompt('Player name:', team.players[0]);
+                    if (!playerName || !playerName.trim()) return;
+                    
+                    const comp = prompt('Competition name:', team.comp);
+                    if (!comp || !comp.trim()) return;
+                    
+                    const position = prompt('Position (1st, 2nd, 3rd, etc.):', team.position);
+                    if (!position || !position.trim()) return;
+                    
+                    const amountStr = prompt('Prize money:', team.totalAmount);
+                    const amount = parseFloat(amountStr);
+                    if (isNaN(amount) || amount <= 0) {
+                        this.showToast('Prize amount must be greater than 0', 'warning');
+                        return;
+                    }
+                    
+                    // Update the team
+                    team.players = [playerName.trim()];
+                    team.comp = comp.trim();
+                    team.position = position.trim();
+                    team.totalAmount = amount;
+                    
+                    this.showToast('Individual winning updated', 'success');
+                } else {
+                    // Edit team
+                    const comp = prompt('Competition name:', team.comp);
+                    if (!comp || !comp.trim()) return;
+                    
+                    // Edit each player
+                    const newPlayers = [];
+                    for (let i = 0; i < team.players.length; i++) {
+                        const name = prompt(`Player ${i + 1} name:`, team.players[i]);
+                        if (!name || !name.trim()) {
+                            this.showToast('All team member names required', 'warning');
+                            return;
+                        }
+                        newPlayers.push(name.trim());
+                    }
+                    
+                    const position = prompt('Team position (1st, 2nd, 3rd, etc.):', team.position);
+                    if (!position || !position.trim()) return;
+                    
+                    const amountStr = prompt('Total prize money for the team:', team.totalAmount);
+                    const totalAmount = parseFloat(amountStr);
+                    if (isNaN(totalAmount) || totalAmount <= 0) {
+                        this.showToast('Prize amount must be greater than 0', 'warning');
+                        return;
+                    }
+                    
+                    // Update the team
+                    team.comp = comp.trim();
+                    team.players = newPlayers;
+                    team.position = position.trim();
+                    team.totalAmount = totalAmount;
+                    
+                    this.showToast('Team winning updated', 'success');
+                }
+                
+                this.renderWinnings();
+                this.updateRemainingMoney();
+                this.saveData();
             },
             
             updateRemainingMoney() {
