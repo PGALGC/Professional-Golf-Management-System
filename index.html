@@ -9218,7 +9218,7 @@
                 let html = `
                     <div style="margin-bottom: 10px; padding: 10px; background: #e3f2fd; border-left: 3px solid #2196f3; border-radius: 3px;">
                         <strong>Course:</strong> ${this.randomDrawCourse} | <strong>Total Groups:</strong> ${this.randomDrawGroups.length}
-                        <div style="font-size: 0.7rem; color: #5a6c7d; margin-top: 4px;">ℹ️ Tip: Drag players between groups to rearrange</div>
+                        <div style="font-size: 0.7rem; color: #5a6c7d; margin-top: 4px;">ℹ️ Tip: Drag players to move between groups or drop on another player to swap</div>
                     </div>
                     <div class="pairs-grid">
                 `;
@@ -9245,6 +9245,9 @@
                                  data-player-index="${playerIdx}"
                                  ondragstart="window.app.handlePlayerDragStart(event, ${groupIdx}, ${playerIdx})"
                                  ondragend="event.currentTarget.style.opacity='1'"
+                                 ondragover="event.preventDefault(); event.stopPropagation(); event.currentTarget.style.background='#fff3cd';"
+                                 ondragleave="event.currentTarget.style.background='#f8f9fa';"
+                                 ondrop="window.app.handlePlayerSwap(event, ${groupIdx}, ${playerIdx}); event.currentTarget.style.background='#f8f9fa';"
                                  style="padding: 6px; margin-bottom: 4px; background: #f8f9fa; border-radius: 3px; border-left: 3px solid #3498db; font-size: 0.8rem; cursor: move;">
                                 <div style="display: flex; justify-content: space-between; align-items: center;">
                                     <span style="font-weight: bold;">☰ ${playerIdx + 1}. ${player.name}</span>
@@ -9274,6 +9277,7 @@
             
             handlePlayerDrop(event, targetGroupIdx) {
                 event.preventDefault();
+                event.stopPropagation();
                 
                 const sourceGroupIdx = parseInt(event.dataTransfer.getData('sourceGroupIdx'));
                 const sourcePlayerIdx = parseInt(event.dataTransfer.getData('sourcePlayerIdx'));
@@ -9286,7 +9290,7 @@
                 
                 // Check if target group would exceed 4 players
                 if (this.randomDrawGroups[targetGroupIdx].players.length >= 4) {
-                    this.showToast('Groups cannot have more than 4 players', 'warning');
+                    this.showToast('Drop on a specific player to swap positions', 'warning');
                     return;
                 }
                 
@@ -9301,6 +9305,35 @@
                 this.renderRandomDraw();
                 
                 this.showToast(`Moved ${player.name} to Group ${this.randomDrawGroups[targetGroupIdx].number}`, 'success');
+            },
+            
+            handlePlayerSwap(event, targetGroupIdx, targetPlayerIdx) {
+                event.preventDefault();
+                event.stopPropagation();
+                
+                const sourceGroupIdx = parseInt(event.dataTransfer.getData('sourceGroupIdx'));
+                const sourcePlayerIdx = parseInt(event.dataTransfer.getData('sourcePlayerIdx'));
+                
+                // Don't do anything if dropping on the same player
+                if (sourceGroupIdx === targetGroupIdx && sourcePlayerIdx === targetPlayerIdx) return;
+                
+                // Get both players
+                const sourcePlayer = this.randomDrawGroups[sourceGroupIdx].players[sourcePlayerIdx];
+                const targetPlayer = this.randomDrawGroups[targetGroupIdx].players[targetPlayerIdx];
+                
+                // Swap players
+                this.randomDrawGroups[sourceGroupIdx].players[sourcePlayerIdx] = targetPlayer;
+                this.randomDrawGroups[targetGroupIdx].players[targetPlayerIdx] = sourcePlayer;
+                
+                // Save and re-render
+                this.saveData();
+                this.renderRandomDraw();
+                
+                const message = sourceGroupIdx === targetGroupIdx 
+                    ? `Swapped ${sourcePlayer.name} and ${targetPlayer.name} within Group ${this.randomDrawGroups[sourceGroupIdx].number}`
+                    : `Swapped ${sourcePlayer.name} (Group ${this.randomDrawGroups[sourceGroupIdx].number}) with ${targetPlayer.name} (Group ${this.randomDrawGroups[targetGroupIdx].number})`;
+                    
+                this.showToast(message, 'success');
             },
             
             showToast(message, type = 'info') {
