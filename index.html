@@ -9218,13 +9218,17 @@
                 let html = `
                     <div style="margin-bottom: 10px; padding: 10px; background: #e3f2fd; border-left: 3px solid #2196f3; border-radius: 3px;">
                         <strong>Course:</strong> ${this.randomDrawCourse} | <strong>Total Groups:</strong> ${this.randomDrawGroups.length}
+                        <div style="font-size: 0.7rem; color: #5a6c7d; margin-top: 4px;">ℹ️ Tip: Drag players between groups to rearrange</div>
                     </div>
                     <div class="pairs-grid">
                 `;
                 
-                this.randomDrawGroups.forEach(group => {
+                this.randomDrawGroups.forEach((group, groupIdx) => {
                     html += `
-                        <div class="pair-card">
+                        <div class="pair-card" data-group-index="${groupIdx}" 
+                             ondragover="event.preventDefault(); event.currentTarget.style.background='#e8f5e9';" 
+                             ondragleave="event.currentTarget.style.background='white';" 
+                             ondrop="window.app.handlePlayerDrop(event, ${groupIdx}); event.currentTarget.style.background='white';">
                             <div class="pair-header">
                                 <div class="pair-title">
                                     🎯 Group ${group.number}
@@ -9234,11 +9238,16 @@
                             <div style="margin-top: 10px;">
                     `;
                     
-                    group.players.forEach((player, index) => {
+                    group.players.forEach((player, playerIdx) => {
                         html += `
-                            <div style="padding: 6px; margin-bottom: 4px; background: #f8f9fa; border-radius: 3px; border-left: 3px solid #3498db; font-size: 0.8rem;">
+                            <div draggable="true" 
+                                 data-group-index="${groupIdx}" 
+                                 data-player-index="${playerIdx}"
+                                 ondragstart="window.app.handlePlayerDragStart(event, ${groupIdx}, ${playerIdx})"
+                                 ondragend="event.currentTarget.style.opacity='1'"
+                                 style="padding: 6px; margin-bottom: 4px; background: #f8f9fa; border-radius: 3px; border-left: 3px solid #3498db; font-size: 0.8rem; cursor: move;">
                                 <div style="display: flex; justify-content: space-between; align-items: center;">
-                                    <span style="font-weight: bold;">${index + 1}. ${player.name}</span>
+                                    <span style="font-weight: bold;">☰ ${playerIdx + 1}. ${player.name}</span>
                                     <span style="color: #7f8c8d; font-size: 0.7rem;">PHC: ${player.phc || 0}</span>
                                 </div>
                             </div>
@@ -9253,6 +9262,45 @@
                 
                 html += '</div>';
                 container.innerHTML = html;
+            },
+            
+            // Drag and Drop handlers for Random Draw
+            handlePlayerDragStart(event, groupIdx, playerIdx) {
+                event.dataTransfer.effectAllowed = 'move';
+                event.dataTransfer.setData('sourceGroupIdx', groupIdx);
+                event.dataTransfer.setData('sourcePlayerIdx', playerIdx);
+                event.currentTarget.style.opacity = '0.5';
+            },
+            
+            handlePlayerDrop(event, targetGroupIdx) {
+                event.preventDefault();
+                
+                const sourceGroupIdx = parseInt(event.dataTransfer.getData('sourceGroupIdx'));
+                const sourcePlayerIdx = parseInt(event.dataTransfer.getData('sourcePlayerIdx'));
+                
+                // Don't do anything if dropping in the same group
+                if (sourceGroupIdx === targetGroupIdx) return;
+                
+                // Get the player being moved
+                const player = this.randomDrawGroups[sourceGroupIdx].players[sourcePlayerIdx];
+                
+                // Check if target group would exceed 4 players
+                if (this.randomDrawGroups[targetGroupIdx].players.length >= 4) {
+                    this.showToast('Groups cannot have more than 4 players', 'warning');
+                    return;
+                }
+                
+                // Remove player from source group
+                this.randomDrawGroups[sourceGroupIdx].players.splice(sourcePlayerIdx, 1);
+                
+                // Add player to target group
+                this.randomDrawGroups[targetGroupIdx].players.push(player);
+                
+                // Save and re-render
+                this.saveData();
+                this.renderRandomDraw();
+                
+                this.showToast(`Moved ${player.name} to Group ${this.randomDrawGroups[targetGroupIdx].number}`, 'success');
             },
             
             showToast(message, type = 'info') {
