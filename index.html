@@ -5420,8 +5420,12 @@
                     backPar: backPar
                 };
                 
+                // Recalculate PHC for all players on this course
+                this.recalculateCoursePHC(name);
+                
                 this.saveData();
                 this.renderCourses();
+                this.renderPlayers();
                 this.populateScorecardDropdowns();
                 this.populatePairsCourseDropdown();
                 this.hideAddCourseForm();
@@ -5434,7 +5438,41 @@
                 // Reset modal title
                 document.querySelector('#addCourseForm h3').textContent = 'Add New Course';
                 
-                this.showToast(`Course "${name}" updated with Par ${totalPar}!`, 'success');
+                this.showToast(`Course "${name}" updated with Par ${totalPar}! Player PHCs recalculated.`, 'success');
+            },
+            
+            recalculateCoursePHC(courseName) {
+                const course = this.courses.find(c => c.name && courseName && c.name.toLowerCase() === courseName.toLowerCase());
+                if (!course) return;
+                
+                const rating = parseFloat(course.rating) || 72;
+                const slope = parseFloat(course.slope) || 113;
+                const par = parseFloat(course.par) || 72;
+                let updated = 0;
+                
+                this.players.forEach(player => {
+                    if (!player.course || player.course.toLowerCase() !== courseName.toLowerCase()) return;
+                    
+                    const handicapIndex = parseFloat(player.handicap) || 0;
+                    const courseHandicap = handicapIndex * (slope / 113) + (rating - par);
+                    const roundedPH = Math.round(courseHandicap);
+                    
+                    let finalPHC;
+                    const pct = player.phcPercentage;
+                    if (pct && pct !== '' && pct !== 'default') {
+                        const phcPct = parseInt(pct) / 100;
+                        finalPHC = phcPct < 1 ? Math.floor(roundedPH * phcPct) : Math.round(roundedPH * phcPct);
+                    } else {
+                        finalPHC = roundedPH;
+                    }
+                    
+                    player.phc = finalPHC;
+                    updated++;
+                });
+                
+                if (updated > 0) {
+                    console.log(`Recalculated PHC for ${updated} players on ${courseName}`);
+                }
             },
             
             deleteCourse(courseId) {
