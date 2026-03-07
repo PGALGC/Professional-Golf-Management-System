@@ -458,6 +458,69 @@
             font-size: 1rem;
         }
 
+        /* Floating Panel (How To) */
+        .floating-panel {
+            position: fixed;
+            width: 700px;
+            height: 550px;
+            min-width: 320px;
+            min-height: 250px;
+            max-width: 95vw;
+            max-height: 90vh;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.25), 0 2px 8px rgba(0,0,0,0.1);
+            z-index: 1001;
+            flex-direction: column;
+            resize: both;
+            overflow: hidden;
+            border: 1px solid #95a5a6;
+        }
+
+        .floating-panel-titlebar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 15px;
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            cursor: grab;
+            user-select: none;
+            flex-shrink: 0;
+            border-radius: 7px 7px 0 0;
+        }
+
+        .floating-panel-titlebar:active {
+            cursor: grabbing;
+        }
+
+        .floating-panel-close {
+            background: #e74c3c;
+            border: none;
+            color: white;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+            flex-shrink: 0;
+            line-height: 1;
+        }
+
+        .floating-panel-close:hover {
+            background: #c0392b;
+        }
+
+        .floating-panel-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 15px;
+        }
+
         /* Pairs Compact Cards */
         .pairs-grid {
             display: grid;
@@ -1359,6 +1422,50 @@
                                 </div>
                             </div>
                         </div>
+                    
+                        <div class="comp-card">
+                            <h3>🏆 Nassau</h3>
+                            <div class="comp-description">
+                                Three separate bets — player with highest Stableford points wins each: Front 9, Back 9, and Overall 18.
+                            </div>
+                            <div style="margin: 10px 0; padding: 10px; background: #f8f9fa; border-radius: 4px; border: 1px solid #e0e0e0;">
+                                <label for="nassauCourseSelect" style="font-size: 11px; font-weight: 600; display: block; margin-bottom: 5px;">Select Course:</label>
+                                <select id="nassauCourseSelect" style="width: 100%; padding: 8px; font-size: 12px; border: 1px solid #ddd; border-radius: 3px;">
+                                    <option value="">-- Select a course --</option>
+                                </select>
+                            </div>
+                            <div class="comp-actions" style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px;">
+                                <button id="createNassau" class="btn-success">🏆 Create</button>
+                                <button id="calculateNassau" class="btn-primary">🧮 Calculate</button>
+                            </div>
+                        </div>
+                        
+                        <div class="comp-card">
+                            <h3>💰 Daily Swindle</h3>
+                            <div class="comp-description">
+                                Individual net Stableford competition per day. Highest score wins.
+                            </div>
+                            <div style="margin: 10px 0; padding: 10px; background: #f8f9fa; border-radius: 4px; border: 1px solid #e0e0e0;">
+                                <label for="dailySwindleCourseSelect" style="font-size: 11px; font-weight: 600; display: block; margin-bottom: 5px;">Select Course:</label>
+                                <select id="dailySwindleCourseSelect" style="width: 100%; padding: 8px; font-size: 12px; border: 1px solid #ddd; border-radius: 3px;">
+                                    <option value="">-- Select a course --</option>
+                                </select>
+                            </div>
+                            <div class="comp-actions" style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px;">
+                                <button id="createDailySwindle" class="btn-success">💰 Create</button>
+                                <button id="calculateDailySwindle" class="btn-primary">🧮 Calculate</button>
+                            </div>
+                        </div>
+                        
+                        <div class="comp-card">
+                            <h3>📊 Comps Master Leaderboard</h3>
+                            <div class="comp-description">
+                                Shows all players across all courses ranked by total Stableford points in one combined leaderboard.
+                            </div>
+                            <div class="comp-actions" style="display: grid; grid-template-columns: 1fr; gap: 6px;">
+                                <button id="calculateCompsLeaderboard" class="btn-primary">📊 Calculate Leaderboard</button>
+                            </div>
+                        </div>
                     </div>
                     
                     <div id="compsResultsContainer" style="margin-top: 20px;">
@@ -1409,6 +1516,7 @@
                     <div class="section-header">
                         <h2>ℹ️ Winnings Tracker</h2>
                         <div class="section-actions">
+                            <button id="generateSummary" class="btn-primary btn-small">📋 Summary Report</button>
                             <button id="showHowTo" class="btn-info btn-small">📖 How To</button>
                         </div>
                     </div>
@@ -1809,16 +1917,20 @@
         </div>
     </div>
     
-    <!-- How To Modal -->
-    <div id="howToModal" class="modal" style="display: none;">
-        <div class="modal-content" style="max-width: 1000px; max-height: 90vh; overflow-y: auto;">
-            <h3 style="margin-bottom: 20px; color: #2c3e50;">📖 Professional Golf Management System - User Guide</h3>
+    <!-- How To Floating Panel -->
+    <div id="howToModal" class="floating-panel" style="display: none;">
+        <div class="floating-panel-titlebar" id="howToTitleBar">
+            <span style="font-weight: bold; font-size: 14px;">📖 User Guide</span>
+            <button id="closeHowTo" class="floating-panel-close" title="Close">✕</button>
+        </div>
+        <div class="floating-panel-body">
+            <h3 style="margin-bottom: 15px; color: #2c3e50; font-size: 1rem;">Professional Golf Management System - User Guide</h3>
             
-            <div style="background: #e8f5e9; padding: 15px; border-radius: 5px; margin-bottom: 20px; border-left: 4px solid #2ecc71;">
-                <strong>🎯 Quick Start:</strong> This comprehensive guide covers all features and functionalities of the Golf Management System.
+            <div style="background: #e8f5e9; padding: 12px; border-radius: 5px; margin-bottom: 15px; border-left: 4px solid #2ecc71; font-size: 12px;">
+                <strong>🎯 Quick Start:</strong> Drag the title bar to move this panel. Drag the bottom-right corner to resize.
             </div>
             
-            <div id="howToContent" style="padding: 10px; font-size: 13px; line-height: 1.8; color: #2c3e50;">
+            <div id="howToContent" style="font-size: 13px; line-height: 1.8; color: #2c3e50;">
                 <!-- Players Tab -->
                 <h4 style="color: #3498db; border-bottom: 2px solid #3498db; padding-bottom: 5px; margin-top: 20px;">👥 PLAYERS TAB</h4>
                 
@@ -2155,10 +2267,6 @@
                     <strong>🎉 Version:</strong> Professional Golf Management System v2.0.0 | <strong>📧 Support:</strong> Contact system administrator for assistance
                 </div>
             </div>
-            
-            <div class="form-actions" style="display: flex; gap: 6px; justify-content: center; margin-top: 20px; padding-top: 15px; border-top: 2px solid #e0e0e0;">
-                <button type="button" id="closeHowTo" class="btn-primary" style="padding: 10px 30px;">✔️ Close Guide</button>
-            </div>
         </div>
     </div>
     
@@ -2208,7 +2316,10 @@
                 fourPersonTeams: [],
                 best3From4: [],
                 mixedScore: [],
-                teamAvsB: { teamA: [], teamB: [], courseName: '' }
+                teamAvsB: { teamA: [], teamB: [], courseName: '' },
+                nassau: { courseName: '', currency: '£', moneyPerBet: 0, results: [] },
+                dailySwindle: { courseName: '', currency: '£', money: 0, results: [] },
+                compsLeaderboard: { results: [] }
             },
             
             // Track current competition type for modal
@@ -2261,6 +2372,7 @@
             init() {
                 this.loadData();
                 this.setupEventListeners();
+                this.initHowToDrag();
                 this.setupTabs();
                 this.renderPlayers();
                 this.renderCourses();
@@ -2350,7 +2462,10 @@
                             fourPersonTeams: loadedComps.fourPersonTeams || [],
                             best3From4: loadedComps.best3From4 || [],
                             mixedScore: loadedComps.mixedScore || [],
-                            teamAvsB: loadedComps.teamAvsB || { teamA: [], teamB: [], courseName: '' }
+                            teamAvsB: loadedComps.teamAvsB || { teamA: [], teamB: [], courseName: '' },
+                            nassau: loadedComps.nassau || { courseName: '', currency: '£', moneyPerBet: 0, results: [] },
+                            dailySwindle: loadedComps.dailySwindle || { courseName: '', currency: '£', money: 0, results: [] },
+                            compsLeaderboard: loadedComps.compsLeaderboard || { results: [] }
                         };
                     }
                     
@@ -2716,6 +2831,13 @@
                 }
                 document.getElementById('editAllComps').addEventListener('click', () => this.showEditAllCompsModal());
                 
+                // Nassau, Daily Swindle, Comps Leaderboard buttons
+                document.getElementById('createNassau').addEventListener('click', () => this.createNassau());
+                document.getElementById('calculateNassau').addEventListener('click', () => this.calculateNassau());
+                document.getElementById('createDailySwindle').addEventListener('click', () => this.createDailySwindle());
+                document.getElementById('calculateDailySwindle').addEventListener('click', () => this.calculateDailySwindle());
+                document.getElementById('calculateCompsLeaderboard').addEventListener('click', () => this.calculateCompsLeaderboard());
+                
                 // Raffle Draw buttons
                 document.getElementById('saveRafflePrizeFund').addEventListener('click', () => this.saveRafflePrizeFund());
                 document.getElementById('conductRaffleDraw').addEventListener('click', () => this.conductRaffleDraw());
@@ -2778,6 +2900,9 @@
                 // How To modal button
                 document.getElementById('showHowTo').addEventListener('click', () => this.showHowToModal());
                 document.getElementById('closeHowTo').addEventListener('click', () => this.hideHowToModal());
+                
+                // Summary Report button
+                document.getElementById('generateSummary').addEventListener('click', () => this.generateSummaryReport());
                 
                 // Winnings Tracker buttons
                 document.getElementById('addPlayerWinning').addEventListener('click', () => this.addPlayerWinning());
@@ -2902,6 +3027,7 @@
                     }, 100);
                 } else if (tabId === 'comps') {
                     setTimeout(() => {
+                        this.populateCompsCourseDropdowns();
                         this.renderCompsResults();
                         this.renderRaffleWinners();
                     }, 100);
@@ -2994,11 +3120,493 @@
             },
             
             showHowToModal() {
-                document.getElementById('howToModal').style.display = 'flex';
+                const modal = document.getElementById('howToModal');
+                modal.style.display = 'flex';
+                if (!modal.dataset.positioned) {
+                    modal.style.left = Math.max(20, (window.innerWidth - 700) / 2) + 'px';
+                    modal.style.top = Math.max(20, (window.innerHeight - 550) / 2) + 'px';
+                }
             },
             
             hideHowToModal() {
                 document.getElementById('howToModal').style.display = 'none';
+            },
+            
+            initHowToDrag() {
+                const panel = document.getElementById('howToModal');
+                const titleBar = document.getElementById('howToTitleBar');
+                if (!panel || !titleBar) return;
+                
+                let isDragging = false;
+                let offsetX = 0, offsetY = 0;
+                
+                const startDrag = (clientX, clientY) => {
+                    isDragging = true;
+                    const rect = panel.getBoundingClientRect();
+                    offsetX = clientX - rect.left;
+                    offsetY = clientY - rect.top;
+                    panel.dataset.positioned = 'true';
+                };
+                
+                const moveDrag = (clientX, clientY) => {
+                    if (!isDragging) return;
+                    panel.style.left = Math.max(0, Math.min(clientX - offsetX, window.innerWidth - 50)) + 'px';
+                    panel.style.top = Math.max(0, Math.min(clientY - offsetY, window.innerHeight - 50)) + 'px';
+                };
+                
+                const endDrag = () => { isDragging = false; };
+                
+                titleBar.addEventListener('mousedown', (e) => {
+                    if (e.target.closest('.floating-panel-close')) return;
+                    startDrag(e.clientX, e.clientY);
+                    e.preventDefault();
+                });
+                document.addEventListener('mousemove', (e) => { if (isDragging) { moveDrag(e.clientX, e.clientY); e.preventDefault(); } });
+                document.addEventListener('mouseup', endDrag);
+                
+                // Touch support for mobile
+                titleBar.addEventListener('touchstart', (e) => {
+                    if (e.target.closest('.floating-panel-close')) return;
+                    startDrag(e.touches[0].clientX, e.touches[0].clientY);
+                }, { passive: true });
+                document.addEventListener('touchmove', (e) => {
+                    if (!isDragging) return;
+                    moveDrag(e.touches[0].clientX, e.touches[0].clientY);
+                }, { passive: true });
+                document.addEventListener('touchend', endDrag);
+            },
+            
+            generateSummaryReport() {
+                const currency = this.winningsData.currency || '£';
+                const grandPot = this.winningsData.grandPotMoney || 0;
+                const totalAwarded = (this.winningsData.teams || []).reduce((sum, t) => sum + (t.totalAmount || 0), 0);
+                const remaining = grandPot - totalAwarded;
+                const totalPlayers = this.players.length;
+                const totalCourses = this.courses.length;
+                const today = new Date();
+                const dateStr = today.toLocaleDateString('en-GB', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+                const timeStr = today.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+                
+                // Count total competitions
+                let totalComps = 0;
+                if (this.comps.fourBBB.length > 0) totalComps++;
+                if (this.comps.fourPersonTeams.length > 0) totalComps++;
+                if (this.comps.best3From4.length > 0) totalComps++;
+                if (this.comps.mixedScore.length > 0) totalComps++;
+                if (this.comps.teamAvsB && this.comps.teamAvsB.teamA && this.comps.teamAvsB.teamA.length > 0) totalComps++;
+                if (this.comps.nassau && this.comps.nassau.results && this.comps.nassau.results.length > 0) totalComps++;
+                if (this.comps.dailySwindle && this.comps.dailySwindle.results && this.comps.dailySwindle.results.length > 0) totalComps++;
+                if (this.comps.compsLeaderboard && this.comps.compsLeaderboard.results && this.comps.compsLeaderboard.results.length > 0) totalComps++;
+                
+                // Build player prize money distribution
+                const playerPrizes = {};
+                (this.winningsData.teams || []).forEach(team => {
+                    const share = (team.totalAmount || 0) / team.players.length;
+                    team.players.forEach(name => {
+                        if (!playerPrizes[name]) playerPrizes[name] = { total: 0, entries: [] };
+                        playerPrizes[name].total += share;
+                        playerPrizes[name].entries.push({ comp: team.comp, amount: share, position: team.position || '' });
+                    });
+                });
+                const sortedPlayers = Object.entries(playerPrizes).sort((a, b) => b[1].total - a[1].total);
+                
+                // Helper: medal for top 3
+                const medal = (i) => i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : `${i + 1}`;
+                
+                // Helper: build team comp table rows
+                const teamCompRows = (teams, compName) => {
+                    if (!teams || teams.length === 0) return '';
+                    return teams.map((t, i) => `
+                        <tr style="${i === 0 ? 'background:#fdf6e3;font-weight:600;' : i % 2 === 0 ? 'background:#f8f9fa;' : ''}">
+                            <td style="padding:8px 12px;border-bottom:1px solid #e0e0e0;">${medal(i)}</td>
+                            <td style="padding:8px 12px;border-bottom:1px solid #e0e0e0;">${t.name}</td>
+                            <td style="padding:8px 12px;border-bottom:1px solid #e0e0e0;">${t.players.map(p => p.name || p).join(', ')}</td>
+                            <td style="padding:8px 12px;border-bottom:1px solid #e0e0e0;text-align:center;">${t.course || ''}</td>
+                            <td style="padding:8px 12px;border-bottom:1px solid #e0e0e0;text-align:center;font-weight:bold;">${t.totalPoints || 0}</td>
+                            <td style="padding:8px 12px;border-bottom:1px solid #e0e0e0;text-align:center;">${t.front9Points || 0}</td>
+                            <td style="padding:8px 12px;border-bottom:1px solid #e0e0e0;text-align:center;">${t.back9Points || 0}</td>
+                            <td style="padding:8px 12px;border-bottom:1px solid #e0e0e0;text-align:right;">${t.money ? currency + (t.money || 0).toFixed(2) : '-'}</td>
+                        </tr>
+                    `).join('');
+                };
+                
+                // Helper: individual comp table (Nassau, Swindle)
+                const individualCompRows = (comp, compLabel) => {
+                    if (!comp || !comp.results || comp.results.length === 0) return '';
+                    const sorted = [...comp.results].sort((a, b) => (b.totalPoints || 0) - (a.totalPoints || 0));
+                    return sorted.map((p, i) => `
+                        <tr style="${i === 0 ? 'background:#fdf6e3;font-weight:600;' : i % 2 === 0 ? 'background:#f8f9fa;' : ''}">
+                            <td style="padding:8px 12px;border-bottom:1px solid #e0e0e0;">${medal(i)}</td>
+                            <td style="padding:8px 12px;border-bottom:1px solid #e0e0e0;">${p.name}</td>
+                            <td style="padding:8px 12px;border-bottom:1px solid #e0e0e0;text-align:center;">${p.phc || 0}</td>
+                            <td style="padding:8px 12px;border-bottom:1px solid #e0e0e0;text-align:center;font-weight:bold;">${p.totalPoints || 0}</td>
+                            <td style="padding:8px 12px;border-bottom:1px solid #e0e0e0;text-align:center;">${p.front9Points || 0}</td>
+                            <td style="padding:8px 12px;border-bottom:1px solid #e0e0e0;text-align:center;">${p.back9Points || 0}</td>
+                            <td style="padding:8px 12px;border-bottom:1px solid #e0e0e0;text-align:right;">${p.money ? currency + (p.money || 0).toFixed(2) : '-'}</td>
+                        </tr>
+                    `).join('');
+                };
+                
+                // ===== Build Sections =====
+                let sectionNum = 0;
+                
+                // --- Section: Financial Overview ---
+                sectionNum++;
+                const financialSection = `
+                    <div style="margin-bottom:30px;">
+                        <h2 style="color:#1a3a5c;border-bottom:2px solid #1a3a5c;padding-bottom:6px;font-size:18px;margin-bottom:15px;">${sectionNum}. Financial Overview</h2>
+                        <div style="display:flex;gap:0;border-radius:6px;overflow:hidden;border:1px solid #ddd;margin-bottom:15px;">
+                            <div style="flex:1;background:#27ae60;color:white;padding:15px;text-align:center;">
+                                <div style="font-size:11px;opacity:0.9;margin-bottom:4px;">GRAND POT</div>
+                                <div style="font-size:24px;font-weight:bold;">${currency}${grandPot.toFixed(2)}</div>
+                            </div>
+                            <div style="flex:1;background:#e74c3c;color:white;padding:15px;text-align:center;">
+                                <div style="font-size:11px;opacity:0.9;margin-bottom:4px;">TOTAL AWARDED</div>
+                                <div style="font-size:24px;font-weight:bold;">${currency}${totalAwarded.toFixed(2)}</div>
+                            </div>
+                            <div style="flex:1;background:${remaining >= 0 ? '#2980b9' : '#c0392b'};color:white;padding:15px;text-align:center;">
+                                <div style="font-size:11px;opacity:0.9;margin-bottom:4px;">REMAINING</div>
+                                <div style="font-size:24px;font-weight:bold;">${currency}${remaining.toFixed(2)}</div>
+                            </div>
+                        </div>
+                        ${grandPot > 0 ? `
+                        <div style="background:#f0f0f0;border-radius:4px;height:20px;overflow:hidden;margin-bottom:8px;">
+                            <div style="height:100%;width:${Math.min((totalAwarded/grandPot)*100, 100).toFixed(1)}%;background:linear-gradient(90deg,#27ae60,#e74c3c);border-radius:4px;transition:width 0.3s;"></div>
+                        </div>
+                        <div style="text-align:center;font-size:11px;color:#7f8c8d;">${((totalAwarded/grandPot)*100).toFixed(1)}% of Grand Pot distributed</div>
+                        ` : ''}
+                    </div>
+                `;
+                
+                // --- Section: Competition Winners Summary ---
+                sectionNum++;
+                let winnersRows = '';
+                
+                // 4BBB winners (top team per group)
+                if (this.comps.fourBBB.length > 0) {
+                    const groups = {};
+                    this.comps.fourBBB.forEach(t => { const g = t.group || 'Ungrouped'; if (!groups[g]) groups[g] = []; groups[g].push(t); });
+                    Object.entries(groups).forEach(([grp, teams]) => {
+                        const sorted = [...teams].sort((a, b) => (b.totalPoints || 0) - (a.totalPoints || 0));
+                        if (sorted[0]) winnersRows += `<tr><td style="padding:8px 12px;border-bottom:1px solid #e0e0e0;">4BBB - ${grp}</td><td style="padding:8px 12px;border-bottom:1px solid #e0e0e0;font-weight:bold;">${sorted[0].name}</td><td style="padding:8px 12px;border-bottom:1px solid #e0e0e0;">${sorted[0].players.map(p => p.name).join(', ')}</td><td style="padding:8px 12px;border-bottom:1px solid #e0e0e0;text-align:center;font-weight:bold;">${sorted[0].totalPoints || 0} pts</td><td style="padding:8px 12px;border-bottom:1px solid #e0e0e0;text-align:right;">${sorted[0].money ? currency + sorted[0].money.toFixed(2) : '-'}</td></tr>`;
+                    });
+                }
+                
+                // Other team comps winners
+                [{arr: this.comps.fourPersonTeams, label: '4 Person Team'}, {arr: this.comps.best3From4, label: 'Best 3 from 4'}, {arr: this.comps.mixedScore, label: 'Mixed Score'}].forEach(({arr, label}) => {
+                    if (arr.length > 0) {
+                        const sorted = [...arr].sort((a, b) => (b.totalPoints || 0) - (a.totalPoints || 0));
+                        if (sorted[0]) winnersRows += `<tr><td style="padding:8px 12px;border-bottom:1px solid #e0e0e0;">${label}</td><td style="padding:8px 12px;border-bottom:1px solid #e0e0e0;font-weight:bold;">${sorted[0].name}</td><td style="padding:8px 12px;border-bottom:1px solid #e0e0e0;">${sorted[0].players.map(p => p.name).join(', ')}</td><td style="padding:8px 12px;border-bottom:1px solid #e0e0e0;text-align:center;font-weight:bold;">${sorted[0].totalPoints || 0} pts</td><td style="padding:8px 12px;border-bottom:1px solid #e0e0e0;text-align:right;">${sorted[0].money ? currency + sorted[0].money.toFixed(2) : '-'}</td></tr>`;
+                    }
+                });
+                
+                // Team A vs B winner
+                if (this.comps.teamAvsB && this.comps.teamAvsB.teamAScores && this.comps.teamAvsB.teamBScores) {
+                    const aP = this.comps.teamAvsB.teamAScores.totalPoints || 0;
+                    const bP = this.comps.teamAvsB.teamBScores.totalPoints || 0;
+                    const winner = aP >= bP ? 'Team A' : 'Team B';
+                    const winPts = Math.max(aP, bP);
+                    winnersRows += `<tr><td style="padding:8px 12px;border-bottom:1px solid #e0e0e0;">Team A vs B</td><td style="padding:8px 12px;border-bottom:1px solid #e0e0e0;font-weight:bold;">${winner}</td><td style="padding:8px 12px;border-bottom:1px solid #e0e0e0;">${this.comps.teamAvsB.courseName || ''}</td><td style="padding:8px 12px;border-bottom:1px solid #e0e0e0;text-align:center;font-weight:bold;">${winPts} pts</td><td style="padding:8px 12px;border-bottom:1px solid #e0e0e0;text-align:right;">-</td></tr>`;
+                }
+                
+                // Nassau winner
+                if (this.comps.nassau && this.comps.nassau.results && this.comps.nassau.results.length > 0) {
+                    const sorted = [...this.comps.nassau.results].sort((a, b) => (b.totalPoints || 0) - (a.totalPoints || 0));
+                    if (sorted[0]) winnersRows += `<tr><td style="padding:8px 12px;border-bottom:1px solid #e0e0e0;">Nassau (Overall)</td><td style="padding:8px 12px;border-bottom:1px solid #e0e0e0;font-weight:bold;">${sorted[0].name}</td><td style="padding:8px 12px;border-bottom:1px solid #e0e0e0;">${this.comps.nassau.courseName || ''}</td><td style="padding:8px 12px;border-bottom:1px solid #e0e0e0;text-align:center;font-weight:bold;">${sorted[0].totalPoints || 0} pts</td><td style="padding:8px 12px;border-bottom:1px solid #e0e0e0;text-align:right;">${sorted[0].money ? currency + sorted[0].money.toFixed(2) : '-'}</td></tr>`;
+                }
+                
+                // Daily Swindle winner
+                if (this.comps.dailySwindle && this.comps.dailySwindle.results && this.comps.dailySwindle.results.length > 0) {
+                    const sorted = [...this.comps.dailySwindle.results].sort((a, b) => (b.totalPoints || 0) - (a.totalPoints || 0));
+                    if (sorted[0]) winnersRows += `<tr><td style="padding:8px 12px;border-bottom:1px solid #e0e0e0;">Daily Swindle</td><td style="padding:8px 12px;border-bottom:1px solid #e0e0e0;font-weight:bold;">${sorted[0].name}</td><td style="padding:8px 12px;border-bottom:1px solid #e0e0e0;">${this.comps.dailySwindle.courseName || ''}</td><td style="padding:8px 12px;border-bottom:1px solid #e0e0e0;text-align:center;font-weight:bold;">${sorted[0].totalPoints || 0} pts</td><td style="padding:8px 12px;border-bottom:1px solid #e0e0e0;text-align:right;">${sorted[0].money ? currency + sorted[0].money.toFixed(2) : '-'}</td></tr>`;
+                }
+                
+                const winnersSection = winnersRows ? `
+                    <div style="margin-bottom:30px;">
+                        <h2 style="color:#1a3a5c;border-bottom:2px solid #1a3a5c;padding-bottom:6px;font-size:18px;margin-bottom:15px;">${sectionNum}. Competition Winners Summary</h2>
+                        <table style="width:100%;border-collapse:collapse;font-size:13px;">
+                            <thead><tr style="background:#1a3a5c;color:white;"><th style="padding:10px 12px;text-align:left;">Competition</th><th style="padding:10px 12px;text-align:left;">Winner</th><th style="padding:10px 12px;text-align:left;">Players / Course</th><th style="padding:10px 12px;text-align:center;">Score</th><th style="padding:10px 12px;text-align:right;">Prize</th></tr></thead>
+                            <tbody>${winnersRows}</tbody>
+                        </table>
+                    </div>
+                ` : '';
+                
+                // --- Section: Player Prize Money Distribution ---
+                sectionNum++;
+                const prizeSection = sortedPlayers.length > 0 ? `
+                    <div style="margin-bottom:30px;">
+                        <h2 style="color:#1a3a5c;border-bottom:2px solid #1a3a5c;padding-bottom:6px;font-size:18px;margin-bottom:15px;">${sectionNum}. Player Prize Money Distribution</h2>
+                        <table style="width:100%;border-collapse:collapse;font-size:13px;">
+                            <thead><tr style="background:#1a3a5c;color:white;"><th style="padding:10px 12px;text-align:left;">Rank</th><th style="padding:10px 12px;text-align:left;">Player</th><th style="padding:10px 12px;text-align:left;">Competitions Won</th><th style="padding:10px 12px;text-align:right;">Total Winnings</th></tr></thead>
+                            <tbody>${sortedPlayers.map(([name, data], i) => `
+                                <tr style="${i === 0 ? 'background:#fdf6e3;font-weight:600;' : i % 2 === 0 ? 'background:#f8f9fa;' : ''}">
+                                    <td style="padding:8px 12px;border-bottom:1px solid #e0e0e0;">${medal(i)}</td>
+                                    <td style="padding:8px 12px;border-bottom:1px solid #e0e0e0;font-weight:bold;">${name}</td>
+                                    <td style="padding:8px 12px;border-bottom:1px solid #e0e0e0;font-size:11px;">${data.entries.map(e => e.comp + (e.position ? ' (' + e.position + ')' : '')).join(', ')}</td>
+                                    <td style="padding:8px 12px;border-bottom:1px solid #e0e0e0;text-align:right;font-weight:bold;color:#27ae60;">${currency}${data.total.toFixed(2)}</td>
+                                </tr>
+                            `).join('')}</tbody>
+                        </table>
+                    </div>
+                ` : '';
+                
+                // --- Section: Detailed Competition Results ---
+                sectionNum++;
+                let detailedComps = '';
+                const thStyle = 'padding:10px 12px;text-align:left;';
+                const thCenter = 'padding:10px 12px;text-align:center;';
+                const thRight = 'padding:10px 12px;text-align:right;';
+                
+                // 4BBB
+                if (this.comps.fourBBB.length > 0) {
+                    const sorted = [...this.comps.fourBBB].sort((a, b) => (b.totalPoints || 0) - (a.totalPoints || 0));
+                    detailedComps += `
+                        <h3 style="color:#2c3e50;margin:20px 0 10px;font-size:15px;">⛳ 4BBB (Four Ball Better Ball)</h3>
+                        <table style="width:100%;border-collapse:collapse;font-size:12px;margin-bottom:15px;">
+                            <thead><tr style="background:#34495e;color:white;"><th style="${thStyle}">#</th><th style="${thStyle}">Team</th><th style="${thStyle}">Players</th><th style="${thCenter}">Course</th><th style="${thCenter}">Total Pts</th><th style="${thCenter}">F9</th><th style="${thCenter}">B9</th><th style="${thRight}">Money</th></tr></thead>
+                            <tbody>${teamCompRows(sorted, '4BBB')}</tbody>
+                        </table>
+                    `;
+                }
+                
+                // 4 Person Team
+                if (this.comps.fourPersonTeams.length > 0) {
+                    const sorted = [...this.comps.fourPersonTeams].sort((a, b) => (b.totalPoints || 0) - (a.totalPoints || 0));
+                    detailedComps += `
+                        <h3 style="color:#2c3e50;margin:20px 0 10px;font-size:15px;">👥 4 Person Team</h3>
+                        <table style="width:100%;border-collapse:collapse;font-size:12px;margin-bottom:15px;">
+                            <thead><tr style="background:#34495e;color:white;"><th style="${thStyle}">#</th><th style="${thStyle}">Team</th><th style="${thStyle}">Players</th><th style="${thCenter}">Course</th><th style="${thCenter}">Total Pts</th><th style="${thCenter}">F9</th><th style="${thCenter}">B9</th><th style="${thRight}">Money</th></tr></thead>
+                            <tbody>${teamCompRows(sorted, '4PersonTeam')}</tbody>
+                        </table>
+                    `;
+                }
+                
+                // Best 3 from 4
+                if (this.comps.best3From4.length > 0) {
+                    const sorted = [...this.comps.best3From4].sort((a, b) => (b.totalPoints || 0) - (a.totalPoints || 0));
+                    detailedComps += `
+                        <h3 style="color:#2c3e50;margin:20px 0 10px;font-size:15px;">🏅 Best 3 from 4</h3>
+                        <table style="width:100%;border-collapse:collapse;font-size:12px;margin-bottom:15px;">
+                            <thead><tr style="background:#34495e;color:white;"><th style="${thStyle}">#</th><th style="${thStyle}">Team</th><th style="${thStyle}">Players</th><th style="${thCenter}">Course</th><th style="${thCenter}">Total Pts</th><th style="${thCenter}">F9</th><th style="${thCenter}">B9</th><th style="${thRight}">Money</th></tr></thead>
+                            <tbody>${teamCompRows(sorted, 'Best3From4')}</tbody>
+                        </table>
+                    `;
+                }
+                
+                // Mixed Score
+                if (this.comps.mixedScore.length > 0) {
+                    const sorted = [...this.comps.mixedScore].sort((a, b) => (b.totalPoints || 0) - (a.totalPoints || 0));
+                    detailedComps += `
+                        <h3 style="color:#2c3e50;margin:20px 0 10px;font-size:15px;">🔀 Mixed Score</h3>
+                        <table style="width:100%;border-collapse:collapse;font-size:12px;margin-bottom:15px;">
+                            <thead><tr style="background:#34495e;color:white;"><th style="${thStyle}">#</th><th style="${thStyle}">Team</th><th style="${thStyle}">Players</th><th style="${thCenter}">Course</th><th style="${thCenter}">Total Pts</th><th style="${thCenter}">F9</th><th style="${thCenter}">B9</th><th style="${thRight}">Money</th></tr></thead>
+                            <tbody>${teamCompRows(sorted, 'MixedScore')}</tbody>
+                        </table>
+                    `;
+                }
+                
+                // Team A vs B
+                if (this.comps.teamAvsB && this.comps.teamAvsB.teamAScores && this.comps.teamAvsB.teamBScores) {
+                    const aS = this.comps.teamAvsB.teamAScores;
+                    const bS = this.comps.teamAvsB.teamBScores;
+                    detailedComps += `
+                        <h3 style="color:#2c3e50;margin:20px 0 10px;font-size:15px;">⚔️ Team A vs Team B — ${this.comps.teamAvsB.courseName || ''}</h3>
+                        <div style="display:flex;gap:15px;margin-bottom:15px;">
+                            <div style="flex:1;background:${aS.totalPoints >= bS.totalPoints ? '#e8f5e9' : '#fce4ec'};padding:15px;border-radius:6px;text-align:center;border:2px solid ${aS.totalPoints >= bS.totalPoints ? '#27ae60' : '#e74c3c'};">
+                                <div style="font-weight:bold;font-size:16px;margin-bottom:5px;">TEAM A ${aS.totalPoints >= bS.totalPoints ? '🏆' : ''}</div>
+                                <div style="font-size:28px;font-weight:bold;color:#1a3a5c;">${aS.totalPoints} pts</div>
+                                ${aS.playerScores ? aS.playerScores.map(p => `<div style="font-size:11px;margin-top:4px;">${p.name}: ${p.points} pts</div>`).join('') : ''}
+                            </div>
+                            <div style="flex:1;background:${bS.totalPoints > aS.totalPoints ? '#e8f5e9' : '#fce4ec'};padding:15px;border-radius:6px;text-align:center;border:2px solid ${bS.totalPoints > aS.totalPoints ? '#27ae60' : '#e74c3c'};">
+                                <div style="font-weight:bold;font-size:16px;margin-bottom:5px;">TEAM B ${bS.totalPoints > aS.totalPoints ? '🏆' : ''}</div>
+                                <div style="font-size:28px;font-weight:bold;color:#1a3a5c;">${bS.totalPoints} pts</div>
+                                ${bS.playerScores ? bS.playerScores.map(p => `<div style="font-size:11px;margin-top:4px;">${p.name}: ${p.points} pts</div>`).join('') : ''}
+                            </div>
+                        </div>
+                    `;
+                }
+                
+                // Nassau
+                if (this.comps.nassau && this.comps.nassau.results && this.comps.nassau.results.length > 0) {
+                    detailedComps += `
+                        <h3 style="color:#2c3e50;margin:20px 0 10px;font-size:15px;">🏆 Nassau — ${this.comps.nassau.courseName || ''}</h3>
+                        <table style="width:100%;border-collapse:collapse;font-size:12px;margin-bottom:15px;">
+                            <thead><tr style="background:#34495e;color:white;"><th style="${thStyle}">#</th><th style="${thStyle}">Player</th><th style="${thCenter}">PHC</th><th style="${thCenter}">Total Pts</th><th style="${thCenter}">F9</th><th style="${thCenter}">B9</th><th style="${thRight}">Money</th></tr></thead>
+                            <tbody>${individualCompRows(this.comps.nassau, 'Nassau')}</tbody>
+                        </table>
+                    `;
+                }
+                
+                // Daily Swindle
+                if (this.comps.dailySwindle && this.comps.dailySwindle.results && this.comps.dailySwindle.results.length > 0) {
+                    detailedComps += `
+                        <h3 style="color:#2c3e50;margin:20px 0 10px;font-size:15px;">💰 Daily Swindle — ${this.comps.dailySwindle.courseName || ''}</h3>
+                        <table style="width:100%;border-collapse:collapse;font-size:12px;margin-bottom:15px;">
+                            <thead><tr style="background:#34495e;color:white;"><th style="${thStyle}">#</th><th style="${thStyle}">Player</th><th style="${thCenter}">PHC</th><th style="${thCenter}">Total Pts</th><th style="${thCenter}">F9</th><th style="${thCenter}">B9</th><th style="${thRight}">Money</th></tr></thead>
+                            <tbody>${individualCompRows(this.comps.dailySwindle, 'Daily Swindle')}</tbody>
+                        </table>
+                    `;
+                }
+                
+                // Comps Master Leaderboard
+                if (this.comps.compsLeaderboard && this.comps.compsLeaderboard.results && this.comps.compsLeaderboard.results.length > 0) {
+                    const lb = [...this.comps.compsLeaderboard.results].sort((a, b) => (b.combinedTotal || 0) - (a.combinedTotal || 0));
+                    detailedComps += `
+                        <h3 style="color:#2c3e50;margin:20px 0 10px;font-size:15px;">📊 Comps Master Leaderboard</h3>
+                        <table style="width:100%;border-collapse:collapse;font-size:12px;margin-bottom:15px;">
+                            <thead><tr style="background:#34495e;color:white;"><th style="${thStyle}">#</th><th style="${thStyle}">Player</th><th style="${thCenter}">PHC</th><th style="${thCenter}">Combined F9</th><th style="${thCenter}">Combined B9</th><th style="${thCenter}">Combined Total</th><th style="${thCenter}">Gross</th><th style="${thRight}">Money</th></tr></thead>
+                            <tbody>${lb.map((p, i) => `
+                                <tr style="${i === 0 ? 'background:#fdf6e3;font-weight:600;' : i % 2 === 0 ? 'background:#f8f9fa;' : ''}">
+                                    <td style="padding:8px 12px;border-bottom:1px solid #e0e0e0;">${medal(i)}</td>
+                                    <td style="padding:8px 12px;border-bottom:1px solid #e0e0e0;font-weight:bold;">${p.name}</td>
+                                    <td style="padding:8px 12px;border-bottom:1px solid #e0e0e0;text-align:center;">${p.phc || 0}</td>
+                                    <td style="padding:8px 12px;border-bottom:1px solid #e0e0e0;text-align:center;">${p.combinedF9 || 0}</td>
+                                    <td style="padding:8px 12px;border-bottom:1px solid #e0e0e0;text-align:center;">${p.combinedB9 || 0}</td>
+                                    <td style="padding:8px 12px;border-bottom:1px solid #e0e0e0;text-align:center;font-weight:bold;">${p.combinedTotal || 0}</td>
+                                    <td style="padding:8px 12px;border-bottom:1px solid #e0e0e0;text-align:center;">${p.combinedGross || 0}</td>
+                                    <td style="padding:8px 12px;border-bottom:1px solid #e0e0e0;text-align:right;">${p.money ? currency + (p.money || 0).toFixed(2) : '-'}</td>
+                                </tr>
+                            `).join('')}</tbody>
+                        </table>
+                    `;
+                }
+                
+                const detailedSection = detailedComps ? `
+                    <div style="margin-bottom:30px;">
+                        <h2 style="color:#1a3a5c;border-bottom:2px solid #1a3a5c;padding-bottom:6px;font-size:18px;margin-bottom:15px;">${sectionNum}. Detailed Competition Results</h2>
+                        ${detailedComps}
+                    </div>
+                ` : '';
+                
+                // --- Section: Raffle Draw ---
+                let raffleSection = '';
+                if (this.raffleDrawData && this.raffleDrawData.winners && this.raffleDrawData.winners.length > 0) {
+                    sectionNum++;
+                    raffleSection = `
+                        <div style="margin-bottom:30px;">
+                            <h2 style="color:#1a3a5c;border-bottom:2px solid #1a3a5c;padding-bottom:6px;font-size:18px;margin-bottom:15px;">${sectionNum}. Raffle Draw Results</h2>
+                            <p style="margin-bottom:10px;font-size:13px;">Prize Fund: <strong>${currency}${(this.raffleDrawData.prizeFund || 0).toFixed(2)}</strong></p>
+                            <table style="width:100%;border-collapse:collapse;font-size:13px;">
+                                <thead><tr style="background:#1a3a5c;color:white;"><th style="padding:10px 12px;text-align:left;">Winner</th><th style="padding:10px 12px;text-align:right;">Amount</th><th style="padding:10px 12px;text-align:left;">Date</th></tr></thead>
+                                <tbody>${this.raffleDrawData.winners.map((w, i) => `
+                                    <tr style="${i % 2 === 0 ? 'background:#f8f9fa;' : ''}">
+                                        <td style="padding:8px 12px;border-bottom:1px solid #e0e0e0;font-weight:bold;">🎉 ${w.playerName}</td>
+                                        <td style="padding:8px 12px;border-bottom:1px solid #e0e0e0;text-align:right;color:#27ae60;font-weight:bold;">${currency}${(w.amount || 0).toFixed(2)}</td>
+                                        <td style="padding:8px 12px;border-bottom:1px solid #e0e0e0;">${w.date || ''}</td>
+                                    </tr>
+                                `).join('')}</tbody>
+                            </table>
+                        </div>
+                    `;
+                }
+                
+                // --- Section: Course Overview ---
+                let courseSection = '';
+                if (this.courses.length > 0) {
+                    sectionNum++;
+                    courseSection = `
+                        <div style="margin-bottom:30px;">
+                            <h2 style="color:#1a3a5c;border-bottom:2px solid #1a3a5c;padding-bottom:6px;font-size:18px;margin-bottom:15px;">${sectionNum}. Course Overview</h2>
+                            <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;">
+                                ${this.courses.map(c => {
+                                    const par = c.holes ? c.holes.reduce((s, h) => s + (h.par || 0), 0) : 0;
+                                    const playersOnCourse = this.players.filter(p => p.course && c.name && p.course.toLowerCase() === c.name.toLowerCase()).length;
+                                    return `
+                                        <div style="background:#f8f9fa;border-radius:6px;padding:12px;border-left:4px solid #1a3a5c;">
+                                            <div style="font-weight:bold;font-size:14px;color:#2c3e50;margin-bottom:6px;">⛳ ${c.name}</div>
+                                            <div style="font-size:12px;color:#7f8c8d;">Par: ${par} | Holes: ${c.holes ? c.holes.length : 0} | Players: ${playersOnCourse}</div>
+                                        </div>
+                                    `;
+                                }).join('')}
+                            </div>
+                        </div>
+                    `;
+                }
+                
+                // ===== Assemble Full Document =====
+                const html = `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Golf Competition Summary Report</title>
+    <style>
+        @page { size: A4; margin: 15mm; }
+        @media print {
+            .no-print { display: none !important; }
+            body { font-size: 11px; }
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: Georgia, 'Times New Roman', serif; color: #2c3e50; background: #fff; line-height: 1.5; padding: 0; }
+        .report-container { max-width: 900px; margin: 0 auto; padding: 30px; }
+        table { page-break-inside: auto; }
+        tr { page-break-inside: avoid; }
+    </style>
+</head>
+<body>
+    <div class="report-container">
+        <!-- Header -->
+        <div style="border: 3px double #1a3a5c; padding: 25px; margin-bottom: 25px; text-align: center; position: relative;">
+            <div style="position:absolute;top:8px;right:12px;font-size:10px;color:#c0392b;font-weight:bold;letter-spacing:2px;border:1px solid #c0392b;padding:2px 8px;border-radius:2px;">OFFICIAL</div>
+            <div style="font-size: 40px; margin-bottom: 8px;">⛳</div>
+            <h1 style="font-size: 26px; color: #1a3a5c; margin-bottom: 4px; letter-spacing: 1px;">GOLF COMPETITION</h1>
+            <h2 style="font-size: 16px; color: #34495e; font-weight: normal; margin-bottom: 12px;">Official Summary Report</h2>
+            <div style="width: 60px; height: 2px; background: #c0392b; margin: 0 auto 12px;"></div>
+            <div style="font-size: 12px; color: #7f8c8d;">${dateStr} — ${timeStr}</div>
+            <div style="font-size: 11px; color: #95a5a6; margin-top:4px;">Prepared by Golf Management System</div>
+        </div>
+        
+        <!-- Executive Summary -->
+        <div style="margin-bottom:30px;">
+            <h2 style="color:#1a3a5c;border-bottom:2px solid #1a3a5c;padding-bottom:6px;font-size:18px;margin-bottom:15px;">Executive Summary</h2>
+            <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:15px;">
+                <div style="background:linear-gradient(135deg,#1a3a5c,#2c5f8a);color:white;padding:15px;border-radius:6px;text-align:center;">
+                    <div style="font-size:28px;font-weight:bold;">${totalPlayers}</div>
+                    <div style="font-size:11px;opacity:0.9;margin-top:4px;">Players</div>
+                </div>
+                <div style="background:linear-gradient(135deg,#27ae60,#2ecc71);color:white;padding:15px;border-radius:6px;text-align:center;">
+                    <div style="font-size:28px;font-weight:bold;">${totalCourses}</div>
+                    <div style="font-size:11px;opacity:0.9;margin-top:4px;">Courses</div>
+                </div>
+                <div style="background:linear-gradient(135deg,#e67e22,#f39c12);color:white;padding:15px;border-radius:6px;text-align:center;">
+                    <div style="font-size:28px;font-weight:bold;">${totalComps}</div>
+                    <div style="font-size:11px;opacity:0.9;margin-top:4px;">Competitions</div>
+                </div>
+                <div style="background:linear-gradient(135deg,#8e44ad,#9b59b6);color:white;padding:15px;border-radius:6px;text-align:center;">
+                    <div style="font-size:28px;font-weight:bold;">${currency}${totalAwarded.toFixed(0)}</div>
+                    <div style="font-size:11px;opacity:0.9;margin-top:4px;">Prize Money</div>
+                </div>
+            </div>
+        </div>
+        
+        ${financialSection}
+        ${winnersSection}
+        ${prizeSection}
+        ${detailedSection}
+        ${raffleSection}
+        ${courseSection}
+        
+        <!-- Footer -->
+        <div style="margin-top:30px;padding-top:15px;border-top:2px solid #1a3a5c;display:flex;justify-content:space-between;align-items:center;font-size:11px;color:#7f8c8d;">
+            <div>Golf Competition Management System</div>
+            <div>Report generated: ${dateStr} at ${timeStr}</div>
+        </div>
+        
+        <!-- Print Button -->
+        <div class="no-print" style="text-align:center;margin-top:20px;">
+            <button onclick="window.print()" style="padding:12px 30px;font-size:14px;background:#1a3a5c;color:white;border:none;border-radius:6px;cursor:pointer;font-family:Georgia,serif;">🖨️ Print / Save as PDF</button>
+        </div>
+    </div>
+</body>
+</html>`;
+                
+                const win = window.open('', '_blank');
+                if (win) {
+                    win.document.write(html);
+                    win.document.close();
+                } else {
+                    this.showToast('Pop-up blocked — please allow pop-ups for this site', 'error');
+                }
             },
             
             // NEW CARD-BASED WINNINGS FUNCTIONS
@@ -3051,7 +3659,8 @@
                                     <div>
                                         <div style="font-weight: bold; font-size: 16px; color: #2c3e50;">👤 ${team.players[0]}</div>
                                         <div style="font-size: 12px; color: #7f8c8d; margin-top: 2px;">
-                                            ${team.comp} <span style="padding: 2px 6px; background: #3498db; color: white; border-radius: 3px; font-size: 10px; margin-left: 4px;">${team.position}</span>
+                                            ${team.comp} ${team.position ? `<span style="padding: 2px 6px; background: #3498db; color: white; border-radius: 3px; font-size: 10px; margin-left: 4px;">${team.position}</span>` : ''}
+                                            ${team.autoComp ? '<span style="padding: 2px 6px; background: #f39c12; color: white; border-radius: 3px; font-size: 10px; margin-left: 4px;">Auto</span>' : ''}
                                         </div>
                                     </div>
                                     <div style="font-size: 20px; font-weight: bold; color: #27ae60;">${currency}${totalPrize.toFixed(2)}</div>
@@ -3071,7 +3680,8 @@
                                     <div>
                                         <div style="font-weight: bold; font-size: 16px; color: #2c3e50;">👥 ${team.comp}</div>
                                         <div style="font-size: 11px; color: #7f8c8d; margin-top: 2px;">
-                                            <span style="padding: 2px 6px; background: #3498db; color: white; border-radius: 3px; font-size: 10px; margin-right: 4px;">${team.position}</span>
+                                            ${team.position ? `<span style="padding: 2px 6px; background: #3498db; color: white; border-radius: 3px; font-size: 10px; margin-right: 4px;">${team.position}</span>` : ''}
+                                            ${team.autoComp ? '<span style="padding: 2px 6px; background: #f39c12; color: white; border-radius: 3px; font-size: 10px; margin-right: 4px;">Auto</span>' : ''}
                                             ${team.players.length} Players
                                         </div>
                                     </div>
@@ -6933,12 +7543,15 @@
                     let front9Points = 0;
                     let back9Points = 0;
                     
+                    // Track individual player stableford totals
+                    const playerTotals = team.players.map(p => ({ name: p.name, id: p.id, totalPoints: 0 }));
+                    
                     // For each hole, take the better stableford score
                     for (let hole = 1; hole <= 18; hole++) {
                         let bestHolePoints = 0;
                         let bestGross = 0;
                         
-                        team.players.forEach(player => {
+                        team.players.forEach((player, playerIdx) => {
                             const playerScores = this.scores[player.id] || {};
                             const score = playerScores[hole];
                             
@@ -6957,6 +7570,9 @@
                                             player.phc,
                                             holeData.index
                                         );
+                                        
+                                        // Track individual player points
+                                        playerTotals[playerIdx].totalPoints += result.points;
                                         
                                         if (result.points > bestHolePoints) {
                                             bestHolePoints = result.points;
@@ -6981,6 +7597,8 @@
                     team.totalGross = totalGross;
                     team.front9Points = front9Points;
                     team.back9Points = back9Points;
+                    team.playerScores = playerTotals;
+                    team.jointTotal = playerTotals.reduce((sum, p) => sum + p.totalPoints, 0);
                 });
                 
                 // Sort teams by total points within each group
@@ -6993,6 +7611,7 @@
                     return a.group.localeCompare(b.group);
                 });
                 
+                this.syncAllCompWinnings();
                 this.saveData();
                 this.renderCompsResults();
                 this.showToast('4BBB scores calculated!', 'success');
@@ -7011,12 +7630,15 @@
                     let front9Points = 0;
                     let back9Points = 0;
                     
+                    // Track individual player stableford totals
+                    const playerTotals = team.players.map(p => ({ name: p.name, id: p.id, totalPoints: 0 }));
+                    
                     // For each hole, take ALL FOUR stableford scores
                     for (let hole = 1; hole <= 18; hole++) {
                         let holePoints = 0;
                         let holeGross = 0;
                         
-                        team.players.forEach(player => {
+                        team.players.forEach((player, playerIdx) => {
                             const playerScores = this.scores[player.id] || {};
                             const score = playerScores[hole];
                             
@@ -7035,6 +7657,9 @@
                                             player.phc,
                                             holeData.index
                                         );
+                                        
+                                        // Track individual player points
+                                        playerTotals[playerIdx].totalPoints += result.points;
                                         
                                         holePoints += result.points;
                                         holeGross += score;
@@ -7057,11 +7682,14 @@
                     team.totalGross = totalGross;
                     team.front9Points = front9Points;
                     team.back9Points = back9Points;
+                    team.playerScores = playerTotals;
+                    team.jointTotal = playerTotals.reduce((sum, p) => sum + p.totalPoints, 0);
                 });
                 
                 // Sort teams by total points
                 this.comps.fourPersonTeams.sort((a, b) => b.totalPoints - a.totalPoints);
                 
+                this.syncAllCompWinnings();
                 this.saveData();
                 this.renderCompsResults();
                 this.showToast('4 Person Team scores calculated (All 4 scores count)!', 'success');
@@ -7080,12 +7708,15 @@
                     let front9Points = 0;
                     let back9Points = 0;
                     
+                    // Track individual player stableford totals
+                    const playerTotals = team.players.map(p => ({ name: p.name, id: p.id, totalPoints: 0 }));
+                    
                     // For each hole, take the best 3 stableford scores
                     for (let hole = 1; hole <= 18; hole++) {
                         const holePoints = [];
                         const holeGross = [];
                         
-                        team.players.forEach(player => {
+                        team.players.forEach((player, playerIdx) => {
                             const playerScores = this.scores[player.id] || {};
                             const score = playerScores[hole];
                             
@@ -7104,6 +7735,9 @@
                                             player.phc,
                                             holeData.index
                                         );
+                                        
+                                        // Track individual player points
+                                        playerTotals[playerIdx].totalPoints += result.points;
                                         
                                         holePoints.push(result.points);
                                         holeGross.push(score);
@@ -7134,11 +7768,14 @@
                     team.totalGross = totalGross;
                     team.front9Points = front9Points;
                     team.back9Points = back9Points;
+                    team.playerScores = playerTotals;
+                    team.jointTotal = playerTotals.reduce((sum, p) => sum + p.totalPoints, 0);
                 });
                 
                 // Sort teams by total points
                 this.comps.best3From4.sort((a, b) => b.totalPoints - a.totalPoints);
                 
+                this.syncAllCompWinnings();
                 this.saveData();
                 this.renderCompsResults();
                 this.showToast('Best 3 from 4 scores calculated!', 'success');
@@ -7157,6 +7794,9 @@
                     let totalGross = 0;
                     let front9Points = 0;
                     let back9Points = 0;
+                    
+                    // Track individual player stableford totals
+                    const playerTotals = team.players.map(p => ({ name: p.name, id: p.id, totalPoints: 0 }));
                     
                     // Define hole assignments for each player (0-indexed in array = players[0] is P1)
                     const holeAssignments = [
@@ -7198,6 +7838,9 @@
                                             holeData.index
                                         );
                                         
+                                        // Track individual player points
+                                        playerTotals[assignedPlayerIndex].totalPoints += result.points;
+                                        
                                         totalPoints += result.points;
                                         totalGross += score;
                                         
@@ -7216,11 +7859,14 @@
                     team.totalGross = totalGross;
                     team.front9Points = front9Points;
                     team.back9Points = back9Points;
+                    team.playerScores = playerTotals;
+                    team.jointTotal = playerTotals.reduce((sum, p) => sum + p.totalPoints, 0);
                 });
                 
                 // Sort teams by total points
                 this.comps.mixedScore.sort((a, b) => b.totalPoints - a.totalPoints);
                 
+                this.syncAllCompWinnings();
                 this.saveData();
                 this.renderCompsResults();
                 this.showToast('4 Person Team Mixed Score calculated!', 'success');
@@ -7606,9 +8252,345 @@
                 this.comps.teamAvsB.teamAScores = calculateTeamScores(this.comps.teamAvsB.teamA);
                 this.comps.teamAvsB.teamBScores = calculateTeamScores(this.comps.teamAvsB.teamB);
                 
+                this.syncAllCompWinnings();
                 this.saveData();
                 this.renderCompsResults();
                 this.showToast('Team A vs Team B scores calculated!', 'success');
+            },
+            
+            // Populate course dropdowns for Nassau and Daily Swindle
+            populateCompsCourseDropdowns() {
+                const nassauSelect = document.getElementById('nassauCourseSelect');
+                const swindleSelect = document.getElementById('dailySwindleCourseSelect');
+                
+                [nassauSelect, swindleSelect].forEach(select => {
+                    if (!select) return;
+                    const currentVal = select.value;
+                    select.innerHTML = '<option value="">-- Select a course --</option>';
+                    this.courses.forEach(course => {
+                        const option = document.createElement('option');
+                        option.value = course.name;
+                        option.textContent = course.name;
+                        select.appendChild(option);
+                    });
+                    if (currentVal) select.value = currentVal;
+                });
+            },
+            
+            // Helper: calculate individual player stableford scores for a course
+            calculateIndividualScores(courseName) {
+                const course = this.courses.find(c => c.name && courseName && c.name.toLowerCase() === courseName.toLowerCase());
+                if (!course) return [];
+                
+                const players = this.players.filter(p => p.course && p.course.toLowerCase() === courseName.toLowerCase());
+                
+                return players.map(player => {
+                    let front9Points = 0, back9Points = 0, totalPoints = 0, totalGross = 0;
+                    const playerScores = this.scores[player.id] || {};
+                    
+                    for (let hole = 1; hole <= 18; hole++) {
+                        const score = playerScores[hole];
+                        if (score !== undefined && score !== null && score !== '' && score !== 0) {
+                            const holeData = course.holes.find(h => h.number === hole);
+                            if (holeData) {
+                                const result = this.calculateStablefordWithResult(score, holeData.par, player.phc, holeData.index);
+                                totalPoints += result.points;
+                                totalGross += parseInt(score);
+                                if (hole <= 9) front9Points += result.points;
+                                else back9Points += result.points;
+                            }
+                        }
+                    }
+                    
+                    return { name: player.name, id: player.id, phc: player.phc || 0, front9Points, back9Points, totalPoints, totalGross };
+                }).filter(p => p.totalGross > 0);
+            },
+            
+            // Nassau
+            createNassau() {
+                const courseName = document.getElementById('nassauCourseSelect').value;
+                if (!courseName) { this.showToast('Please select a course', 'error'); return; }
+                
+                const players = this.players.filter(p => p.course && p.course.toLowerCase() === courseName.toLowerCase());
+                if (players.length === 0) { this.showToast('No players on this course', 'warning'); return; }
+                
+                this.comps.nassau = {
+                    courseName: courseName,
+                    currency: '£',
+                    moneyPerBet: 0,
+                    results: players.map(p => ({ name: p.name, id: p.id, phc: p.phc || 0, front9Points: 0, back9Points: 0, totalPoints: 0, totalGross: 0 }))
+                };
+                
+                this.saveData();
+                this.renderCompsResults();
+                this.showToast(`Nassau created with ${players.length} players on ${courseName}`, 'success');
+            },
+            
+            calculateNassau() {
+                if (!this.comps.nassau || !this.comps.nassau.courseName) {
+                    this.showToast('No Nassau competition created yet', 'warning');
+                    return;
+                }
+                
+                // Preserve existing money values
+                const existingMoney = {};
+                if (this.comps.nassau.results) {
+                    this.comps.nassau.results.forEach(p => {
+                        if (p.money) existingMoney[p.name.toLowerCase()] = p.money;
+                    });
+                }
+                
+                this.comps.nassau.results = this.calculateIndividualScores(this.comps.nassau.courseName);
+                this.comps.nassau.results.forEach(p => { p.money = existingMoney[p.name.toLowerCase()] || 0; });
+                this.comps.nassau.results.sort((a, b) => b.totalPoints - a.totalPoints);
+                
+                this.syncAllCompWinnings();
+                this.saveData();
+                this.renderCompsResults();
+                this.showToast('Nassau scores calculated!', 'success');
+            },
+            
+            // Daily Swindle
+            createDailySwindle() {
+                const courseName = document.getElementById('dailySwindleCourseSelect').value;
+                if (!courseName) { this.showToast('Please select a course', 'error'); return; }
+                
+                const players = this.players.filter(p => p.course && p.course.toLowerCase() === courseName.toLowerCase());
+                if (players.length === 0) { this.showToast('No players on this course', 'warning'); return; }
+                
+                this.comps.dailySwindle = {
+                    courseName: courseName,
+                    currency: '£',
+                    money: 0,
+                    results: players.map(p => ({ name: p.name, id: p.id, phc: p.phc || 0, front9Points: 0, back9Points: 0, totalPoints: 0, totalGross: 0 }))
+                };
+                
+                this.saveData();
+                this.renderCompsResults();
+                this.showToast(`Daily Swindle created with ${players.length} players on ${courseName}`, 'success');
+            },
+            
+            calculateDailySwindle() {
+                if (!this.comps.dailySwindle || !this.comps.dailySwindle.courseName) {
+                    this.showToast('No Daily Swindle competition created yet', 'warning');
+                    return;
+                }
+                
+                // Preserve existing money values
+                const existingMoney = {};
+                if (this.comps.dailySwindle.results) {
+                    this.comps.dailySwindle.results.forEach(p => {
+                        if (p.money) existingMoney[p.name.toLowerCase()] = p.money;
+                    });
+                }
+                
+                this.comps.dailySwindle.results = this.calculateIndividualScores(this.comps.dailySwindle.courseName);
+                this.comps.dailySwindle.results.forEach(p => { p.money = existingMoney[p.name.toLowerCase()] || 0; });
+                this.comps.dailySwindle.results.sort((a, b) => b.totalPoints - a.totalPoints);
+                
+                this.syncAllCompWinnings();
+                this.saveData();
+                this.renderCompsResults();
+                this.showToast('Daily Swindle scores calculated!', 'success');
+            },
+            
+            // Comps Master Leaderboard
+            calculateCompsLeaderboard() {
+                // Preserve existing money values
+                const existingMoney = {};
+                if (this.comps.compsLeaderboard && this.comps.compsLeaderboard.results) {
+                    this.comps.compsLeaderboard.results.forEach(p => {
+                        if (p.money) existingMoney[p.name.toLowerCase().trim()] = p.money;
+                    });
+                }
+                
+                // Collect per-course scores, grouped by player NAME so each person appears once
+                const playerMap = {}; // keyed by lowercase player name
+                
+                this.courses.forEach(course => {
+                    const courseResults = this.calculateIndividualScores(course.name);
+                    courseResults.forEach(r => {
+                        const key = r.name.toLowerCase().trim();
+                        if (!playerMap[key]) {
+                            playerMap[key] = {
+                                name: r.name, phc: r.phc,
+                                combinedF9: 0, combinedB9: 0, combinedTotal: 0, combinedGross: 0,
+                                courseScores: []
+                            };
+                        }
+                        playerMap[key].courseScores.push({
+                            course: course.name,
+                            front9Points: r.front9Points,
+                            back9Points: r.back9Points,
+                            totalPoints: r.totalPoints,
+                            totalGross: r.totalGross
+                        });
+                        playerMap[key].combinedF9 += r.front9Points;
+                        playerMap[key].combinedB9 += r.back9Points;
+                        playerMap[key].combinedTotal += r.totalPoints;
+                        playerMap[key].combinedGross += r.totalGross;
+                    });
+                });
+                
+                const combined = Object.values(playerMap);
+                combined.forEach(p => { p.money = existingMoney[p.name.toLowerCase().trim()] || 0; });
+                combined.sort((a, b) => b.combinedTotal - a.combinedTotal);
+                this.comps.compsLeaderboard = { results: combined };
+                
+                this.syncAllCompWinnings();
+                this.saveData();
+                this.renderCompsResults();
+                this.showToast(`Comps Leaderboard calculated with ${combined.length} players!`, 'success');
+            },
+            
+            // Sync all comp winnings to Information tab
+            syncAllCompWinnings() {
+                // Remove all auto-generated comp entries
+                this.winningsData.teams = this.winningsData.teams.filter(t => !t.autoComp);
+                
+                // Team comps: 4BBB
+                this.comps.fourBBB.forEach(team => {
+                    if (team.money > 0) {
+                        this.winningsData.teams.push({
+                            comp: '4BBB - ' + (team.group || 'Ungrouped'),
+                            position: '',
+                            players: team.players.map(p => p.name),
+                            totalAmount: team.money,
+                            autoComp: true
+                        });
+                    }
+                });
+                
+                // 4 Person Team
+                this.comps.fourPersonTeams.forEach(team => {
+                    if (team.money > 0) {
+                        this.winningsData.teams.push({
+                            comp: '4 Person Team',
+                            position: '',
+                            players: team.players.map(p => p.name),
+                            totalAmount: team.money,
+                            autoComp: true
+                        });
+                    }
+                });
+                
+                // Best 3 from 4
+                this.comps.best3From4.forEach(team => {
+                    if (team.money > 0) {
+                        this.winningsData.teams.push({
+                            comp: 'Best 3 from 4',
+                            position: '',
+                            players: team.players.map(p => p.name),
+                            totalAmount: team.money,
+                            autoComp: true
+                        });
+                    }
+                });
+                
+                // Mixed Score
+                this.comps.mixedScore.forEach(team => {
+                    if (team.money > 0) {
+                        this.winningsData.teams.push({
+                            comp: 'Mixed Score',
+                            position: '',
+                            players: team.players.map(p => p.name),
+                            totalAmount: team.money,
+                            autoComp: true
+                        });
+                    }
+                });
+                
+                // Nassau
+                if (this.comps.nassau && this.comps.nassau.results) {
+                    this.comps.nassau.results.forEach(p => {
+                        if (p.money > 0) {
+                            this.winningsData.teams.push({
+                                comp: 'Nassau - ' + this.comps.nassau.courseName,
+                                position: '',
+                                players: [p.name],
+                                totalAmount: p.money,
+                                autoComp: true
+                            });
+                        }
+                    });
+                }
+                
+                // Daily Swindle
+                if (this.comps.dailySwindle && this.comps.dailySwindle.results) {
+                    this.comps.dailySwindle.results.forEach(p => {
+                        if (p.money > 0) {
+                            this.winningsData.teams.push({
+                                comp: 'Daily Swindle - ' + this.comps.dailySwindle.courseName,
+                                position: '',
+                                players: [p.name],
+                                totalAmount: p.money,
+                                autoComp: true
+                            });
+                        }
+                    });
+                }
+                
+                // Comps Leaderboard
+                if (this.comps.compsLeaderboard && this.comps.compsLeaderboard.results) {
+                    this.comps.compsLeaderboard.results.forEach(p => {
+                        if (p.money > 0) {
+                            this.winningsData.teams.push({
+                                comp: 'Comps Master Leaderboard',
+                                position: '',
+                                players: [p.name],
+                                totalAmount: p.money,
+                                autoComp: true
+                            });
+                        }
+                    });
+                }
+                
+                this.updateRemainingMoney();
+            },
+            
+            // Save money for Nassau (Overall 18)
+            saveNassauMoney() {
+                if (!this.comps.nassau || !this.comps.nassau.results) return;
+                const inputs = document.querySelectorAll('input[data-comp="nassau"]');
+                inputs.forEach(input => {
+                    const playerName = input.dataset.player;
+                    const player = this.comps.nassau.results.find(p => p.name === playerName);
+                    if (player) player.money = parseFloat(input.value) || 0;
+                });
+                this.syncAllCompWinnings();
+                this.saveData();
+                this.renderCompsResults();
+                this.showToast('Nassau money saved!', 'success');
+            },
+            
+            // Save money for Daily Swindle
+            saveDailySwindleMoney() {
+                if (!this.comps.dailySwindle || !this.comps.dailySwindle.results) return;
+                const inputs = document.querySelectorAll('input[data-comp="swindle"]');
+                inputs.forEach(input => {
+                    const playerName = input.dataset.player;
+                    const player = this.comps.dailySwindle.results.find(p => p.name === playerName);
+                    if (player) player.money = parseFloat(input.value) || 0;
+                });
+                this.syncAllCompWinnings();
+                this.saveData();
+                this.renderCompsResults();
+                this.showToast('Daily Swindle money saved!', 'success');
+            },
+            
+            // Save money for Comps Leaderboard
+            saveCompsLeaderboardMoney() {
+                if (!this.comps.compsLeaderboard || !this.comps.compsLeaderboard.results) return;
+                const inputs = document.querySelectorAll('input[data-comp="leaderboard"]');
+                inputs.forEach(input => {
+                    const playerName = input.dataset.player;
+                    const player = this.comps.compsLeaderboard.results.find(p => p.name === playerName);
+                    if (player) player.money = parseFloat(input.value) || 0;
+                });
+                this.syncAllCompWinnings();
+                this.saveData();
+                this.renderCompsResults();
+                this.showToast('Leaderboard money saved!', 'success');
             },
             
             deleteCompetition(compType, groupName) {
@@ -7629,6 +8611,12 @@
                     confirmMessage = `Delete all ${teamsToDelete} Mixed Score teams?`;
                 } else if (compType === 'TeamAvsB') {
                     confirmMessage = 'Delete Team A vs Team B competition?';
+                } else if (compType === 'Nassau') {
+                    confirmMessage = 'Delete Nassau competition?';
+                } else if (compType === 'DailySwindle') {
+                    confirmMessage = 'Delete Daily Swindle competition?';
+                } else if (compType === 'CompsLeaderboard') {
+                    confirmMessage = 'Delete Comps Master Leaderboard?';
                 }
                 
                 if (!confirm(confirmMessage)) return;
@@ -7648,8 +8636,18 @@
                 } else if (compType === 'TeamAvsB') {
                     this.comps.teamAvsB = { teamA: [], teamB: [], courseName: '' };
                     this.showToast(`Deleted Team A vs Team B competition`, 'warning');
+                } else if (compType === 'Nassau') {
+                    this.comps.nassau = { courseName: '', currency: '£', moneyPerBet: 0, results: [] };
+                    this.showToast('Deleted Nassau competition', 'warning');
+                } else if (compType === 'DailySwindle') {
+                    this.comps.dailySwindle = { courseName: '', currency: '£', money: 0, results: [] };
+                    this.showToast('Deleted Daily Swindle competition', 'warning');
+                } else if (compType === 'CompsLeaderboard') {
+                    this.comps.compsLeaderboard = { results: [] };
+                    this.showToast('Deleted Comps Master Leaderboard', 'warning');
                 }
                 
+                this.syncAllCompWinnings();
                 this.saveData();
                 this.renderCompsResults();
             },
@@ -7671,11 +8669,13 @@
                         groupedTeams[group].push(team);
                     });
                     
-                    // Sort groups
+                    // Sort groups by highest Total P score (highest first)
                     const sortedGroups = Object.keys(groupedTeams).sort((a, b) => {
                         if (a === 'Ungrouped') return 1;
                         if (b === 'Ungrouped') return -1;
-                        return a.localeCompare(b);
+                        const maxA = Math.max(...groupedTeams[a].map(t => t.totalPoints || 0));
+                        const maxB = Math.max(...groupedTeams[b].map(t => t.totalPoints || 0));
+                        return maxB - maxA;
                     });
                     
                     sortedGroups.forEach(groupName => {
@@ -7717,6 +8717,7 @@
                                             <th style="padding: 6px; text-align: center; width: 60px; background: #2ecc71;">B9 P</th>
                                             <th style="padding: 6px; text-align: center; width: 60px; background: #2ecc71;">Total P</th>
                                             <th style="padding: 6px; text-align: center; width: 60px;">Gross</th>
+                                            <th style="padding: 6px; text-align: center; width: 60px; background: #3498db;">Joint</th>
                                             <th style="padding: 6px; text-align: center; width: 80px; background: #27ae60;">Money</th>
                                             <th style="padding: 6px; text-align: center; width: 50px;">Actions</th>
                                         </tr>
@@ -7735,18 +8736,24 @@
                                 
                                 // FULL player names in team display
                                 const playerNames = team.players.map(p => p.name).join(', ');
+                                const playerDisplay = team.playerScores ? 
+                                    team.players.map(p => {
+                                        const ps = team.playerScores.find(s => s.name === p.name);
+                                        return `${p.name} <span style="color: #2ecc71; font-weight: bold;">(${ps ? ps.totalPoints : 0})</span>`;
+                                    }).join('<br>') : playerNames;
                                 
                                 html += `
                                     <tr ${positionClass}>
                                         <td style="padding: 6px; text-align: center; font-weight: bold; border-right: 1px solid #e0e0e0;">${position}</td>
                                         <td style="padding: 6px;"><strong>${team.name}</strong></td>
                                         <td style="padding: 6px; text-align: left; font-size: 0.7em;" title="${playerNames}">
-                                            ${playerNames}
+                                            ${playerDisplay}
                                         </td>
                                         <td style="padding: 6px; text-align: center; font-weight: bold; background: #f0f9f4;">${team.front9Points || 0}</td>
                                         <td style="padding: 6px; text-align: center; font-weight: bold; background: #f0f9f4;">${team.back9Points || 0}</td>
                                         <td style="padding: 6px; text-align: center; font-weight: bold; background: #f0f9f4; color: #2ecc71;">${team.totalPoints || 0}</td>
                                         <td style="padding: 6px; text-align: center;">${team.totalGross || 0}</td>
+                                        <td style="padding: 6px; text-align: center; font-weight: bold; background: #ebf5fb; color: #3498db;">${team.jointTotal || 0}</td>
                                         <td style="padding: 6px; text-align: center; font-weight: bold; background: #e8f6f3; color: #27ae60;">
                                             ${team.money > 0 ? `${team.currency || '£'}${team.money.toFixed(2)}` : '-'}
                                         </td>
@@ -7812,6 +8819,7 @@
                                         <th style="padding: 6px; text-align: center; width: 60px; background: #1abc9c;">B9 P</th>
                                         <th style="padding: 6px; text-align: center; width: 60px; background: #1abc9c;">Total P</th>
                                         <th style="padding: 6px; text-align: center; width: 60px;">Gross</th>
+                                        <th style="padding: 6px; text-align: center; width: 60px; background: #3498db;">Joint</th>
                                         <th style="padding: 6px; text-align: center; width: 80px; background: #27ae60;">Money</th>
                                         <th style="padding: 6px; text-align: center; width: 50px;">Actions</th>
                                     </tr>
@@ -7827,6 +8835,11 @@
                             
                             // FULL player names in team display
                             const playerNames = team.players.map(p => p.name).join(', ');
+                            const playerDisplay = team.playerScores ? 
+                                team.players.map(p => {
+                                    const ps = team.playerScores.find(s => s.name === p.name);
+                                    return `${p.name} <span style="color: #1abc9c; font-weight: bold;">(${ps ? ps.totalPoints : 0})</span>`;
+                                }).join('<br>') : playerNames;
                             
                             html += `
                                 <tr ${positionClass}>
@@ -7836,12 +8849,13 @@
                                         <div style="font-size: 0.7rem; color: #7f8c8d;">${team.group || 'No Group'}</div>
                                     </td>
                                     <td style="padding: 6px; text-align: left; font-size: 0.7em;" title="${playerNames}">
-                                        ${playerNames}
+                                        ${playerDisplay}
                                     </td>
                                     <td style="padding: 6px; text-align: center; font-weight: bold; background: #e8f6f3;">${team.front9Points || 0}</td>
                                     <td style="padding: 6px; text-align: center; font-weight: bold; background: #e8f6f3;">${team.back9Points || 0}</td>
                                     <td style="padding: 6px; text-align: center; font-weight: bold; background: #e8f6f3; color: #1abc9c;">${team.totalPoints || 0}</td>
                                     <td style="padding: 6px; text-align: center;">${team.totalGross || 0}</td>
+                                    <td style="padding: 6px; text-align: center; font-weight: bold; background: #ebf5fb; color: #3498db;">${team.jointTotal || 0}</td>
                                     <td style="padding: 6px; text-align: center; font-weight: bold; background: #e8f6f3; color: #27ae60;">
                                         ${team.money > 0 ? `${team.currency || '£'}${team.money.toFixed(2)}` : '-'}
                                     </td>
@@ -7906,6 +8920,7 @@
                                         <th style="padding: 6px; text-align: center; width: 60px; background: #e67e22;">B9 P</th>
                                         <th style="padding: 6px; text-align: center; width: 60px; background: #e67e22;">Total P</th>
                                         <th style="padding: 6px; text-align: center; width: 60px;">Gross</th>
+                                        <th style="padding: 6px; text-align: center; width: 60px; background: #3498db;">Joint</th>
                                         <th style="padding: 6px; text-align: center; width: 80px; background: #27ae60;">Money</th>
                                         <th style="padding: 6px; text-align: center; width: 50px;">Actions</th>
                                     </tr>
@@ -7921,6 +8936,11 @@
                             
                             // FULL player names in team display
                             const playerNames = team.players.map(p => p.name).join(', ');
+                            const playerDisplay = team.playerScores ? 
+                                team.players.map(p => {
+                                    const ps = team.playerScores.find(s => s.name === p.name);
+                                    return `${p.name} <span style="color: #e67e22; font-weight: bold;">(${ps ? ps.totalPoints : 0})</span>`;
+                                }).join('<br>') : playerNames;
                             
                             html += `
                                 <tr ${positionClass}>
@@ -7930,12 +8950,13 @@
                                         <div style="font-size: 0.7rem; color: #7f8c8d;">${team.group || 'No Group'}</div>
                                     </td>
                                     <td style="padding: 6px; text-align: left; font-size: 0.7em;" title="${playerNames}">
-                                        ${playerNames}
+                                        ${playerDisplay}
                                     </td>
                                     <td style="padding: 6px; text-align: center; font-weight: bold; background: #fef5e7;">${team.front9Points || 0}</td>
                                     <td style="padding: 6px; text-align: center; font-weight: bold; background: #fef5e7;">${team.back9Points || 0}</td>
                                     <td style="padding: 6px; text-align: center; font-weight: bold; background: #fef5e7; color: #e67e22;">${team.totalPoints || 0}</td>
                                     <td style="padding: 6px; text-align: center;">${team.totalGross || 0}</td>
+                                    <td style="padding: 6px; text-align: center; font-weight: bold; background: #ebf5fb; color: #3498db;">${team.jointTotal || 0}</td>
                                     <td style="padding: 6px; text-align: center; font-weight: bold; background: #e8f6f3; color: #27ae60;">
                                         ${team.money > 0 ? `${team.currency || '£'}${team.money.toFixed(2)}` : '-'}
                                     </td>
@@ -8003,6 +9024,7 @@
                                         <th style="padding: 6px; text-align: center; width: 60px; background: #9b59b6;">B9 P</th>
                                         <th style="padding: 6px; text-align: center; width: 60px; background: #9b59b6;">Total P</th>
                                         <th style="padding: 6px; text-align: center; width: 60px;">Gross</th>
+                                        <th style="padding: 6px; text-align: center; width: 60px; background: #3498db;">Joint</th>
                                         <th style="padding: 6px; text-align: center; width: 80px; background: #27ae60;">Money</th>
                                         <th style="padding: 6px; text-align: center; width: 50px;">Actions</th>
                                     </tr>
@@ -8018,6 +9040,11 @@
                             
                             // FULL player names in team display
                             const playerNames = team.players.map(p => p.name).join(', ');
+                            const playerDisplay = team.playerScores ? 
+                                team.players.map(p => {
+                                    const ps = team.playerScores.find(s => s.name === p.name);
+                                    return `${p.name} <span style="color: #9b59b6; font-weight: bold;">(${ps ? ps.totalPoints : 0})</span>`;
+                                }).join('<br>') : playerNames;
                             
                             html += `
                                 <tr ${positionClass}>
@@ -8027,12 +9054,13 @@
                                         <div style="font-size: 0.7rem; color: #7f8c8d;">${team.group || 'No Group'}</div>
                                     </td>
                                     <td style="padding: 6px; text-align: left; font-size: 0.7em;" title="${playerNames}">
-                                        ${playerNames}
+                                        ${playerDisplay}
                                     </td>
                                     <td style="padding: 6px; text-align: center; font-weight: bold; background: #f3e5f5;">${team.front9Points || 0}</td>
                                     <td style="padding: 6px; text-align: center; font-weight: bold; background: #f3e5f5;">${team.back9Points || 0}</td>
                                     <td style="padding: 6px; text-align: center; font-weight: bold; background: #f3e5f5; color: #9b59b6;">${team.totalPoints || 0}</td>
                                     <td style="padding: 6px; text-align: center;">${team.totalGross || 0}</td>
+                                    <td style="padding: 6px; text-align: center; font-weight: bold; background: #ebf5fb; color: #3498db;">${team.jointTotal || 0}</td>
                                     <td style="padding: 6px; text-align: center; font-weight: bold; background: #e8f6f3; color: #27ae60;">
                                         ${team.money > 0 ? `${team.currency || '£'}${team.money.toFixed(2)}` : '-'}
                                     </td>
@@ -8198,6 +9226,224 @@
                     }
                     
                     html += `</div>`;
+                }
+                
+                // Nassau Results
+                if (this.comps.nassau && this.comps.nassau.courseName && this.comps.nassau.results.length > 0) {
+                    const nassau = this.comps.nassau;
+                    const hasScores = nassau.results.some(r => r.totalPoints > 0);
+                    
+                    html += `
+                        <div style="background: white; border-radius: 5px; padding: 12px; margin-bottom: 15px; border: 1px solid #e0e0e0; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                                <h3 style="color: #2c3e50; margin: 0; padding-bottom: 5px; border-bottom: 2px solid #f39c12; font-size: 1rem; flex: 1;">
+                                    🏆 Nassau Results
+                                    <span style="font-size: 0.7rem; color: #7f8c8d; margin-left: 10px;">${nassau.results.length} players</span>
+                                    <span style="font-size: 0.7rem; color: #3498db; margin-left: 10px; font-weight: bold;">⛳ ${nassau.courseName}</span>
+                                </h3>
+                                <button onclick="app.deleteCompetition('Nassau', '')" class="btn-danger btn-small" style="font-size: 10px; padding: 4px 8px; white-space: nowrap;">🗑️ Delete</button>
+                            </div>
+                    `;
+                    
+                    if (hasScores) {
+                        // Three sections: Front 9, Back 9, Overall 18
+                        const f9Sorted = [...nassau.results].sort((a, b) => b.front9Points - a.front9Points);
+                        const b9Sorted = [...nassau.results].sort((a, b) => b.back9Points - a.back9Points);
+                        const totalSorted = [...nassau.results].sort((a, b) => b.totalPoints - a.totalPoints);
+                        
+                        const renderNassauTable = (title, color, data, pointsKey, icon, showMoney = false) => {
+                            let tableHtml = `
+                                <div style="margin-bottom: 12px;">
+                                    <h4 style="color: #2c3e50; margin: 0 0 6px 0; font-size: 0.85rem; border-left: 3px solid ${color}; padding-left: 8px;">
+                                        ${icon} ${title}
+                                    </h4>
+                                    <table style="width: 100%; border-collapse: collapse; font-size: 11px;">
+                                        <thead>
+                                            <tr style="background: #2c3e50; color: white;">
+                                                <th style="padding: 5px; text-align: center; width: 35px;">Pos</th>
+                                                <th style="padding: 5px; text-align: left;">Player</th>
+                                                <th style="padding: 5px; text-align: center; width: 50px;">PHC</th>
+                                                <th style="padding: 5px; text-align: center; width: 60px; background: ${color};">Points</th>
+                                                <th style="padding: 5px; text-align: center; width: 60px;">Gross</th>
+                                                ${showMoney ? '<th style="padding: 5px; text-align: center; width: 80px; background: #27ae60;">Money</th>' : ''}
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                            `;
+                            data.forEach((p, idx) => {
+                                const pos = idx + 1;
+                                const bg = pos === 1 ? '#fef9e7' : pos === 2 ? '#f8f9fa' : pos === 3 ? '#f5f5f5' : '';
+                                tableHtml += `
+                                    <tr style="background: ${bg};">
+                                        <td style="padding: 5px; text-align: center; font-weight: bold;">${pos}</td>
+                                        <td style="padding: 5px;">${p.name}</td>
+                                        <td style="padding: 5px; text-align: center;">${p.phc}</td>
+                                        <td style="padding: 5px; text-align: center; font-weight: bold; color: ${color};">${p[pointsKey]}</td>
+                                        <td style="padding: 5px; text-align: center;">${p.totalGross}</td>
+                                        ${showMoney ? `<td style="padding: 5px; text-align: center;"><input type="number" data-comp="nassau" data-player="${p.name}" value="${p.money || 0}" min="0" step="0.01" style="width: 65px; padding: 3px; border: 1px solid #ddd; border-radius: 3px; text-align: center; font-size: 11px;"></td>` : ''}
+                                    </tr>
+                                `;
+                            });
+                            tableHtml += '</tbody></table>';
+                            if (showMoney) {
+                                tableHtml += '<button onclick="app.saveNassauMoney()" class="btn-primary" style="margin-top: 6px; padding: 5px 12px; font-size: 11px;">💾 Save Money</button>';
+                            }
+                            tableHtml += '</div>';
+                            return tableHtml;
+                        };
+                        
+                        html += '<div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px;">';
+                        html += renderNassauTable('Front 9', '#e67e22', f9Sorted, 'front9Points', '⭐');
+                        html += renderNassauTable('Back 9', '#8e44ad', b9Sorted, 'back9Points', '⭐');
+                        html += renderNassauTable('Overall 18', '#27ae60', totalSorted, 'totalPoints', '🏆', true);
+                        html += '</div>';
+                    } else {
+                        html += `
+                            <div style="text-align: center; padding: 20px; color: #7f8c8d; background: #f8f9fa; border-radius: 3px;">
+                                <p>No scores calculated yet. Click "Calculate" to compute Nassau scores.</p>
+                            </div>
+                        `;
+                    }
+                    
+                    html += `</div>`;
+                }
+                
+                // Daily Swindle Results
+                if (this.comps.dailySwindle && this.comps.dailySwindle.courseName && this.comps.dailySwindle.results.length > 0) {
+                    const swindle = this.comps.dailySwindle;
+                    const hasScores = swindle.results.some(r => r.totalPoints > 0);
+                    
+                    html += `
+                        <div style="background: white; border-radius: 5px; padding: 12px; margin-bottom: 15px; border: 1px solid #e0e0e0; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                                <h3 style="color: #2c3e50; margin: 0; padding-bottom: 5px; border-bottom: 2px solid #2ecc71; font-size: 1rem; flex: 1;">
+                                    💰 Daily Swindle Results
+                                    <span style="font-size: 0.7rem; color: #7f8c8d; margin-left: 10px;">${swindle.results.length} players</span>
+                                    <span style="font-size: 0.7rem; color: #3498db; margin-left: 10px; font-weight: bold;">⛳ ${swindle.courseName}</span>
+                                </h3>
+                                <button onclick="app.deleteCompetition('DailySwindle', '')" class="btn-danger btn-small" style="font-size: 10px; padding: 4px 8px; white-space: nowrap;">🗑️ Delete</button>
+                            </div>
+                    `;
+                    
+                    if (hasScores) {
+                        const sorted = [...swindle.results].sort((a, b) => b.totalPoints - a.totalPoints);
+                        
+                        html += `
+                            <table style="width: 100%; border-collapse: collapse; font-size: 11px;">
+                                <thead>
+                                    <tr style="background: #2c3e50; color: white;">
+                                        <th style="padding: 6px; text-align: center; width: 40px;">Pos</th>
+                                        <th style="padding: 6px; text-align: left;">Player</th>
+                                        <th style="padding: 6px; text-align: center; width: 50px;">PHC</th>
+                                        <th style="padding: 6px; text-align: center; width: 60px; background: #2ecc71;">F9 P</th>
+                                        <th style="padding: 6px; text-align: center; width: 60px; background: #2ecc71;">B9 P</th>
+                                        <th style="padding: 6px; text-align: center; width: 60px; background: #27ae60;">Total P</th>
+                                        <th style="padding: 6px; text-align: center; width: 60px;">Gross</th>
+                                        <th style="padding: 6px; text-align: center; width: 80px; background: #27ae60;">Money</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                        `;
+                        
+                        sorted.forEach((p, idx) => {
+                            const pos = idx + 1;
+                            const bg = pos === 1 ? 'background: #fef9e7;' : pos === 2 ? 'background: #f8f9fa;' : pos === 3 ? 'background: #f5f5f5;' : '';
+                            html += `
+                                <tr style="${bg}">
+                                    <td style="padding: 6px; text-align: center; font-weight: bold; border-right: 1px solid #e0e0e0;">${pos}</td>
+                                    <td style="padding: 6px;">${p.name}</td>
+                                    <td style="padding: 6px; text-align: center;">${p.phc}</td>
+                                    <td style="padding: 6px; text-align: center; font-weight: bold; background: #f0f9f4;">${p.front9Points}</td>
+                                    <td style="padding: 6px; text-align: center; font-weight: bold; background: #f0f9f4;">${p.back9Points}</td>
+                                    <td style="padding: 6px; text-align: center; font-weight: bold; background: #e8f6f3; color: #27ae60;">${p.totalPoints}</td>
+                                    <td style="padding: 6px; text-align: center;">${p.totalGross}</td>
+                                    <td style="padding: 6px; text-align: center;"><input type="number" data-comp="swindle" data-player="${p.name}" value="${p.money || 0}" min="0" step="0.01" style="width: 65px; padding: 3px; border: 1px solid #ddd; border-radius: 3px; text-align: center; font-size: 11px;"></td>
+                                </tr>
+                            `;
+                        });
+                        
+                        html += '</tbody></table>';
+                        html += '<button onclick="app.saveDailySwindleMoney()" class="btn-primary" style="margin-top: 8px; padding: 5px 12px; font-size: 11px;">💾 Save Money</button>';
+                    } else {
+                        html += `
+                            <div style="text-align: center; padding: 20px; color: #7f8c8d; background: #f8f9fa; border-radius: 3px;">
+                                <p>No scores calculated yet. Click "Calculate" to compute Daily Swindle scores.</p>
+                            </div>
+                        `;
+                    }
+                    
+                    html += `</div>`;
+                }
+                
+                // Comps Master Leaderboard Results
+                if (this.comps.compsLeaderboard && this.comps.compsLeaderboard.results.length > 0) {
+                    const lb = this.comps.compsLeaderboard;
+                    // Gather unique course names for dynamic columns
+                    const allCourses = [];
+                    lb.results.forEach(p => {
+                        if (p.courseScores) {
+                            p.courseScores.forEach(cs => {
+                                if (!allCourses.includes(cs.course)) allCourses.push(cs.course);
+                            });
+                        }
+                    });
+                    
+                    html += `
+                        <div style="background: white; border-radius: 5px; padding: 12px; margin-bottom: 15px; border: 1px solid #e0e0e0; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                                <h3 style="color: #2c3e50; margin: 0; padding-bottom: 5px; border-bottom: 2px solid #3498db; font-size: 1rem; flex: 1;">
+                                    📊 Comps Master Leaderboard
+                                    <span style="font-size: 0.7rem; color: #7f8c8d; margin-left: 10px;">${lb.results.length} players</span>
+                                    <span style="font-size: 0.7rem; color: #3498db; margin-left: 10px;">${allCourses.length} course${allCourses.length !== 1 ? 's' : ''}</span>
+                                </h3>
+                                <button onclick="app.deleteCompetition('CompsLeaderboard', '')" class="btn-danger btn-small" style="font-size: 10px; padding: 4px 8px; white-space: nowrap;">🗑️ Delete</button>
+                            </div>
+                            <div style="overflow-x: auto;">
+                            <table style="width: 100%; border-collapse: collapse; font-size: 11px;">
+                                <thead>
+                                    <tr style="background: #2c3e50; color: white;">
+                                        <th style="padding: 6px; text-align: center; width: 35px;">Pos</th>
+                                        <th style="padding: 6px; text-align: left;">Player</th>
+                                        <th style="padding: 6px; text-align: center; width: 45px;">PHC</th>
+                                        ${allCourses.map(c => `<th style="padding: 6px; text-align: center; width: 70px; background: #3498db; font-size: 0.7em;" title="${c}">${c.length > 10 ? c.substring(0, 10) + '..' : c}</th>`).join('')}
+                                        <th style="padding: 6px; text-align: center; width: 55px; background: #2ecc71;">F9 P</th>
+                                        <th style="padding: 6px; text-align: center; width: 55px; background: #2ecc71;">B9 P</th>
+                                        <th style="padding: 6px; text-align: center; width: 60px; background: #27ae60; font-weight: bold;">Total P</th>
+                                        <th style="padding: 6px; text-align: center; width: 55px;">Gross</th>
+                                        <th style="padding: 6px; text-align: center; width: 80px; background: #27ae60;">Money</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                    `;
+                    
+                    lb.results.forEach((p, idx) => {
+                        const pos = idx + 1;
+                        const bg = pos === 1 ? 'background: #fef9e7;' : pos === 2 ? 'background: #f8f9fa;' : pos === 3 ? 'background: #f5f5f5;' : '';
+                        // Per-course points cells
+                        const courseCells = allCourses.map(c => {
+                            const cs = p.courseScores ? p.courseScores.find(s => s.course === c) : null;
+                            return cs ? `<td style="padding: 6px; text-align: center; font-weight: bold; background: #ebf5fb; color: #2980b9;">${cs.totalPoints}</td>` 
+                                       : `<td style="padding: 6px; text-align: center; color: #bdc3c7;">-</td>`;
+                        }).join('');
+                        
+                        html += `
+                            <tr style="${bg}">
+                                <td style="padding: 6px; text-align: center; font-weight: bold; border-right: 1px solid #e0e0e0;">${pos}</td>
+                                <td style="padding: 6px; font-weight: ${pos <= 3 ? 'bold' : 'normal'};">${p.name}</td>
+                                <td style="padding: 6px; text-align: center;">${p.phc}</td>
+                                ${courseCells}
+                                <td style="padding: 6px; text-align: center; font-weight: bold; background: #f0f9f4;">${p.combinedF9 || 0}</td>
+                                <td style="padding: 6px; text-align: center; font-weight: bold; background: #f0f9f4;">${p.combinedB9 || 0}</td>
+                                <td style="padding: 6px; text-align: center; font-weight: bold; background: #e8f6f3; color: #27ae60; font-size: 12px;">${p.combinedTotal || 0}</td>
+                                <td style="padding: 6px; text-align: center;">${p.combinedGross || 0}</td>
+                                <td style="padding: 6px; text-align: center;"><input type="number" data-comp="leaderboard" data-player="${p.name}" value="${p.money || 0}" min="0" step="0.01" style="width: 65px; padding: 3px; border: 1px solid #ddd; border-radius: 3px; text-align: center; font-size: 11px;"></td>
+                            </tr>
+                        `;
+                    });
+                    
+                    html += '</tbody></table>';
+                    html += '<button onclick="app.saveCompsLeaderboardMoney()" class="btn-primary" style="margin-top: 8px; padding: 5px 12px; font-size: 11px;">💾 Save Money</button>';
+                    html += '</div></div>';
                 }
                 
                 if (html === '') {
