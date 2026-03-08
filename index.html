@@ -98,7 +98,7 @@
         /* Compact Tab Navigation */
         .tab-nav {
             display: grid;
-            grid-template-columns: repeat(8, 1fr);
+            grid-template-columns: repeat(9, 1fr);
             gap: 2px;
             margin-bottom: 10px;
             border-radius: 5px;
@@ -1050,6 +1050,59 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Quill.js Rich Text Editor -->
+    <link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet">
+    <script src="https://cdn.quilljs.com/1.3.7/quill.min.js"></script>
+    <style>
+        /* Editor Tab Styles */
+        #editor-tab .ql-toolbar {
+            border-radius: 6px 6px 0 0;
+            background: #f8f9fa;
+            border-color: #ddd;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        #editor-tab .ql-container {
+            border-radius: 0 0 6px 6px;
+            border-color: #ddd;
+            font-size: 14px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        #editor-tab .ql-editor {
+            min-height: 500px;
+            line-height: 1.6;
+        }
+        #editor-tab .ql-editor img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+            margin: 8px 0;
+        }
+        #editor-tab .editor-status {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 6px 12px;
+            background: #f8f9fa;
+            border: 1px solid #ddd;
+            border-top: none;
+            border-radius: 0 0 6px 6px;
+            font-size: 10px;
+            color: #7f8c8d;
+        }
+        #editor-tab .editor-status .save-indicator {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        #editor-tab .editor-status .save-indicator.saved {
+            color: #27ae60;
+        }
+        #editor-tab .editor-status .save-indicator.saving {
+            color: #f39c12;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -1081,6 +1134,7 @@
             <button class="tab-button" data-tab="comps">🎯 Comps</button>
             <button class="tab-button" data-tab="randomdraw">🎲 Random Draw</button>
             <button class="tab-button" data-tab="information">ℹ️ Information</button>
+            <button class="tab-button" data-tab="editor">📝 Editor</button>
         </nav>
 
         <main>
@@ -1579,6 +1633,25 @@
                     <!-- Handicap Tracker Table -->
                     <div id="handicapTrackerContainer" style="overflow-x: auto; margin-top: 15px;">
                         <!-- Table will be generated here -->
+                    </div>
+                </section>
+            </div>
+
+            <!-- Editor Tab -->
+            <div id="editor-tab" class="tab-content">
+                <section class="editor-section">
+                    <div class="section-header">
+                        <h2>📝 Document Editor</h2>
+                        <div class="section-actions">
+                            <button id="editorNewDoc" class="btn-warning btn-small">📄 New Document</button>
+                            <button id="editorPrint" class="btn-info btn-small">🖨️ Print</button>
+                            <button id="editorExportHTML" class="btn-primary btn-small">📤 Export HTML</button>
+                        </div>
+                    </div>
+                    <div id="editorContainer"></div>
+                    <div class="editor-status">
+                        <div class="save-indicator saved" id="editorSaveStatus">✔ Saved</div>
+                        <div id="editorWordCount">Words: 0 | Characters: 0</div>
                     </div>
                 </section>
             </div>
@@ -2366,6 +2439,11 @@
             // How To content
             howToContent: '',
             
+            // Editor content
+            editorContent: '',
+            quillEditor: null,
+            editorSaveTimer: null,
+            
             // Information - Winnings data (team-based structure)
             winningsData: {
                 teams: [], // [{comp: '', position: '', players: ['name1', 'name2'], totalAmount: 0}]
@@ -2522,6 +2600,10 @@
                     const savedHowTo = localStorage.getItem('golfHowToContent');
                     if (savedHowTo) this.howToContent = savedHowTo;
                     
+                    // Load Editor content
+                    const savedEditorContent = localStorage.getItem('golfEditorContent');
+                    if (savedEditorContent) this.editorContent = savedEditorContent;
+                    
                     // Load Winnings data (new team-based system)
                     const savedWinnings = localStorage.getItem('golfWinningsData');
                     if (savedWinnings) {
@@ -2578,6 +2660,7 @@
                     localStorage.setItem('golfMasterLeaderboardMoney', JSON.stringify(this.masterLeaderboardMoney));
                     localStorage.setItem('golfMasterLeaderboardCurrency', this.masterLeaderboardCurrency);
                     localStorage.setItem('golfHowToContent', this.howToContent);
+                    localStorage.setItem('golfEditorContent', this.editorContent);
                     localStorage.setItem('golfWinningsData', JSON.stringify(this.winningsData));
                     localStorage.setItem('golfHandicapTracker', JSON.stringify(this.handicapTracker));
                     localStorage.setItem('golfRaffleDrawData', JSON.stringify(this.raffleDrawData));
@@ -2984,6 +3067,21 @@
                 document.getElementById('captureWinnings').addEventListener('click', () => this.captureWinningsTracker());
                 document.getElementById('captureHandicapTracker').addEventListener('click', () => this.captureHandicapTracker());
                 
+                // Editor buttons
+                document.getElementById('editorNewDoc').addEventListener('click', () => {
+                    if (confirm('Start a new document? This will clear the current content.')) {
+                        if (this.quillEditor) {
+                            this.quillEditor.setContents([]);
+                        }
+                        this.editorContent = '';
+                        localStorage.setItem('golfEditorContent', '');
+                        this.updateEditorWordCount();
+                        this.showToast('New document created', 'success');
+                    }
+                });
+                document.getElementById('editorPrint').addEventListener('click', () => this.printEditorContent());
+                document.getElementById('editorExportHTML').addEventListener('click', () => this.exportEditorHTML());
+                
                 window.addEventListener('beforeunload', () => this.saveData());
             },
             
@@ -3072,6 +3170,8 @@
                         this.renderWinnings();
                         this.renderHandicapTracker();
                     }, 100);
+                } else if (tabId === 'editor') {
+                    setTimeout(() => this.initEditor(), 100);
                 }
                 
                 this.saveData();
@@ -4113,6 +4213,157 @@
                 
                 this.handicapTracker.players[playerIdx].days[dayIdx][field] = input.value;
                 this.saveData();
+            },
+            
+            // EDITOR FUNCTIONS
+            initEditor() {
+                if (this.quillEditor) {
+                    // Editor already initialized, just restore content
+                    return;
+                }
+                
+                const container = document.getElementById('editorContainer');
+                if (!container) return;
+                
+                this.quillEditor = new Quill('#editorContainer', {
+                    theme: 'snow',
+                    placeholder: 'Start typing your document here... You can paste images and formatted text.',
+                    modules: {
+                        toolbar: [
+                            [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+                            [{ 'font': [] }],
+                            [{ 'size': ['small', false, 'large', 'huge'] }],
+                            ['bold', 'italic', 'underline', 'strike'],
+                            [{ 'color': [] }, { 'background': [] }],
+                            [{ 'script': 'sub' }, { 'script': 'super' }],
+                            [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                            [{ 'indent': '-1' }, { 'indent': '+1' }],
+                            [{ 'direction': 'rtl' }],
+                            [{ 'align': [] }],
+                            ['blockquote', 'code-block'],
+                            ['link', 'image'],
+                            ['clean']
+                        ],
+                        clipboard: {
+                            matchVisual: false
+                        }
+                    }
+                });
+                
+                // Load saved content
+                if (this.editorContent) {
+                    this.quillEditor.root.innerHTML = this.editorContent;
+                }
+                
+                // Auto-save on text change with debounce
+                this.quillEditor.on('text-change', () => {
+                    const statusEl = document.getElementById('editorSaveStatus');
+                    if (statusEl) {
+                        statusEl.className = 'save-indicator saving';
+                        statusEl.textContent = '⏳ Saving...';
+                    }
+                    
+                    clearTimeout(this.editorSaveTimer);
+                    this.editorSaveTimer = setTimeout(() => {
+                        this.editorContent = this.quillEditor.root.innerHTML;
+                        localStorage.setItem('golfEditorContent', this.editorContent);
+                        
+                        if (statusEl) {
+                            statusEl.className = 'save-indicator saved';
+                            statusEl.textContent = '✔ Saved';
+                        }
+                    }, 500);
+                    
+                    this.updateEditorWordCount();
+                });
+                
+                // Handle image paste via clipboard
+                this.quillEditor.root.addEventListener('paste', (e) => {
+                    const clipboardData = e.clipboardData || window.clipboardData;
+                    if (!clipboardData) return;
+                    
+                    const items = clipboardData.items;
+                    if (!items) return;
+                    
+                    for (let i = 0; i < items.length; i++) {
+                        if (items[i].type.indexOf('image') !== -1) {
+                            e.preventDefault();
+                            const file = items[i].getAsFile();
+                            const reader = new FileReader();
+                            reader.onload = (event) => {
+                                const range = this.quillEditor.getSelection(true);
+                                this.quillEditor.insertEmbed(range.index, 'image', event.target.result);
+                                this.quillEditor.setSelection(range.index + 1);
+                            };
+                            reader.readAsDataURL(file);
+                            break;
+                        }
+                    }
+                });
+                
+                this.updateEditorWordCount();
+            },
+            
+            updateEditorWordCount() {
+                const countEl = document.getElementById('editorWordCount');
+                if (!countEl || !this.quillEditor) return;
+                
+                const text = this.quillEditor.getText().trim();
+                const words = text ? text.split(/\s+/).length : 0;
+                const chars = text.length;
+                countEl.textContent = `Words: ${words} | Characters: ${chars}`;
+            },
+            
+            printEditorContent() {
+                if (!this.quillEditor) {
+                    this.showToast('Editor not initialized', 'error');
+                    return;
+                }
+                
+                const content = this.quillEditor.root.innerHTML;
+                const printWindow = window.open('', '_blank');
+                if (!printWindow) {
+                    this.showToast('Pop-up blocked — please allow pop-ups', 'error');
+                    return;
+                }
+                
+                printWindow.document.write(`<!DOCTYPE html>
+<html><head><title>Print Document</title>
+<style>
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
+           padding: 40px; max-width: 800px; margin: 0 auto; line-height: 1.6; color: #333; }
+    img { max-width: 100%; height: auto; }
+    @media print { body { padding: 0; } }
+</style></head>
+<body>${content}
+<script>window.onload = function() { window.print(); }<\/script>
+</body></html>`);
+                printWindow.document.close();
+            },
+            
+            exportEditorHTML() {
+                if (!this.quillEditor) {
+                    this.showToast('Editor not initialized', 'error');
+                    return;
+                }
+                
+                const content = this.quillEditor.root.innerHTML;
+                const html = `<!DOCTYPE html>
+<html><head><meta charset="UTF-8"><title>Document</title>
+<style>
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
+           padding: 40px; max-width: 800px; margin: 0 auto; line-height: 1.6; color: #333; }
+    img { max-width: 100%; height: auto; }
+</style></head>
+<body>${content}</body></html>`;
+                
+                const blob = new Blob([html], { type: 'text/html' });
+                const link = document.createElement('a');
+                link.download = `document-${new Date().toISOString().slice(0, 10)}.html`;
+                link.href = URL.createObjectURL(blob);
+                link.click();
+                URL.revokeObjectURL(link.href);
+                this.showToast('Document exported as HTML', 'success');
             },
             
             // CAPTURE FUNCTIONS FOR INFORMATION TAB

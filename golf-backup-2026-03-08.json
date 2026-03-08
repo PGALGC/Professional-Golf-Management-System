@@ -1,0 +1,1146 @@
+{
+  "players": [
+    {
+      "id": 1770897870607,
+      "name": "Kamal Dhunna",
+      "handicap": 8.4,
+      "phc": 10,
+      "course": "Aphrodite-Hiils 8th May 2026",
+      "group": "",
+      "date": "2026-02-12",
+      "phcPercentage": ""
+    },
+    {
+      "id": 1770897896217,
+      "name": "Dan Breeze",
+      "handicap": 2,
+      "phc": 3,
+      "course": "Aphrodite-Hiils 8th May 2026",
+      "group": "",
+      "date": "2026-02-12",
+      "phcPercentage": ""
+    },
+    {
+      "id": 1770897911165,
+      "name": "Sean Casey",
+      "handicap": 3,
+      "phc": 4,
+      "course": "Aphrodite-Hiils 8th May 2026",
+      "group": "",
+      "date": "2026-02-12",
+      "phcPercentage": ""
+    },
+    {
+      "id": 1770897927160,
+      "name": "Gamma Basra",
+      "handicap": 4,
+      "phc": 5,
+      "course": "Aphrodite-Hiils 8th May 2026",
+      "group": "",
+      "date": "2026-02-12",
+      "phcPercentage": ""
+    },
+    {
+      "id": 1770897945072,
+      "name": "Daren Davey",
+      "handicap": 5,
+      "phc": 6,
+      "course": "Aphrodite-Hiils 8th May 2026",
+      "group": "",
+      "date": "2026-02-12",
+      "phcPercentage": ""
+    },
+    {
+      "id": 1770897966796,
+      "name": "Jeet Sohal",
+      "handicap": 6,
+      "phc": 7,
+      "course": "Aphrodite-Hiils 8th May 2026",
+      "group": "",
+      "date": "2026-02-12",
+      "phcPercentage": ""
+    },
+    {
+      "id": 1770897985762,
+      "name": "Joe Ciampa",
+      "handicap": 7,
+      "phc": 8,
+      "course": "Aphrodite-Hiils 8th May 2026",
+      "group": "",
+      "date": "2026-02-12",
+      "phcPercentage": ""
+    },
+    {
+      "id": 1770898005142,
+      "name": "Josh Eaton",
+      "handicap": 8,
+      "phc": 10,
+      "course": "Aphrodite-Hiils 8th May 2026",
+      "group": "",
+      "date": "2026-02-12",
+      "phcPercentage": ""
+    },
+    {
+      "id": 1770898019969,
+      "name": "Josh Roseberry",
+      "handicap": 9,
+      "phc": 11,
+      "course": "Aphrodite-Hiils 8th May 2026",
+      "group": "",
+      "date": "2026-02-12",
+      "phcPercentage": ""
+    },
+    {
+      "id": 1770898039565,
+      "name": "Mark Hickman",
+      "handicap": 10,
+      "phc": 12,
+      "course": "Aphrodite-Hiils 8th May 2026",
+      "group": "",
+      "date": "2026-02-12",
+      "phcPercentage": ""
+    },
+    {
+      "id": 1770898055578,
+      "name": "Ringo Theara",
+      "handicap": 11,
+      "phc": 13,
+      "course": "Aphrodite-Hiils 8th May 2026",
+      "group": "",
+      "date": "2026-02-12",
+      "phcPercentage": ""
+    },
+    {
+      "id": 1770898070492,
+      "name": "Robert Brown",
+      "handicap": 12,
+      "phc": 14,
+      "course": "Aphrodite-Hiils 8th May 2026",
+      "group": "",
+      "date": "2026-02-12",
+      "phcPercentage": ""
+    }
+  ],
+  "courses": [
+    {
+      "id": 1770897003482,
+      "name": "Aphrodite-Hiils 8th May 2026",
+      "rating": 71.5,
+      "slope": 128,
+      "par": 71,
+      "teeColor": "White",
+      "holes": [
+        {
+          "number": 1,
+          "par": 4,
+          "index": 10,
+          "yardage": 0
+        },
+        {
+          "number": 2,
+          "par": 4,
+          "index": 6,
+          "yardage": 0
+        },
+        {
+          "number": 3,
+          "par": 5,
+          "index": 14,
+          "yardage": 0
+        },
+        {
+          "number": 4,
+          "par": 4,
+          "index": 4,
+          "yardage": 0
+        },
+        {
+          "number": 5,
+          "par": 3,
+          "index": 18,
+          "yardage": 0
+        },
+        {
+          "number": 6,
+          "par": 5,
+          "index": 8,
+          "yardage": 0
+        },
+        {
+          "number": 7,
+          "par": 3,
+          "index": 16,
+          "yardage": 0
+        },
+        {
+          "number": 8,
+          "par": 4,
+          "index": 2,
+          "yardage": 0
+        },
+        {
+          "number": 9,
+          "par": 4,
+          "index": 12,
+          "yardage": 0
+        },
+        {
+          "number": 10,
+          "par": 5,
+          "index": 9,
+          "yardage": 0
+        },
+        {
+          "number": 11,
+          "par": 4,
+          "index": 1,
+          "yardage": 0
+        },
+        {
+          "number": 12,
+          "par": 3,
+          "index": 15,
+          "yardage": 0
+        },
+        {
+          "number": 13,
+          "par": 4,
+          "index": 3,
+          "yardage": 0
+        },
+        {
+          "number": 14,
+          "par": 4,
+          "index": 13,
+          "yardage": 0
+        },
+        {
+          "number": 15,
+          "par": 3,
+          "index": 11,
+          "yardage": 0
+        },
+        {
+          "number": 16,
+          "par": 4,
+          "index": 5,
+          "yardage": 0
+        },
+        {
+          "number": 17,
+          "par": 3,
+          "index": 17,
+          "yardage": 0
+        },
+        {
+          "number": 18,
+          "par": 5,
+          "index": 7,
+          "yardage": 0
+        }
+      ],
+      "frontPar": 36,
+      "backPar": 35,
+      "date": "2026-02-12T11:50:03.482Z",
+      "tees": {
+        "white": {
+          "rating": 71.5,
+          "slope": 128
+        },
+        "yellow": {
+          "rating": 70.5,
+          "slope": 123
+        }
+      },
+      "activeTee": "white"
+    },
+    {
+      "id": 1770897225535,
+      "name": "Aphrodite-Hiils 12th May 2026",
+      "rating": 70.4,
+      "slope": 129,
+      "par": 71,
+      "teeColor": "White",
+      "holes": [
+        {
+          "number": 1,
+          "par": 4,
+          "index": 10,
+          "yardage": 0
+        },
+        {
+          "number": 2,
+          "par": 4,
+          "index": 6,
+          "yardage": 0
+        },
+        {
+          "number": 3,
+          "par": 5,
+          "index": 14,
+          "yardage": 0
+        },
+        {
+          "number": 4,
+          "par": 4,
+          "index": 4,
+          "yardage": 0
+        },
+        {
+          "number": 5,
+          "par": 3,
+          "index": 18,
+          "yardage": 0
+        },
+        {
+          "number": 6,
+          "par": 5,
+          "index": 8,
+          "yardage": 0
+        },
+        {
+          "number": 7,
+          "par": 3,
+          "index": 16,
+          "yardage": 0
+        },
+        {
+          "number": 8,
+          "par": 4,
+          "index": 2,
+          "yardage": 0
+        },
+        {
+          "number": 9,
+          "par": 4,
+          "index": 12,
+          "yardage": 0
+        },
+        {
+          "number": 10,
+          "par": 5,
+          "index": 9,
+          "yardage": 0
+        },
+        {
+          "number": 11,
+          "par": 4,
+          "index": 1,
+          "yardage": 0
+        },
+        {
+          "number": 12,
+          "par": 3,
+          "index": 15,
+          "yardage": 0
+        },
+        {
+          "number": 13,
+          "par": 4,
+          "index": 3,
+          "yardage": 0
+        },
+        {
+          "number": 14,
+          "par": 4,
+          "index": 13,
+          "yardage": 0
+        },
+        {
+          "number": 15,
+          "par": 3,
+          "index": 11,
+          "yardage": 0
+        },
+        {
+          "number": 16,
+          "par": 4,
+          "index": 5,
+          "yardage": 0
+        },
+        {
+          "number": 17,
+          "par": 3,
+          "index": 17,
+          "yardage": 0
+        },
+        {
+          "number": 18,
+          "par": 5,
+          "index": 7,
+          "yardage": 0
+        }
+      ],
+      "frontPar": 36,
+      "backPar": 35,
+      "date": "2026-02-12T11:53:45.535Z",
+      "tees": {
+        "white": {
+          "rating": 70.4,
+          "slope": 129
+        }
+      },
+      "activeTee": "white"
+    },
+    {
+      "id": 1770897479019,
+      "name": "Minthis Golf Course - 9th May",
+      "rating": 69.8,
+      "slope": 131,
+      "par": 72,
+      "teeColor": "White",
+      "holes": [
+        {
+          "number": 1,
+          "par": 4,
+          "index": 14,
+          "yardage": 0
+        },
+        {
+          "number": 2,
+          "par": 3,
+          "index": 18,
+          "yardage": 0
+        },
+        {
+          "number": 3,
+          "par": 5,
+          "index": 12,
+          "yardage": 0
+        },
+        {
+          "number": 4,
+          "par": 4,
+          "index": 10,
+          "yardage": 0
+        },
+        {
+          "number": 5,
+          "par": 4,
+          "index": 6,
+          "yardage": 0
+        },
+        {
+          "number": 6,
+          "par": 4,
+          "index": 2,
+          "yardage": 0
+        },
+        {
+          "number": 7,
+          "par": 4,
+          "index": 4,
+          "yardage": 0
+        },
+        {
+          "number": 8,
+          "par": 3,
+          "index": 16,
+          "yardage": 0
+        },
+        {
+          "number": 9,
+          "par": 4,
+          "index": 8,
+          "yardage": 0
+        },
+        {
+          "number": 10,
+          "par": 5,
+          "index": 5,
+          "yardage": 0
+        },
+        {
+          "number": 11,
+          "par": 5,
+          "index": 9,
+          "yardage": 0
+        },
+        {
+          "number": 12,
+          "par": 4,
+          "index": 1,
+          "yardage": 0
+        },
+        {
+          "number": 13,
+          "par": 3,
+          "index": 17,
+          "yardage": 0
+        },
+        {
+          "number": 14,
+          "par": 4,
+          "index": 15,
+          "yardage": 0
+        },
+        {
+          "number": 15,
+          "par": 3,
+          "index": 13,
+          "yardage": 0
+        },
+        {
+          "number": 16,
+          "par": 4,
+          "index": 3,
+          "yardage": 0
+        },
+        {
+          "number": 17,
+          "par": 5,
+          "index": 7,
+          "yardage": 0
+        },
+        {
+          "number": 18,
+          "par": 4,
+          "index": 11,
+          "yardage": 0
+        }
+      ],
+      "frontPar": 35,
+      "backPar": 37,
+      "date": "2026-02-12T11:57:59.019Z",
+      "tees": {
+        "white": {
+          "rating": 69.8,
+          "slope": 131
+        }
+      },
+      "activeTee": "white"
+    },
+    {
+      "id": 1770897772984,
+      "name": "Secret Valley Golf Course - 11th May 2026",
+      "rating": 68.9,
+      "slope": 134,
+      "par": 71,
+      "teeColor": "White",
+      "holes": [
+        {
+          "number": 1,
+          "par": 4,
+          "index": 17,
+          "yardage": 0
+        },
+        {
+          "number": 2,
+          "par": 5,
+          "index": 5,
+          "yardage": 0
+        },
+        {
+          "number": 3,
+          "par": 4,
+          "index": 13,
+          "yardage": 0
+        },
+        {
+          "number": 4,
+          "par": 3,
+          "index": 9,
+          "yardage": 0
+        },
+        {
+          "number": 5,
+          "par": 4,
+          "index": 3,
+          "yardage": 0
+        },
+        {
+          "number": 6,
+          "par": 3,
+          "index": 15,
+          "yardage": 0
+        },
+        {
+          "number": 7,
+          "par": 4,
+          "index": 11,
+          "yardage": 0
+        },
+        {
+          "number": 8,
+          "par": 4,
+          "index": 7,
+          "yardage": 0
+        },
+        {
+          "number": 9,
+          "par": 5,
+          "index": 1,
+          "yardage": 0
+        },
+        {
+          "number": 10,
+          "par": 3,
+          "index": 14,
+          "yardage": 0
+        },
+        {
+          "number": 11,
+          "par": 4,
+          "index": 2,
+          "yardage": 0
+        },
+        {
+          "number": 12,
+          "par": 4,
+          "index": 8,
+          "yardage": 0
+        },
+        {
+          "number": 13,
+          "par": 5,
+          "index": 6,
+          "yardage": 0
+        },
+        {
+          "number": 14,
+          "par": 3,
+          "index": 18,
+          "yardage": 0
+        },
+        {
+          "number": 15,
+          "par": 4,
+          "index": 12,
+          "yardage": 0
+        },
+        {
+          "number": 16,
+          "par": 3,
+          "index": 16,
+          "yardage": 0
+        },
+        {
+          "number": 17,
+          "par": 4,
+          "index": 4,
+          "yardage": 0
+        },
+        {
+          "number": 18,
+          "par": 5,
+          "index": 10,
+          "yardage": 0
+        }
+      ],
+      "frontPar": 36,
+      "backPar": 35,
+      "date": "2026-02-12T12:02:52.984Z",
+      "tees": {
+        "white": {
+          "rating": 68.9,
+          "slope": 134
+        }
+      },
+      "activeTee": "white"
+    }
+  ],
+  "pairs": [],
+  "scores": {
+    "1770897870607": {
+      "1": 4,
+      "2": 4,
+      "3": 4,
+      "4": 4,
+      "5": 4,
+      "6": 4,
+      "7": 4,
+      "8": 4,
+      "9": 4,
+      "10": 4,
+      "11": 4,
+      "12": 4,
+      "13": 4,
+      "14": 4,
+      "15": 4,
+      "16": 4,
+      "17": 4,
+      "18": 4
+    },
+    "1770897896217": {
+      "1": 4,
+      "2": 4,
+      "3": 4,
+      "4": 4,
+      "5": 4,
+      "6": 4,
+      "7": 4,
+      "8": 4,
+      "9": 4,
+      "10": 4,
+      "11": 4,
+      "12": 4,
+      "13": 4,
+      "14": 4,
+      "15": 4,
+      "16": 4,
+      "17": 4,
+      "18": 4
+    },
+    "1770897911165": {
+      "1": 0,
+      "2": 4,
+      "3": 4,
+      "4": 4,
+      "5": 4,
+      "6": 4,
+      "7": 4,
+      "8": 4,
+      "9": 4,
+      "10": 4,
+      "11": 4,
+      "12": 4,
+      "13": 4,
+      "14": 4,
+      "15": 4,
+      "16": 4,
+      "17": 4,
+      "18": 4
+    },
+    "1770897927160": {
+      "1": 4,
+      "2": 4,
+      "3": 4,
+      "4": 4,
+      "5": 4,
+      "6": 4,
+      "7": 4,
+      "8": 4,
+      "9": 4,
+      "10": 4,
+      "11": 4,
+      "12": 4,
+      "13": 4,
+      "14": 4,
+      "15": 4,
+      "16": 4,
+      "17": 4,
+      "18": 4
+    },
+    "1770897945072": {
+      "1": 4,
+      "2": 4,
+      "3": 4,
+      "4": 4,
+      "5": 4,
+      "6": 4,
+      "7": 4,
+      "8": 4,
+      "9": 4,
+      "10": 4,
+      "11": 4,
+      "12": 4,
+      "13": 4,
+      "14": 4,
+      "15": 4,
+      "16": 4,
+      "17": 4,
+      "18": 4
+    },
+    "1770897966796": {
+      "1": 4,
+      "2": 4,
+      "3": 4,
+      "4": 4,
+      "5": 4,
+      "6": 4,
+      "7": 4,
+      "8": 4,
+      "9": 4,
+      "10": 4,
+      "11": 4,
+      "12": 4,
+      "13": 4,
+      "14": 4,
+      "15": 4,
+      "16": 4,
+      "17": 4,
+      "18": 4
+    },
+    "1770897985762": {
+      "1": 4,
+      "2": 4,
+      "3": 4,
+      "4": 4,
+      "5": 4,
+      "6": 4,
+      "7": 4,
+      "8": 4,
+      "9": 4,
+      "10": 4,
+      "11": 4,
+      "12": 4,
+      "13": 4,
+      "14": 4,
+      "15": 4,
+      "16": 4,
+      "17": 4,
+      "18": 4
+    },
+    "1770898005142": {
+      "1": 4,
+      "2": 4,
+      "3": 4,
+      "4": 4,
+      "5": 4,
+      "6": 4,
+      "7": 4,
+      "8": 4,
+      "9": 4,
+      "10": 4,
+      "11": 4,
+      "12": 4,
+      "13": 4,
+      "14": 4,
+      "15": 4,
+      "16": 4,
+      "17": 4,
+      "18": 4
+    },
+    "1770898019969": {
+      "1": 4,
+      "2": 4,
+      "3": 4,
+      "4": 4,
+      "5": 4,
+      "6": 4,
+      "7": 4,
+      "8": 4,
+      "9": 4,
+      "10": 4,
+      "11": 4,
+      "12": 4,
+      "13": 4,
+      "14": 4,
+      "15": 4,
+      "16": 4,
+      "17": 4,
+      "18": 4
+    },
+    "1770898039565": {
+      "1": 4,
+      "2": 4,
+      "3": 4,
+      "4": 4,
+      "5": 4,
+      "6": 4,
+      "7": 4,
+      "8": 4,
+      "9": 4,
+      "10": 4,
+      "11": 4,
+      "12": 4,
+      "13": 4,
+      "14": 4,
+      "15": 4,
+      "16": 4,
+      "17": 4,
+      "18": 4
+    },
+    "1770898055578": {
+      "1": 4,
+      "2": 4,
+      "3": 4,
+      "4": 4,
+      "5": 4,
+      "6": 4,
+      "7": 4,
+      "8": 4,
+      "9": 4,
+      "10": 4,
+      "11": 4,
+      "12": 4,
+      "13": 4,
+      "14": 4,
+      "15": 4,
+      "16": 4,
+      "17": 4,
+      "18": 4
+    },
+    "1770898070492": {
+      "1": 4,
+      "2": 4,
+      "3": 4,
+      "4": 4,
+      "5": 4,
+      "6": 4,
+      "7": 4,
+      "8": 4,
+      "9": 4,
+      "10": 4,
+      "11": 4,
+      "12": 4,
+      "13": 4,
+      "14": 4,
+      "15": 4,
+      "16": 4,
+      "17": 4,
+      "18": 4
+    }
+  },
+  "leaderboardMoney": {},
+  "pairsScores": {},
+  "pairsMoney": {},
+  "pairsCourseGenerated": "",
+  "comps": {
+    "fourBBB": [
+      {
+        "id": 1772782609399,
+        "name": "4BBB Team 2",
+        "players": [
+          {
+            "id": 1770898070492,
+            "name": "Robert Brown",
+            "handicap": 12,
+            "phc": 13,
+            "course": "Aphrodite-Hiils 8th May 2026",
+            "group": "",
+            "date": "2026-02-12",
+            "phcPercentage": ""
+          },
+          {
+            "id": 1770898055578,
+            "name": "Ringo Theara",
+            "handicap": 11,
+            "phc": 12,
+            "course": "Aphrodite-Hiils 8th May 2026",
+            "group": "",
+            "date": "2026-02-12",
+            "phcPercentage": ""
+          }
+        ],
+        "course": "Aphrodite-Hiils 8th May 2026",
+        "currency": "£",
+        "money": 0,
+        "group": "Group 1",
+        "date": "2026-03-06T07:36:49.397Z",
+        "scores": {},
+        "totalPoints": 48,
+        "totalGross": 72,
+        "front9Points": 24,
+        "back9Points": 24
+      },
+      {
+        "id": 1772782609397,
+        "name": "4BBB Team 1",
+        "players": [
+          {
+            "id": 1770898005142,
+            "name": "Josh Eaton",
+            "handicap": 8,
+            "phc": 9,
+            "course": "Aphrodite-Hiils 8th May 2026",
+            "group": "",
+            "date": "2026-02-12",
+            "phcPercentage": ""
+          },
+          {
+            "id": 1770897945072,
+            "name": "Daren Davey",
+            "handicap": 5,
+            "phc": 5,
+            "course": "Aphrodite-Hiils 8th May 2026",
+            "group": "",
+            "date": "2026-02-12",
+            "phcPercentage": ""
+          }
+        ],
+        "course": "Aphrodite-Hiils 8th May 2026",
+        "currency": "£",
+        "money": 0,
+        "group": "Group 1",
+        "date": "2026-03-06T07:36:49.397Z",
+        "scores": {},
+        "totalPoints": 44,
+        "totalGross": 72,
+        "front9Points": 22,
+        "back9Points": 22
+      },
+      {
+        "id": 1772782609403,
+        "name": "4BBB Team 4",
+        "players": [
+          {
+            "id": 1770898019969,
+            "name": "Josh Roseberry",
+            "handicap": 9,
+            "phc": 10,
+            "course": "Aphrodite-Hiils 8th May 2026",
+            "group": "",
+            "date": "2026-02-12",
+            "phcPercentage": ""
+          },
+          {
+            "id": 1770897896217,
+            "name": "Dan Breeze",
+            "handicap": 2,
+            "phc": 2,
+            "course": "Aphrodite-Hiils 8th May 2026",
+            "group": "",
+            "date": "2026-02-12",
+            "phcPercentage": ""
+          }
+        ],
+        "course": "Aphrodite-Hiils 8th May 2026",
+        "currency": "£",
+        "money": 0,
+        "group": "Group 2",
+        "date": "2026-03-06T07:36:49.397Z",
+        "scores": {},
+        "totalPoints": 45,
+        "totalGross": 72,
+        "front9Points": 23,
+        "back9Points": 22
+      },
+      {
+        "id": 1772782609401,
+        "name": "4BBB Team 3",
+        "players": [
+          {
+            "id": 1770897927160,
+            "name": "Gamma Basra",
+            "handicap": 4,
+            "phc": 4,
+            "course": "Aphrodite-Hiils 8th May 2026",
+            "group": "",
+            "date": "2026-02-12",
+            "phcPercentage": ""
+          },
+          {
+            "id": 1770897870607,
+            "name": "Kamal Dhunna",
+            "handicap": 1,
+            "phc": 1,
+            "course": "Aphrodite-Hiils 8th May 2026",
+            "group": "",
+            "date": "2026-02-12",
+            "phcPercentage": ""
+          }
+        ],
+        "course": "Aphrodite-Hiils 8th May 2026",
+        "currency": "£",
+        "money": 0,
+        "group": "Group 2",
+        "date": "2026-03-06T07:36:49.397Z",
+        "scores": {},
+        "totalPoints": 39,
+        "totalGross": 72,
+        "front9Points": 20,
+        "back9Points": 19
+      },
+      {
+        "id": 1772782609405,
+        "name": "4BBB Team 5",
+        "players": [
+          {
+            "id": 1770897911165,
+            "name": "Sean Casey",
+            "handicap": 3,
+            "phc": 3,
+            "course": "Aphrodite-Hiils 8th May 2026",
+            "group": "",
+            "date": "2026-02-12",
+            "phcPercentage": ""
+          },
+          {
+            "id": 1770898039565,
+            "name": "Mark Hickman",
+            "handicap": 10,
+            "phc": 11,
+            "course": "Aphrodite-Hiils 8th May 2026",
+            "group": "",
+            "date": "2026-02-12",
+            "phcPercentage": ""
+          }
+        ],
+        "course": "Aphrodite-Hiils 8th May 2026",
+        "currency": "£",
+        "money": 0,
+        "group": "Group 3",
+        "date": "2026-03-06T07:36:49.397Z",
+        "scores": {},
+        "totalPoints": 46,
+        "totalGross": 72,
+        "front9Points": 23,
+        "back9Points": 23
+      },
+      {
+        "id": 1772782609407,
+        "name": "4BBB Team 6",
+        "players": [
+          {
+            "id": 1770897966796,
+            "name": "Jeet Sohal",
+            "handicap": 6,
+            "phc": 6,
+            "course": "Aphrodite-Hiils 8th May 2026",
+            "group": "",
+            "date": "2026-02-12",
+            "phcPercentage": ""
+          },
+          {
+            "id": 1770897985762,
+            "name": "Joe Ciampa",
+            "handicap": 7,
+            "phc": 7,
+            "course": "Aphrodite-Hiils 8th May 2026",
+            "group": "",
+            "date": "2026-02-12",
+            "phcPercentage": ""
+          }
+        ],
+        "course": "Aphrodite-Hiils 8th May 2026",
+        "currency": "£",
+        "money": 0,
+        "group": "Group 3",
+        "date": "2026-03-06T07:36:49.397Z",
+        "scores": {},
+        "totalPoints": 42,
+        "totalGross": 72,
+        "front9Points": 21,
+        "back9Points": 21
+      }
+    ],
+    "fourPersonTeams": [],
+    "best3From4": [],
+    "mixedScore": [],
+    "teamAvsB": {
+      "teamA": [],
+      "teamB": [],
+      "courseName": ""
+    },
+    "nassau": {
+      "courseName": "",
+      "currency": "£",
+      "moneyPerBet": 0,
+      "results": []
+    },
+    "dailySwindle": {
+      "courseName": "",
+      "currency": "£",
+      "money": 0,
+      "results": []
+    },
+    "compsLeaderboard": {
+      "results": []
+    }
+  },
+  "masterLeaderboardData": [],
+  "currentTab": "players",
+  "scorecardSettings": {
+    "selectedCourseId": "1770897003482",
+    "selectedGroupFilter": "all"
+  },
+  "leaderboardSettings": {
+    "currency": "$",
+    "defaultSort": "totalPoints"
+  },
+  "pairsSettings": {
+    "currency": "$"
+  },
+  "timestamp": "2026-03-08T17:53:25.979Z"
+}
