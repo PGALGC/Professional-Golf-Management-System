@@ -1512,6 +1512,25 @@
                         </div>
                         
                         <div class="comp-card">
+                            <h3>🎯 PAR 3 — Closest to Pin</h3>
+                            <div class="comp-description">
+                                Closest to Pin competition on Par 3 holes. Auto-detect Par 3 holes from the course or manually select holes.
+                            </div>
+                            <div style="margin: 10px 0; padding: 10px; background: #f8f9fa; border-radius: 4px; border: 1px solid #e0e0e0;">
+                                <label for="ctpCourseSelect" style="font-size: 11px; font-weight: 600; display: block; margin-bottom: 5px;">Select Course:</label>
+                                <select id="ctpCourseSelect" style="width: 100%; padding: 8px; font-size: 12px; border: 1px solid #ddd; border-radius: 3px;">
+                                    <option value="">-- Select a course --</option>
+                                </select>
+                            </div>
+                            <div class="comp-actions" style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px;">
+                                <button id="autoDetectCTP" class="btn-success">🎯 Auto Par 3</button>
+                                <button id="manualSelectCTP" class="btn-info">✍️ Manual Select</button>
+                                <button id="saveCTPResults" class="btn-primary" style="grid-column: 1 / -1;">💾 Save Results</button>
+                            </div>
+                            <div id="ctpHolesContainer" style="margin-top: 10px;"></div>
+                        </div>
+                        
+                        <div class="comp-card">
                             <h3>📊 Comps Master Leaderboard</h3>
                             <div class="comp-description">
                                 Shows all players across all courses ranked by total Stableford points in one combined leaderboard.
@@ -2414,7 +2433,8 @@
                 teamAvsB: { teamA: [], teamB: [], courseName: '' },
                 nassau: { courseName: '', currency: '£', moneyPerBet: 0, results: [] },
                 dailySwindle: { courseName: '', currency: '£', money: 0, results: [] },
-                compsLeaderboard: { results: [] }
+                compsLeaderboard: { results: [] },
+                closestToPin: { courseName: '', holes: [] }
             },
             
             // Track current competition type for modal
@@ -2574,7 +2594,8 @@
                             teamAvsB: loadedComps.teamAvsB || { teamA: [], teamB: [], courseName: '' },
                             nassau: loadedComps.nassau || { courseName: '', currency: '£', moneyPerBet: 0, results: [] },
                             dailySwindle: loadedComps.dailySwindle || { courseName: '', currency: '£', money: 0, results: [] },
-                            compsLeaderboard: loadedComps.compsLeaderboard || { results: [] }
+                            compsLeaderboard: loadedComps.compsLeaderboard || { results: [] },
+                            closestToPin: loadedComps.closestToPin || { courseName: '', holes: [] }
                         };
                     }
                     
@@ -2952,6 +2973,11 @@
                 document.getElementById('calculateDailySwindle').addEventListener('click', () => this.calculateDailySwindle());
                 document.getElementById('calculateCompsLeaderboard').addEventListener('click', () => this.calculateCompsLeaderboard());
                 
+                // Closest to Pin buttons
+                document.getElementById('autoDetectCTP').addEventListener('click', () => this.autoDetectCTP());
+                document.getElementById('manualSelectCTP').addEventListener('click', () => this.manualSelectCTP());
+                document.getElementById('saveCTPResults').addEventListener('click', () => this.saveCTPResults());
+                
                 // Raffle Draw buttons
                 document.getElementById('saveRafflePrizeFund').addEventListener('click', () => this.saveRafflePrizeFund());
                 document.getElementById('conductRaffleDraw').addEventListener('click', () => this.conductRaffleDraw());
@@ -3159,6 +3185,13 @@
                         this.populateCompsCourseDropdowns();
                         this.renderCompsResults();
                         this.renderRaffleWinners();
+                        // Restore CTP holes UI if competition exists
+                        if (this.comps.closestToPin.courseName && this.comps.closestToPin.holes.length > 0) {
+                            const ctpSelect = document.getElementById('ctpCourseSelect');
+                            if (ctpSelect) ctpSelect.value = this.comps.closestToPin.courseName;
+                            const players = this.players.filter(p => p.course && p.course.toLowerCase() === this.comps.closestToPin.courseName.toLowerCase());
+                            this.renderCTPHoles(players);
+                        }
                     }, 100);
                 } else if (tabId === 'randomdraw') {
                     setTimeout(() => {
@@ -8626,12 +8659,13 @@
                 this.showToast('Team A vs Team B scores calculated!', 'success');
             },
             
-            // Populate course dropdowns for Nassau and Daily Swindle
+            // Populate course dropdowns for Nassau, Daily Swindle, and CTP
             populateCompsCourseDropdowns() {
                 const nassauSelect = document.getElementById('nassauCourseSelect');
                 const swindleSelect = document.getElementById('dailySwindleCourseSelect');
+                const ctpSelect = document.getElementById('ctpCourseSelect');
                 
-                [nassauSelect, swindleSelect].forEach(select => {
+                [nassauSelect, swindleSelect, ctpSelect].forEach(select => {
                     if (!select) return;
                     const currentVal = select.value;
                     select.innerHTML = '<option value="">-- Select a course --</option>';
@@ -8811,6 +8845,195 @@
                 this.showToast(`Comps Leaderboard calculated with ${combined.length} players!`, 'success');
             },
             
+            // PAR 3 - Closest to Pin
+            autoDetectCTP() {
+                const courseName = document.getElementById('ctpCourseSelect').value;
+                if (!courseName) { this.showToast('Please select a course', 'error'); return; }
+                
+                const course = this.courses.find(c => c.name && c.name.toLowerCase() === courseName.toLowerCase());
+                if (!course || !course.holes) { this.showToast('Course not found or has no holes', 'error'); return; }
+                
+                // Find Par 3 holes
+                const par3Holes = course.holes.filter(h => h.par === 3);
+                if (par3Holes.length === 0) {
+                    this.showToast('No Par 3 holes found on this course', 'warning');
+                    return;
+                }
+                
+                // Get players on this course
+                const players = this.players.filter(p => p.course && p.course.toLowerCase() === courseName.toLowerCase());
+                
+                // Preserve existing winners if same course
+                const existingWinners = {};
+                const existingMoney = {};
+                if (this.comps.closestToPin.courseName === courseName && this.comps.closestToPin.holes) {
+                    this.comps.closestToPin.holes.forEach(h => {
+                        if (h.winner) existingWinners[h.hole] = h.winner;
+                        if (h.money) existingMoney[h.hole] = h.money;
+                    });
+                }
+                
+                this.comps.closestToPin = {
+                    courseName: courseName,
+                    holes: par3Holes.map(h => ({
+                        hole: h.number,
+                        par: h.par,
+                        winner: existingWinners[h.number] || '',
+                        money: existingMoney[h.number] || 0
+                    }))
+                };
+                
+                this.renderCTPHoles(players);
+                this.saveData();
+                this.renderCompsResults();
+                this.showToast(`Found ${par3Holes.length} Par 3 holes on ${courseName}`, 'success');
+            },
+            
+            manualSelectCTP() {
+                const courseName = document.getElementById('ctpCourseSelect').value;
+                if (!courseName) { this.showToast('Please select a course', 'error'); return; }
+                
+                const course = this.courses.find(c => c.name && c.name.toLowerCase() === courseName.toLowerCase());
+                if (!course || !course.holes) { this.showToast('Course not found or has no holes', 'error'); return; }
+                
+                // Preserve existing selections
+                const existingHoles = {};
+                if (this.comps.closestToPin.courseName === courseName && this.comps.closestToPin.holes) {
+                    this.comps.closestToPin.holes.forEach(h => {
+                        existingHoles[h.hole] = { winner: h.winner || '', money: h.money || 0 };
+                    });
+                }
+                
+                // Show checkboxes for all 18 holes
+                const container = document.getElementById('ctpHolesContainer');
+                let html = '<div style="background: #f8f9fa; padding: 10px; border-radius: 4px; border: 1px solid #e0e0e0;">';
+                html += '<p style="font-size: 11px; font-weight: 600; margin-bottom: 8px;">Select holes for Closest to Pin:</p>';
+                html += '<div style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 4px;">';
+                
+                course.holes.forEach(h => {
+                    const checked = existingHoles[h.number] ? 'checked' : (h.par === 3 ? 'checked' : '');
+                    const isPar3 = h.par === 3;
+                    html += `
+                        <label style="display: flex; align-items: center; gap: 4px; padding: 4px; border-radius: 3px; font-size: 11px; cursor: pointer; background: ${isPar3 ? '#e8f8f5' : 'white'}; border: 1px solid ${isPar3 ? '#27ae60' : '#ddd'};">
+                            <input type="checkbox" class="ctp-hole-check" value="${h.number}" data-par="${h.par}" ${checked}>
+                            H${h.number} <span style="font-size: 9px; color: #7f8c8d;">(P${h.par})</span>
+                        </label>
+                    `;
+                });
+                
+                html += '</div>';
+                html += '<button onclick="app.confirmManualCTP()" class="btn-success btn-small" style="margin-top: 8px;">✔ Confirm Selection</button>';
+                html += '</div>';
+                container.innerHTML = html;
+            },
+            
+            confirmManualCTP() {
+                const courseName = document.getElementById('ctpCourseSelect').value;
+                if (!courseName) return;
+                
+                const course = this.courses.find(c => c.name && c.name.toLowerCase() === courseName.toLowerCase());
+                const players = this.players.filter(p => p.course && p.course.toLowerCase() === courseName.toLowerCase());
+                
+                const checkboxes = document.querySelectorAll('.ctp-hole-check:checked');
+                if (checkboxes.length === 0) {
+                    this.showToast('Please select at least one hole', 'warning');
+                    return;
+                }
+                
+                // Preserve existing winners
+                const existingWinners = {};
+                const existingMoney = {};
+                if (this.comps.closestToPin.courseName === courseName && this.comps.closestToPin.holes) {
+                    this.comps.closestToPin.holes.forEach(h => {
+                        if (h.winner) existingWinners[h.hole] = h.winner;
+                        if (h.money) existingMoney[h.hole] = h.money;
+                    });
+                }
+                
+                const selectedHoles = [];
+                checkboxes.forEach(cb => {
+                    const holeNum = parseInt(cb.value);
+                    const par = parseInt(cb.dataset.par);
+                    selectedHoles.push({
+                        hole: holeNum,
+                        par: par,
+                        winner: existingWinners[holeNum] || '',
+                        money: existingMoney[holeNum] || 0
+                    });
+                });
+                
+                selectedHoles.sort((a, b) => a.hole - b.hole);
+                
+                this.comps.closestToPin = {
+                    courseName: courseName,
+                    holes: selectedHoles
+                };
+                
+                this.renderCTPHoles(players);
+                this.saveData();
+                this.renderCompsResults();
+                this.showToast(`${selectedHoles.length} holes selected for Closest to Pin`, 'success');
+            },
+            
+            renderCTPHoles(players) {
+                const container = document.getElementById('ctpHolesContainer');
+                if (!container) return;
+                
+                const ctp = this.comps.closestToPin;
+                if (!ctp.holes || ctp.holes.length === 0) {
+                    container.innerHTML = '';
+                    return;
+                }
+                
+                let html = '<div style="background: #e8f8f5; padding: 10px; border-radius: 4px; border: 1px solid #27ae60; margin-top: 8px;">';
+                html += `<p style="font-size: 11px; font-weight: 600; margin-bottom: 8px; color: #27ae60;">🎯 ${ctp.holes.length} holes selected — ⛳ ${ctp.courseName}</p>`;
+                
+                ctp.holes.forEach(h => {
+                    html += `
+                        <div style="display: flex; gap: 6px; align-items: center; margin-bottom: 6px; padding: 6px; background: white; border-radius: 3px; border: 1px solid #e0e0e0;">
+                            <span style="font-size: 11px; font-weight: 600; min-width: 55px;">Hole ${h.hole} <span style="color: #7f8c8d; font-size: 9px;">(P${h.par})</span></span>
+                            <select class="ctp-winner-select" data-hole="${h.hole}" style="flex: 1; padding: 4px; font-size: 11px; border: 1px solid #ddd; border-radius: 3px;">
+                                <option value="">-- Select winner --</option>
+                                ${players.map(p => `<option value="${p.name}" ${h.winner === p.name ? 'selected' : ''}>${p.name}</option>`).join('')}
+                            </select>
+                            <input type="number" class="ctp-money-input" data-hole="${h.hole}" value="${h.money || 0}" min="0" step="0.01" placeholder="£" style="width: 60px; padding: 4px; font-size: 11px; border: 1px solid #ddd; border-radius: 3px; text-align: center;">
+                        </div>
+                    `;
+                });
+                
+                html += '</div>';
+                container.innerHTML = html;
+            },
+            
+            saveCTPResults() {
+                const ctp = this.comps.closestToPin;
+                if (!ctp.courseName || !ctp.holes || ctp.holes.length === 0) {
+                    this.showToast('No Closest to Pin competition created yet', 'warning');
+                    return;
+                }
+                
+                const winnerSelects = document.querySelectorAll('.ctp-winner-select');
+                const moneyInputs = document.querySelectorAll('.ctp-money-input');
+                
+                winnerSelects.forEach(select => {
+                    const holeNum = parseInt(select.dataset.hole);
+                    const hole = ctp.holes.find(h => h.hole === holeNum);
+                    if (hole) hole.winner = select.value;
+                });
+                
+                moneyInputs.forEach(input => {
+                    const holeNum = parseInt(input.dataset.hole);
+                    const hole = ctp.holes.find(h => h.hole === holeNum);
+                    if (hole) hole.money = parseFloat(input.value) || 0;
+                });
+                
+                // Sync CTP winnings to Information tab
+                this.syncAllCompWinnings();
+                this.saveData();
+                this.renderCompsResults();
+                this.showToast('Closest to Pin results saved!', 'success');
+            },
+            
             // Sync all comp winnings to Information tab
             syncAllCompWinnings() {
                 // Remove all auto-generated comp entries
@@ -8913,6 +9136,21 @@
                     });
                 }
                 
+                // Closest to Pin
+                if (this.comps.closestToPin && this.comps.closestToPin.holes) {
+                    this.comps.closestToPin.holes.forEach(h => {
+                        if (h.winner && h.money > 0) {
+                            this.winningsData.teams.push({
+                                comp: 'CTP Hole ' + h.hole + ' - ' + this.comps.closestToPin.courseName,
+                                position: '',
+                                players: [h.winner],
+                                totalAmount: h.money,
+                                autoComp: true
+                            });
+                        }
+                    });
+                }
+                
                 this.updateRemainingMoney();
             },
             
@@ -8985,6 +9223,8 @@
                     confirmMessage = 'Delete Daily Swindle competition?';
                 } else if (compType === 'CompsLeaderboard') {
                     confirmMessage = 'Delete Comps Master Leaderboard?';
+                } else if (compType === 'ClosestToPin') {
+                    confirmMessage = 'Delete Closest to Pin competition?';
                 }
                 
                 if (!confirm(confirmMessage)) return;
@@ -9013,6 +9253,10 @@
                 } else if (compType === 'CompsLeaderboard') {
                     this.comps.compsLeaderboard = { results: [] };
                     this.showToast('Deleted Comps Master Leaderboard', 'warning');
+                } else if (compType === 'ClosestToPin') {
+                    this.comps.closestToPin = { courseName: '', holes: [] };
+                    document.getElementById('ctpHolesContainer').innerHTML = '';
+                    this.showToast('Deleted Closest to Pin competition', 'warning');
                 }
                 
                 this.syncAllCompWinnings();
@@ -9736,6 +9980,57 @@
                         html += `
                             <div style="text-align: center; padding: 20px; color: #7f8c8d; background: #f8f9fa; border-radius: 3px;">
                                 <p>No scores calculated yet. Click "Calculate" to compute Daily Swindle scores.</p>
+                            </div>
+                        `;
+                    }
+                    
+                    html += `</div>`;
+                }
+                
+                // Closest to Pin Results
+                if (this.comps.closestToPin && this.comps.closestToPin.courseName && this.comps.closestToPin.holes.length > 0) {
+                    const ctp = this.comps.closestToPin;
+                    const hasWinners = ctp.holes.some(h => h.winner);
+                    
+                    html += `
+                        <div style="background: white; border-radius: 5px; padding: 12px; margin-bottom: 15px; border: 1px solid #e0e0e0; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                                <h3 style="color: #2c3e50; margin: 0; padding-bottom: 5px; border-bottom: 2px solid #e74c3c; font-size: 1rem; flex: 1;">
+                                    🎯 PAR 3 — Closest to Pin
+                                    <span style="font-size: 0.7rem; color: #7f8c8d; margin-left: 10px;">${ctp.holes.length} holes</span>
+                                    <span style="font-size: 0.7rem; color: #3498db; margin-left: 10px; font-weight: bold;">⛳ ${ctp.courseName}</span>
+                                </h3>
+                                <button onclick="app.deleteCompetition('ClosestToPin', '')" class="btn-danger btn-small" style="font-size: 10px; padding: 4px 8px; white-space: nowrap;">🗑️ Delete</button>
+                            </div>
+                    `;
+                    
+                    html += `
+                        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 8px;">
+                    `;
+                    
+                    ctp.holes.forEach(h => {
+                        const hasWinner = h.winner && h.winner !== '';
+                        html += `
+                            <div style="padding: 10px; border-radius: 5px; border: 2px solid ${hasWinner ? '#27ae60' : '#e0e0e0'}; background: ${hasWinner ? '#e8f8f5' : '#f8f9fa'}; text-align: center;">
+                                <div style="font-size: 13px; font-weight: bold; color: #2c3e50; margin-bottom: 4px;">
+                                    ⛳ Hole ${h.hole} <span style="font-size: 10px; color: #7f8c8d;">(Par ${h.par})</span>
+                                </div>
+                                ${hasWinner ? `
+                                    <div style="font-size: 14px; font-weight: bold; color: #27ae60; margin: 6px 0;">🏆 ${h.winner}</div>
+                                    ${h.money > 0 ? `<div style="font-size: 12px; color: #e67e22; font-weight: bold;">£${h.money.toFixed(2)}</div>` : ''}
+                                ` : `
+                                    <div style="font-size: 11px; color: #bdc3c7; margin: 6px 0;">No winner yet</div>
+                                `}
+                            </div>
+                        `;
+                    });
+                    
+                    html += '</div>';
+                    
+                    if (!hasWinners) {
+                        html += `
+                            <div style="text-align: center; padding: 10px; margin-top: 10px; color: #7f8c8d; background: #f8f9fa; border-radius: 3px; font-size: 11px;">
+                                <p>Select winners from the CTP card above and click "Save Results".</p>
                             </div>
                         `;
                     }
